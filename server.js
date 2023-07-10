@@ -1,4 +1,5 @@
 import express from "express";
+import session from "express-session";
 import fetch from "node-fetch";
 import request from "request";
 import { client_id, client_secret } from "./config.js";
@@ -29,7 +30,12 @@ app.set("views", "./views");
 app.set("view engine", "pug");
 app.use(express.static('/public'))
   .use(cors())
-  .use(cookieParser());
+  .use(cookieParser())
+  .use(session({
+    secret: 'your-secret-key', // Replace with a strong secret key
+    resave: false,
+    saveUninitialized: false,
+  }));
 
 const redirect_uri = "http://localhost:3000/callback";
 
@@ -82,11 +88,14 @@ app.get("/", function (req, res) {
  
      request.post(authOptions, function(error, response, body) {
        if (!error && response.statusCode === 200) {
-        console.log("sfsf", body)
  
          var access_token = body.access_token,
              refresh_token = body.refresh_token,
               expires_in = body.expires_in;
+          
+          req.session.access_token = access_token;
+          req.session.refresh_token = refresh_token;
+          req.session.expires_in = expires_in;
  
          var options = {
            url: 'https://api.spotify.com/v1/me',
@@ -100,72 +109,56 @@ app.get("/", function (req, res) {
          });
  
          // we can also pass the token to the browser to make requests from there
-         res.redirect('/dashboard' +
-           querystring.stringify({
-             access_token: access_token,
-             refresh_token: refresh_token
-           }));
+         res.redirect('/dashboard');
        } else {
-         res.redirect('/dashboard' +
-           querystring.stringify({
-             error: 'invalid_token'
-           }));
+         res.redirect('/dashboard');
        }
      });
    }
  });
 
- 
- app.get('/refresh_token', function(req, res) {
- 
-   // requesting access token from refresh token
-   var refresh_token = req.query.refresh_token;
-   var authOptions = {
-     url: 'https://accounts.spotify.com/api/token',
-     headers: { 'Authorization': 'Basic ' + (Buffer.from(client_id + ':' + client_secret).toString('base64')) },
-     form: {
-       grant_type: 'refresh_token',
-       refresh_token: refresh_token
-     },
-     json: true
-   };
- 
-   request.post(authOptions, function(error, response, body) {
-     if (!error && response.statusCode === 200) {
-       var access_token = body.access_token;
-       res.send({
-         'access_token': access_token
-       });
-     }
-   });
- });
+ async function refreshToken(refresh_token) {
+  console.log("refresh token: ", refresh_token)
+  const response = await fetch('https://accounts.spotify.com/api/token', {
+    method: 'post',
+    headers: { Authorization: 'Basic ' + (Buffer.from(client_id + ':' + client_secret).toString('base64')) },
+    body: new URLSearchParams({
+      grant_type: 'refresh_token',
+      refresh_token: refresh_token
+    }),
+    json: true
+  });
+  const data = await response.json();
+  console.log("refresh response: ", data);
+  return data;
+ }
 
 
- async function getData(endpoint, access_token, refresh_token, retry = true) {
+ async function getData(endpoint, req, retry = true) {
   const response = await fetch("https://api.spotify.com/v1" + endpoint, {
     method: "get",
     headers: {
-      Authorization: "Bearer " + access_token,
+      Authorization: "Bearer " + req.session.access_token,
     },
   });
-
+  
   const data = await response.json();
   if (retry && data.error && data.error.status === 401) {
-    const refresh = await fetch("http://localhost:3000/refresh_token?refresh_token=" + refresh_token);
-    const refreshData = await refresh.json();
-    return getData(endpoint, refreshData.access_token, refresh_token, false);
+    const refreshData = await refreshToken(req.session.refresh_token);
+    if (!refreshData.error) {
+      req.session.access_token = refreshData.access_token;
+      return getData(endpoint, req, false);
+    } else {
+      console.log("refresh token failed: ", refreshData)
+    }
   }
   return data;
 }
 
 app.get("/dashboard", async (req, res) => {
-  const access_token = req.query.access_token || null;
-  const refresh_token = req.query.refresh_token || null;
 
-  const userInfo = await getData("/me", access_token, refresh_token);
-  const tracks = await getData("/me/tracks?limit=10", access_token, refresh_token);
-  console.log("user  ", userInfo);
-  console.log("tracls  ", tracks);
+  const userInfo = await getData("/me", req);
+  const tracks = await getData("/me/tracks?limit=10", req);
 
   res.render("dashboard", { user: userInfo, tracks: tracks.items });
 });
