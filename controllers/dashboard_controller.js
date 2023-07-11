@@ -1,13 +1,12 @@
-import { getData } from "../utils/get_data.js";
+import { getData } from '../utils/get_data.js'
 
 export default async (req, res) => {
-  if (!req.session.access_token) {
-    return res.redirect("/index");
+  if (!req.session.accessToken) {
+    return res.redirect('/')
   }
 
-  console.log("session: ", req.session)
-  const userInfo = await getData("/me", req);
-  const tracks = await getData("/me/tracks?limit=10", req);
+  const userInfo = await getData('/me', req)
+  const tracks = await getData('/me/tracks?limit=10', req)
 
-  res.render("dashboard", { user: userInfo, tracks: tracks.items });
-};
+  res.render('dashboard', { user: userInfo, tracks: tracks.items })
+}

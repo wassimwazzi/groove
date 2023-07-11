@@ -4,7 +4,17 @@
   "description": "Spotify example node app",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "test": "tsc && vitest --watch false",
+    "test-watch": "tsc && vitest",
+    "coverage": "vitest run --coverage",
+    "eslint": "eslint --ext js,jsx,ts,tsx .",
+    "eslint-fix": "eslint --ext js,jsx,ts,tsx . --fix",
+    "eslint-staged-fix": "eslint --ext js,jsx,ts,tsx --fix",
+    "format": "prettier . --write",
+    "format-staged": "prettier --write",
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "prepare": "cd ../ && husky install ./front-end/.husky"
   },
   "type": "module",
   "dependencies": {
@@ -18,5 +28,13 @@
     "pug": "^3.0.0",
     "request": "^2.88.2"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.44.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^16.0.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "prettier": "^3.0.0"
+  }
 }
