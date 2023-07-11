@@ -9,7 +9,8 @@
     "eslint-fix": "eslint --ext js,jsx,ts,tsx . --fix",
     "eslint-staged-fix": "eslint --ext js,jsx,ts,tsx --fix",
     "format": "prettier . --write",
-    "format-staged": "prettier --write"
+    "format-staged": "prettier --write",
+    "pre-commit": "lint-staged"
   },
   "type": "module",
   "dependencies": {
