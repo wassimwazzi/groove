@@ -1,5 +1,18 @@
 extends layout.pug
     
 block content
-    h1 My first Spotify app ✨
-    a(href='/login') Log in
+    //- h1 My first Spotify app ✨
+    //- a(href='/login') Log in
+
+    h1.centered Listen to all your songs in one place
+    h2.centered Groove allows you to play music from all platforms, and easily manage and transfer playlists between them.
+    p.centered
+        a(href='/login') Log in
+        |  to get started!
+
+block append content
+    div(style='background-color: var(--primary-color-beige)')
+        h1.centered.dark Scroll down to check out all the Platforms we support!
+        p.dark We support all the major music platforms, and are constantly adding more!
+        //- display an image of the platforms we support
+        img(src="../images/dj.jpg", alt="DJ set")

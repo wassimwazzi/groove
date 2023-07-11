@@ -1,6 +1,30 @@
 body {
-  padding: 1em 2em;
+  width: 100%;
+  margin-bottom: var(--spacing-1);
+  background-color: var(--primary-color-dark);
 }
+
+.body-content {
+  margin: var(--spacing-3) var(--spacing-3);
+}
+
+.dark {
+  color: var(--primary-color-dark);
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+a {
+  font-family: var(--font-family-primary);
+  color: var(--primary-color-light);
+}
+
 ul.footer {
   list-style: none;
   display: inline;
@@ -22,10 +46,33 @@ td {
   padding-left: 10px;
 }
 
+h1 {
+  font-size: var(--font-xlarge);
+  font-weight: var(--font-weight-bold);
+}
+
+h2 {
+  font-size: var(--font-large);
+  font-weight: var(--font-weight-bold);
+}
+
+h3 {
+  font-size: var(--font-medium);
+  font-weight: var(--font-weight-bold);
+}
+
+p {
+  font-size: var(--font-medium);
+}
+
 .circular_image {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   overflow: hidden;
   float: left;
+}
+
+.centered {
+  text-align: center;
 }

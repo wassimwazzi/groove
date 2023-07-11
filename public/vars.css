@@ -1,0 +1,47 @@
+/* Colors */
+
+/* Primary colors */
+:root {
+  --primary-color-dark: rgb(40, 45, 48);
+  --primary-color-beige: rgb(243, 229, 214);
+  --primary-color-brown: rgb(204, 98, 35);
+  --primary-color-light: rgb(255, 255, 255);
+}
+
+/* Secondary colors */
+:root {
+  --secondary-color-dark: rgb(40, 45, 48);
+  --secondary-color-light: rgb(255, 255, 255);
+}
+
+/* Spacing */
+:root {
+  --spacing-1: 5px;
+  --spacing-2: 10px;
+  --spacing-3: 20px;
+  --spacing-4: 50px;
+  --spacing-5: 100px;
+  --spacing-6: 200px;
+}
+
+/* Font sizes */
+:root {
+  --font-small: 12px;
+  --font-medium: 16px;
+  --font-large: 20px;
+  --font-xlarge: 48px;
+}
+
+/* Font families */
+:root {
+  --font-family-primary: 'Roboto', sans-serif;
+  --font-family-secondary: 'Open Sans', sans-serif;
+}
+
+/* Font weights */
+:root {
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+}

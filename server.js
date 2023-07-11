@@ -20,8 +20,9 @@ app
       saveUninitialized: false,
     }),
   )
-app.use(authRouter)
-app.use(dashboardRouter)
+  .use('/images', express.static('images'))
+  .use(authRouter)
+  .use(dashboardRouter)
 
 const listener = app.listen(3000, function () {
   console.log('Your app is listening on http://localhost:' + listener.address().port)
