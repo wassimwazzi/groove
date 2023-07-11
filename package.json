@@ -5,16 +5,11 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
-    "test": "tsc && vitest --watch false",
-    "test-watch": "tsc && vitest",
-    "coverage": "vitest run --coverage",
     "eslint": "eslint --ext js,jsx,ts,tsx .",
     "eslint-fix": "eslint --ext js,jsx,ts,tsx . --fix",
     "eslint-staged-fix": "eslint --ext js,jsx,ts,tsx --fix",
     "format": "prettier . --write",
-    "format-staged": "prettier --write",
-    "typecheck": "tsc --project tsconfig.json --noEmit",
-    "prepare": "cd ../ && husky install ./front-end/.husky"
+    "format-staged": "prettier --write"
   },
   "type": "module",
   "dependencies": {
@@ -35,6 +30,14 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^16.0.1",
     "eslint-plugin-promise": "^6.1.1",
+    "lint-staged": "^13.2.3",
+    "pre-commit": "^1.2.2",
     "prettier": "^3.0.0"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }
