@@ -25,7 +25,7 @@ class SpotifyAuthenticator extends BaseAuthenticator {
   }
 
   isLoggedIn(req) {
-    return req.session.spotifyAccessToken && new Date(req.session.expiresAt) > new Date()
+    return !!(req.session.spotifyAccessToken && new Date(req.session.spotifyTokenExpiresAt) > new Date())
   }
 
   /**
@@ -65,6 +65,7 @@ class SpotifyAuthenticator extends BaseAuthenticator {
   callback(req, res) {
     const code = req.query.code || null
     const state = req.query.state || null
+    console.log(req.cookies)
     const storedState = req.cookies ? req.cookies[this.stateKey] : null
 
     if (state === null || state !== storedState) {
@@ -90,13 +91,15 @@ class SpotifyAuthenticator extends BaseAuthenticator {
       }
 
       request.post(authOptions, function (error, response, body) {
+        console.log(body)
+        console.log(response.statusCode)
         if (!error && response.statusCode === 200) {
           const spotifyAccessToken = body.access_token
           const spotifyRefreshToken = body.refresh_token
-          const spotifyTokenExpiresIn = body.expires_in
+          const expiresIn = body.expires_in
           req.session.spotifyAccessToken = spotifyAccessToken
           req.session.spotifyRefreshToken = spotifyRefreshToken
-          req.session.expiresAt = new Date().getTime() + spotifyTokenExpiresIn * 1000
+          req.session.spotifyTokenExpiresAt = new Date().getTime() + expiresIn * 1000
 
           res.redirect('/dashboard')
         } else {
