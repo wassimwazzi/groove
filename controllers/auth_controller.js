@@ -20,7 +20,6 @@ const generateRandomString = function (length) {
   return text
 }
 
-// app.get('/login', function(req, res) {
 const login = function (req, res) {
   const state = generateRandomString(16)
   res.cookie(stateKey, state)
@@ -39,7 +38,6 @@ const login = function (req, res) {
   )
 }
 
-// app.get('/callback', function(req, res) {
 const callback = function (req, res) {
   const code = req.query.code || null
   const state = req.query.state || null

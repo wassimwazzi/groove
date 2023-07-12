@@ -10,7 +10,8 @@
     "eslint-staged-fix": "eslint --ext js,jsx,ts,tsx --fix",
     "format": "prettier . --write",
     "format-staged": "prettier --write",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "prepare": "husky install"
   },
   "type": "module",
   "dependencies": {
@@ -31,13 +32,13 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^16.0.1",
     "eslint-plugin-promise": "^6.1.1",
-    "husky": "^4.3.8",
+    "husky": "^8.0.0",
     "lint-staged": "^13.2.3",
     "pre-commit": "^1.2.2",
     "prettier": "^3.0.0"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,css,scss,md}": [
+    "*.{js,jsx,ts,tsx,css,scss,md}": [
       "eslint --fix",
       "prettier --write"
     ]
