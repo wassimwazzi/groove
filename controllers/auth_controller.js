@@ -7,7 +7,7 @@ const authenticators = {
 const login = function (req, res) {
   const platform = req.query.platform
   const authenticator = new authenticators[platform]()
-  authenticator.authenticate(req, res)
+  authenticator.login(req, res)
 }
 
 const callback = function (req, res) {

@@ -25,6 +25,10 @@ class SpotifyAuthenticator extends BaseAuthenticator {
     return 'spotify';
   }
 
+  isLoggedIn(req) {
+    return req.session.accessToken && new Date(req.session.expiresAt) > new Date();
+  }
+
   /**
    * Authenticate user
    * 
@@ -93,7 +97,7 @@ class SpotifyAuthenticator extends BaseAuthenticator {
           const expiresIn = body.expires_in
           req.session.accessToken = accessToken
           req.session.refreshToken = refreshToken
-          req.session.expiresAt = new Date(now.getTime() + expiresIn * 1000)
+          req.session.expiresAt = new Date().getTime() + expiresIn * 1000
 
           res.redirect('/dashboard')
         } else {
