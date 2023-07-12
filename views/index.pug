@@ -20,17 +20,21 @@ block content
 
 
         div(style='background-color: var(--primary-color-brown); width: 100%')
-            div(style='padding: var(--spacing-4) var(--spacing-5)')
-                .vertical-align
+            .horizontal-align.inner-content 
+                .vertical-align(style='max-width: 40%')
                     h1 Let's get started!
-                    p Click on one of the platforms below to start listening to music.
-                    .horizontal-align 
-                        //- show the platform logos, and each logo is a link to the platform's page
-                        a(href='/spotify' class='logo-link')
-                            img(src="../images/spotify-logo.svg", class="logo-image")
-                        a(href='/apple' class='logo-link')
-                            img(src="../images/applemusic-logo.svg", class="logo-image")
-                        a(href='/soundcloud' class='logo-link')
-                            img(src="../images/soundcloud-logo.svg", class="logo-image")
-                        a(href='/youtube' class='logo-link')
-                            img(src="../images/youtube-logo.svg", class="logo-image")
+                    p Click on one of the platforms to the right to start listening to music.
+
+                div(style='padding: var(--spacing-4) var(--spacing-5)')
+                    .vertical-align
+                        .horizontal-align
+                            a(href='/spotify' class='logo-link')
+                                img(src="../images/spotify-logo.svg", class="logo-image")
+                            a(href='/apple' class='logo-link')
+                                img(src="../images/applemusic-logo.svg", class="logo-image")
+                        .horizontal-align
+                            a(href='/soundcloud' class='logo-link')
+                                img(src="../images/soundcloud-logo.svg", class="logo-image")
+                            a(href='/youtube' class='logo-link')
+                                img(src="../images/youtube-logo.svg", class="logo-image")
+

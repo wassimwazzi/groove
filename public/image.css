@@ -27,7 +27,7 @@
 }
 
 .logo-link {
-  margin-left: var(--spacing-3);
+  margin: var(--spacing-3);
   text-decoration: none;
   color: var(--primary-color-light);
 }
