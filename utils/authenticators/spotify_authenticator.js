@@ -37,7 +37,7 @@ class SpotifyAuthenticator extends BaseAuthenticator {
    * @memberof SpotifyAuthenticator
    */
   authenticate(req, res) {
-    const state = this.generateRandomString(16)
+    const state = BaseAuthenticator.generateRandomString(16)
     res.cookie(this.stateKey, state)
 
     // request authorization

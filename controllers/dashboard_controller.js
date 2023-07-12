@@ -1,7 +1,7 @@
 import { getData } from '../utils/get_data.js'
 
 export default async (req, res) => {
-  if (!req.session.accessToken) {
+  if (!req.session.spotifyAccessToken) {
     return res.redirect('/')
   }
 
