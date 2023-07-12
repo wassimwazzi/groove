@@ -12,6 +12,11 @@ body {
   margin: 0 var(--spacing-3);
 }
 
+/* content with top and bottom spacing */
+.content {
+  margin: var(--spacing-3) 0;
+}
+
 .dark-primary {
   color: var(--primary-color-dark);
 }

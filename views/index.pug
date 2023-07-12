@@ -1,26 +1,36 @@
 extends layout.pug
     
 block content
-    //- h1 My first Spotify app ✨
-    //- a(href='/login') Log in
+    .vertical-align
+        div
+            h1.centered All your favorite platforms in one place
+            h2.centered Groove allows you to play music from all platforms, and easily manage and transfer playlists between them.
 
-    h1.centered All your favorite platforms in one place
-    h2.centered Groove allows you to play music from all platforms, and easily manage and transfer playlists between them.
-    //- p.centered
-    //-     a(href='/login') Log in
-    //-     |  to get started!
-    .centered 
-        img(src="../images/microphone.jpg" class="image-large")
+            .centered 
+                img(src="../images/microphone.jpg" class="image-large")
 
-block append content
-    div(style='background-color: var(--primary-color-beige)')
-        .horizontal-align.inner-content
-            img(src="../images/dj.jpg", class="image-large" style='padding: var(--spacing-4)')
-            
-            .vertical-align(style='max-width: 40%')
-                h2.centered.dark-primary Discover and Stream Music
-                p.dark-secondary(style='text-align: justify')
-                    | Explore a wide range of music from Spotify, Apple Music, SoundCloud, Youtube, and more.
+        div(style='background-color: var(--primary-color-beige)')
+            .horizontal-align.inner-content
+                img(src="../images/dj.jpg", class="image-large" style='padding: var(--spacing-4)')
+                
+                .vertical-align(style='max-width: 40%')
+                    h2.centered.dark-primary Discover and Stream Music
+                    p.dark-secondary(style='text-align: justify')
+                        | Explore a wide range of music from Spotify, Apple Music, SoundCloud, Youtube, and more.
 
 
-        //- display an image of the platforms we support
+        div(style='background-color: var(--primary-color-brown); width: 100%')
+            div(style='padding: var(--spacing-4) var(--spacing-5)')
+                .vertical-align
+                    h1 Let's get started!
+                    p Click on one of the platforms below to start listening to music.
+                    .horizontal-align 
+                        //- show the platform logos, and each logo is a link to the platform's page
+                        a(href='/spotify' class='logo-link')
+                            img(src="../images/spotify-logo.svg", class="logo-image")
+                        a(href='/apple' class='logo-link')
+                            img(src="../images/applemusic-logo.svg", class="logo-image")
+                        a(href='/soundcloud' class='logo-link')
+                            img(src="../images/soundcloud-logo.svg", class="logo-image")
+                        a(href='/youtube' class='logo-link')
+                            img(src="../images/youtube-logo.svg", class="logo-image")
