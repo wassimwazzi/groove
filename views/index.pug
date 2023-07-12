@@ -4,15 +4,23 @@ block content
     //- h1 My first Spotify app ✨
     //- a(href='/login') Log in
 
-    h1.centered Listen to all your songs in one place
+    h1.centered All your favorite platforms in one place
     h2.centered Groove allows you to play music from all platforms, and easily manage and transfer playlists between them.
-    p.centered
-        a(href='/login') Log in
-        |  to get started!
+    //- p.centered
+    //-     a(href='/login') Log in
+    //-     |  to get started!
+    .centered 
+        img(src="../images/microphone.jpg" class="image-large")
 
 block append content
     div(style='background-color: var(--primary-color-beige)')
-        h1.centered.dark Scroll down to check out all the Platforms we support!
-        p.dark We support all the major music platforms, and are constantly adding more!
+        .horizontal-align.inner-content
+            img(src="../images/dj.jpg", class="image-large" style='padding: var(--spacing-4)')
+            
+            .vertical-align(style='max-width: 40%')
+                h2.centered.dark-primary Discover and Stream Music
+                p.dark-secondary(style='text-align: justify')
+                    | Explore a wide range of music from Spotify, Apple Music, SoundCloud, Youtube, and more.
+
+
         //- display an image of the platforms we support
-        img(src="../images/dj.jpg", alt="DJ set")

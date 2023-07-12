@@ -1,0 +1,22 @@
+.circular_image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  float: left;
+}
+
+.image-large {
+  max-width: 60%;
+  max-height: 60%;
+}
+
+.image-medium {
+  max-width: 40%;
+  max-height: 40%;
+}
+
+.image-small {
+  max-width: 20%;
+  max-height: 20%;
+}

@@ -10,8 +10,8 @@
 
 /* Secondary colors */
 :root {
-  --secondary-color-dark: rgb(40, 45, 48);
-  --secondary-color-light: rgb(255, 255, 255);
+  --secondary-color-dark: rgb(57, 62, 63);
+  --secondary-color-light: rgb(228, 221, 221);
 }
 
 /* Spacing */
@@ -34,8 +34,8 @@
 
 /* Font families */
 :root {
-  --font-family-primary: 'Roboto', sans-serif;
-  --font-family-secondary: 'Open Sans', sans-serif;
+  --font-family-primary: 'Times New Roman', serif;
+  --font-family-secondary: 'Helevectica', sans-serif;
 }
 
 /* Font weights */
