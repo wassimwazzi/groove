@@ -1,16 +1,19 @@
 extends layout.pug
-    
+
+block head
+    link(rel='stylesheet', href='/homepage.css')
+
 block content
     .vertical-align
-        div
+        .card.first
             h1.centered All your favorite platforms in one place
             h2.centered Groove allows you to play music from all platforms, and easily manage and transfer playlists between them.
 
             .centered 
                 img(src="../images/microphone.jpg" class="image-large")
 
-        div(style='background-color: var(--primary-color-beige)')
-            .horizontal-align.inner-content
+        .card.second
+            .horizontal-align-centered.inner-content
                 img(src="../images/dj.jpg", class="image-large" style='padding: var(--spacing-4)')
                 
                 .vertical-align(style='max-width: 40%')
@@ -19,20 +22,20 @@ block content
                         | Explore a wide range of music from Spotify, Apple Music, SoundCloud, Youtube, and more.
 
 
-        div(style='background-color: var(--primary-color-brown); width: 100%')
-            .horizontal-align.inner-content 
+        .card.third
+            .horizontal-align-centered.inner-content 
                 .vertical-align(style='max-width: 40%')
                     h1 Let's get started!
                     p Click on one of the platforms to the right to start listening to music.
 
                 div(style='padding: var(--spacing-4) var(--spacing-5)')
                     .vertical-align
-                        .horizontal-align
+                        .horizontal-align-centered
                             a(href='/login?platform=spotify' class='logo-link')
                                 img(src="../images/spotify-logo.svg", class="logo-image")
                             a(href='/login?platform=apple' class='logo-link')
                                 img(src="../images/applemusic-logo.svg", class="logo-image")
-                        .horizontal-align
+                        .horizontal-align-centered
                             a(href='/login?platform=soundcloud' class='logo-link')
                                 img(src="../images/soundcloud-logo.svg", class="logo-image")
                             a(href='/login?platform=youtube' class='logo-link')

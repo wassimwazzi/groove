@@ -1,0 +1,14 @@
+.card.first {
+  background-color: var(--primary-color-dark);
+  width: 100%;
+}
+
+.card.second {
+  background-color: var(--primary-color-beige);
+  width: 100%;
+}
+
+.card.third {
+  background-color: var(--primary-color-brown);
+  width: 100%;
+}

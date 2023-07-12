@@ -1,12 +1,12 @@
-import { getData } from '../utils/get_data.js'
+// import { getData } from '../utils/get_data.js'
+import PlatformsManager from '../utils/platforms_manager.js'
 
 export default async (req, res) => {
-  if (!req.session.spotifyAccessToken) {
-    return res.redirect('/')
+  const LoggedInPlatforms = PlatformsManager.getLoggedInPlatforms(req)
+  if (LoggedInPlatforms.length < 1) {
+    res.redirect('/')
+    return
   }
 
-  const userInfo = await getData('/me', req)
-  const tracks = await getData('/me/tracks?limit=10', req)
-
-  res.render('dashboard', { user: userInfo, tracks: tracks.items })
+  res.render('dashboard', { platforms: LoggedInPlatforms })
 }

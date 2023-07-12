@@ -86,9 +86,15 @@ p {
   text-align: center;
 }
 
-.horizontal-align {
+.horizontal-align-centered {
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.horizontal-align-left {
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
 }
 
