@@ -1,63 +1,62 @@
-import SpotifyWebApi from 'spotify-web-api-node';
-import BaseAuthenticator from './base_authenticator.js';
+// import SpotifyWebApi from 'spotify-web-api-node';
+import BaseAuthenticator from './base_authenticator.js'
 import request from 'request'
 import querystring from 'querystring'
 import { clientId, clientSecret } from '../../config.js'
 
 /**
  * Spotify Authenticator
-*/
+ */
 class SpotifyAuthenticator extends BaseAuthenticator {
   constructor() {
-    super();
+    super()
     // this._authenticator = new SpotifyWebApi({
     //     clientId: process.env.SPOTIFY_CLIENT_ID,
     //     clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
     //     redirectUri: 'http://localhost:3000/callback',
     // });
-    this.clientId = clientId;
-    this.clientSecret = clientSecret;
-    this.redirectUri = 'http://localhost:3000/callback?platform=spotify';
-    this.stateKey = 'spotify_auth_state';
+    this.clientId = clientId
+    this.clientSecret = clientSecret
+    this.stateKey = 'spotify_auth_state'
   }
 
   getPlatform() {
-    return 'spotify';
+    return 'spotify'
   }
 
   isLoggedIn(req) {
-    return req.session.accessToken && new Date(req.session.expiresAt) > new Date();
+    return req.session.accessToken && new Date(req.session.expiresAt) > new Date()
   }
 
   /**
    * Authenticate user
-   * 
+   *
    * @param {Object} req
    * @param {Object} res
    * @returns {Object} response
    * @memberof SpotifyAuthenticator
    */
   authenticate(req, res) {
-    const state = this.generateRandomString(16);
-    res.cookie(this.stateKey, state);
+    const state = this.generateRandomString(16)
+    res.cookie(this.stateKey, state)
 
     // request authorization
-    const scope = 'user-read-private user-read-email user-library-read';
+    const scope = 'user-read-private user-read-email user-library-read'
     res.redirect(
       'https://accounts.spotify.com/authorize?' +
-      querystring.stringify({
-        response_type: 'code',
-        client_id: this.clientId,
-        scope,
-        redirect_uri: this.redirectUri,
-        state,
-      }),
-    );
+        querystring.stringify({
+          response_type: 'code',
+          client_id: this.clientId,
+          scope,
+          redirect_uri: this.redirectUri,
+          state,
+        }),
+    )
   }
 
   /**
    * Callback for authentication
-   * 
+   *
    * @param {Object} req
    * @param {Object} res
    * @returns {Object} response
@@ -71,9 +70,9 @@ class SpotifyAuthenticator extends BaseAuthenticator {
     if (state === null || state !== storedState) {
       res.redirect(
         '/' +
-        querystring.stringify({
-          error: 'state_mismatch',
-        }),
+          querystring.stringify({
+            error: 'state_mismatch',
+          }),
       )
     } else {
       res.clearCookie(this.stateKey)
@@ -108,4 +107,4 @@ class SpotifyAuthenticator extends BaseAuthenticator {
   }
 }
 
-export default SpotifyAuthenticator;
+export default SpotifyAuthenticator
