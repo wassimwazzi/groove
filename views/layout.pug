@@ -10,11 +10,11 @@ html
   body
     .body-content
       .navbar
-        h1.h1 Groove ✨
+        h1 Groove ✨
         div.navbar-links
-          a.active(href='/home') Home
-          a(href='/about') About
-          a(href='/contact') Contact
+          a(class=(currentPage === 'Home' ? 'active' : '') href='/') Home
+          a(class=(currentPage === 'About' ? 'active' : '') href='/about') About
+          a(class=(currentPage === 'Contact' ? 'active' : '') href='/contact') Contact
 
       //- .body-content
       block content
