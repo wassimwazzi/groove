@@ -18,12 +18,20 @@ class BaseAuthenticator {
   /**
    * Check if user is logged in
    *
+<<<<<<< HEAD
    * @param {Object} _req
+=======
+   * @param {Object} req
+>>>>>>> a17c972 (add platforms manager and refactor variable names)
    * @returns {boolean} true if user is logged in, false otherwise
    * @memberof BaseAuthenticator
    * @abstract
    */
+<<<<<<< HEAD
   isLoggedIn(_req) {
+=======
+  isLoggedIn(req) {
+>>>>>>> a17c972 (add platforms manager and refactor variable names)
     throw new Error('Method "isLoggedIn()" must be implemented.')
   }
 
