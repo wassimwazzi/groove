@@ -2,7 +2,7 @@
 import BaseAuthenticator from './base_authenticator.js'
 import request from 'request'
 import querystring from 'querystring'
-import { clientId, clientSecret } from '../../config.js'
+import { spotifyClientId, spotifyClientSecret } from '../../config.js'
 
 /**
  * Spotify Authenticator
@@ -11,12 +11,12 @@ class SpotifyAuthenticator extends BaseAuthenticator {
   constructor() {
     super()
     // this._authenticator = new SpotifyWebApi({
-    //     clientId: process.env.SPOTIFY_CLIENT_ID,
-    //     clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+    //     spotifyClientId: process.env.SPOTIFY_CLIENT_ID,
+    //     spotifyClientSecret: process.env.SPOTIFY_CLIENT_SECRET,
     //     redirectUri: 'http://localhost:3000/callback',
     // });
-    this.clientId = clientId
-    this.clientSecret = clientSecret
+    this.spotifyClientId = spotifyClientId
+    this.spotifyClientSecret = spotifyClientSecret
     this.stateKey = 'spotify_auth_state'
   }
 
@@ -25,7 +25,7 @@ class SpotifyAuthenticator extends BaseAuthenticator {
   }
 
   isLoggedIn(req) {
-    return req.session.accessToken && new Date(req.session.expiresAt) > new Date()
+    return req.session.spotifyAccessToken && new Date(req.session.expiresAt) > new Date()
   }
 
   /**
@@ -46,7 +46,7 @@ class SpotifyAuthenticator extends BaseAuthenticator {
       'https://accounts.spotify.com/authorize?' +
         querystring.stringify({
           response_type: 'code',
-          client_id: this.clientId,
+          client_id: this.spotifyClientId,
           scope,
           redirect_uri: this.redirectUri,
           state,
@@ -84,19 +84,19 @@ class SpotifyAuthenticator extends BaseAuthenticator {
           grant_type: 'authorization_code',
         },
         headers: {
-          Authorization: 'Basic ' + Buffer.from(clientId + ':' + clientSecret).toString('base64'),
+          Authorization: 'Basic ' + Buffer.from(spotifyClientId + ':' + spotifyClientSecret).toString('base64'),
         },
         json: true,
       }
 
       request.post(authOptions, function (error, response, body) {
         if (!error && response.statusCode === 200) {
-          const accessToken = body.access_token
-          const refreshToken = body.refresh_token
-          const expiresIn = body.expires_in
-          req.session.accessToken = accessToken
-          req.session.refreshToken = refreshToken
-          req.session.expiresAt = new Date().getTime() + expiresIn * 1000
+          const spotifyAccessToken = body.access_token
+          const spotifyRefreshToken = body.refresh_token
+          const spotifyTokenExpiresIn = body.expires_in
+          req.session.spotifyAccessToken = spotifyAccessToken
+          req.session.spotifyRefreshToken = spotifyRefreshToken
+          req.session.expiresAt = new Date().getTime() + spotifyTokenExpiresIn * 1000
 
           res.redirect('/dashboard')
         } else {

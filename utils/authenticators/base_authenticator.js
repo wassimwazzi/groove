@@ -68,7 +68,7 @@ class BaseAuthenticator {
    * @abstract
    */
   callback(req, res) {
-    throw new Error('Method "callback()" must be implemented.')
+    throw new Error(this.getPlatform() + ' does not implement callback()')
   }
 
   /**
