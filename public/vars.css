@@ -1,4 +1,13 @@
 :root {
+  /* Breakpoints */
+  --breakpoint-subscribe: 400px;
+  --breakpoint-case-studies: 672px;
+  --breakpoint-post: 960px;
+  --desktop-mid-width: 1336px;
+  --desktop-width: 1025px;
+  --breakpoint-tablet: 1024px;
+  --breakpoint-mobile: 767px;
+
   /* Colors */
   /* Primary colors */
   --primary-color-dark: rgb(40, 45, 48);
@@ -95,4 +104,36 @@
   --radius-round: 30px;
   --radius-medium: 20px;
   --radius-small: 5px;
+
+  /** Screen width */
+  --grid-margin: 74px;
+  --grid-gutter: 18px;
+  --grid-column: 53px;
+
+  --screen-min-width: 1025px;
+  --content-width: calc(var(--screen-min-width) - (var(--grid-margin) * 2) + ((100vw - var(--screen-min-width)) * 0.5));
+
+  @media (max-width: var(--breakpoint-tablet)) {
+    --grid-margin: 64px;
+    --grid-gutter: 20px;
+    --grid-column: 35px;
+
+    --screen-min-width: 768px;
+
+    --radius-round: 20px;
+    --radius-medium: 16px;
+    --radius-small: 4px;
+  }
+
+  @media (max-width: var(--breakpoint-mobile)) {
+    --grid-margin: 22px;
+    --grid-gutter: 8px;
+    --grid-column: 19px;
+
+    --screen-min-width: 360px;
+
+    --radius-round: 16px;
+    --radius-medium: 14px;
+    --radius-small: 2px;
+  }
 }
