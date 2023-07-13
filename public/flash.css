@@ -2,6 +2,11 @@
   padding: var(--spacing-1) 0;
 }
 
+.FlashList-inset {
+  max-width: var(--content-width);
+  margin: 0 auto;
+}
+
 .Flash--margin-top {
   margin-top: var(--spacing-3);
 }
