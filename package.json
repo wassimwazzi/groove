@@ -1,14 +1,15 @@
 {
-  "name": "spotify-node-app",
+  "name": "groove",
   "version": "0.0.1",
-  "description": "Spotify example node app",
+  "description": "Groove",
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
     "eslint": "eslint --ext js,jsx,ts,tsx .",
-    "eslint-fix": "eslint --ext js,jsx,ts,tsx . --fix",
-    "eslint-staged-fix": "eslint --ext js,jsx,ts,tsx --fix",
-    "format": "prettier . --write",
+    "eslint-fix": "eslint . --ext js,jsx --fix",
+    "eslint-staged-fix": "eslint . --ext js,jsx --fix",
+    "format": "prettier .",
+    "format-fix": "prettier . --write",
     "format-staged": "prettier --write",
     "pre-commit": "lint-staged",
     "prepare": "husky install",
@@ -32,9 +33,12 @@
   "devDependencies": {
     "chai": "^4.3.7",
     "eslint": "^8.44.0",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^16.0.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-promise": "^6.1.1",
     "husky": "^8.0.0",
     "lint-staged": "^13.2.3",
@@ -47,8 +51,8 @@
   },
   "lint-staged": {
     "*.{js,jsx}": [
-      "eslint --fix",
-      "prettier --write"
+      "npm run  eslint-fix",
+      "npm run format-fix"
     ]
   }
 }

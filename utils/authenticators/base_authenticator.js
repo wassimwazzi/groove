@@ -18,12 +18,12 @@ class BaseAuthenticator {
   /**
    * Check if user is logged in
    *
-   * @param {Object} req
+   * @param {Object} _req
    * @returns {boolean} true if user is logged in, false otherwise
    * @memberof BaseAuthenticator
    * @abstract
    */
-  isLoggedIn(req) {
+  isLoggedIn(_req) {
     throw new Error('Method "isLoggedIn()" must be implemented.')
   }
 
@@ -48,28 +48,28 @@ class BaseAuthenticator {
   /**
    * Authenticate user
    *
-   * @param {Object} req
-   * @param {Object} res
+   * @param {Object} _req
+   * @param {Object} _res
    * @returns {Object} response
    * @memberof BaseAuthenticator
    * @abstract
    */
-  authenticate(req, res) {
+  authenticate(_req, _res) {
     throw new Error('Method "authenticate()" must be implemented.')
   }
 
   /**
    * Callback for authentication
    *
-   * @param {Object} req
-   * @param {Object} res
-   * @param {Function} onSuccess
-   * @param {Function} onError
+   * @param {Object} _req
+   * @param {Object} _res
+   * @param {Function} _onSuccess
+   * @param {Function} _onError
    * @returns {Object} response
    * @memberof BaseAuthenticator
    * @abstract
    */
-  callback(req, res, onSuccess, onError) {
+  callback(_req, _res, _onSuccess, _onError) {
     throw new Error(this.getPlatform() + ' does not implement callback()')
   }
 

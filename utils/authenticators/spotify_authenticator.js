@@ -31,12 +31,12 @@ class SpotifyAuthenticator extends BaseAuthenticator {
   /**
    * Authenticate user
    *
-   * @param {Object} req
+   * @param {Object} _req
    * @param {Object} res
    * @returns {Object} response
    * @memberof SpotifyAuthenticator
    */
-  authenticate(req, res) {
+  authenticate(_req, res) {
     const state = BaseAuthenticator.generateRandomString(16)
     res.cookie(this.stateKey, state)
 

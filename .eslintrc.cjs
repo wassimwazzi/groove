@@ -3,12 +3,15 @@ module.exports = {
     browser: true,
     es2021: true,
     mocha: true,
+    node: true,
+    es6: true,
   },
-  extends: 'standard',
+  extends: ['eslint:recommended', 'prettier'],
   overrides: [
     {
       env: {
         node: true,
+        es6: true,
       },
       files: ['.eslintrc.{js,cjs}'],
       parserOptions: {
@@ -20,5 +23,12 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  rules: {},
+  rules: {
+    'prettier/prettier': 'error',
+    'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+  },
+  plugins: ['prettier'],
+  globals: {
+    NodeJS: true,
+  },
 }

@@ -1,7 +1,5 @@
 {
   "all": true,
-  "include": [
-    "test/**.js"
-  ],
+  "include": ["test/**.js"],
   "exclude": []
 }

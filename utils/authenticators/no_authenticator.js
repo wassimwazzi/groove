@@ -6,7 +6,7 @@ class NoAuthenticator extends BaseAuthenticator {
     return 'no_platform'
   }
 
-  isLoggedIn(req) {
+  isLoggedIn(_req) {
     return false
   }
 
@@ -15,7 +15,7 @@ class NoAuthenticator extends BaseAuthenticator {
     res.redirect('/')
   }
 
-  callback(req, res, onSuccess, onError) {
+  callback(req, res, _onSuccess, _onError) {
     req.flash('alert', 'Connect to one of the platforms first')
     res.redirect('/')
   }

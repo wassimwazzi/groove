@@ -17,7 +17,6 @@
   display: flex;
   align-items: center;
   border-radius: var(--radius-small);
-
 }
 
 .FlashMessage-inner .icon {
@@ -33,14 +32,14 @@
 }
 
 .FlashMessage--notice .FlashMessage-inner {
-    border: var(--line-light) solid var(--notice-colour);
-    color: var(--notice-colour);
-  }
+  border: var(--line-light) solid var(--notice-colour);
+  color: var(--notice-colour);
+}
 
 .FlashMessage--alert .FlashMessage-inner {
-    border: var(--line-light) solid var(--alert-colour);
-    color: var(--alert-colour);
-  }
+  border: var(--line-light) solid var(--alert-colour);
+  color: var(--alert-colour);
+}
 
 .Flash--inverted {
   background-color: var(--b1-coral);

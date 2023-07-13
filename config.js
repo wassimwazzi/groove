@@ -1,4 +1,5 @@
 import dotenv from 'dotenv'
+/* eslint-disable */
 
 dotenv.config()
 

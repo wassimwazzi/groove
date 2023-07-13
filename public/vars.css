@@ -34,7 +34,7 @@
   --b5-blue: #247091;
 
   /* Secondary */
-  --c1-grey:#727272;
+  --c1-grey: #727272;
   --c2-black: #0a1c23;
   --c3-blue: #134588;
   --c4-blue: #2166ac;
@@ -81,7 +81,6 @@
   --font-medium: 16px;
   --font-large: 20px;
   --font-xlarge: 48px;
-
 
   /* Font families */
   --font-family-primary: 'Times New Roman', serif;
