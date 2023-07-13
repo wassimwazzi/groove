@@ -1,12 +1,6 @@
 import BaseAuthenticator from '../../../utils/authenticators/base_authenticator.js'
 import { expect } from 'chai'
 
-// test('BaseAuthenticator should throw error when instantiated directly', () => {
-//   expect(() => {
-//     new BaseAuthenticator();
-//   }).toThrow(TypeError);
-// });
-
 describe('BaseAuthenticator', () => {
   describe('constructor', () => {
     it('should throw an error when instantiated directly', () => {
