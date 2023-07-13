@@ -69,9 +69,12 @@
   --spacing-1: 5px;
   --spacing-2: 10px;
   --spacing-3: 20px;
-  --spacing-4: 50px;
-  --spacing-5: 100px;
-  --spacing-6: 200px;
+  --spacing-4: 30px;
+  --spacing-5: 50px;
+  --spacing-6: 80px;
+  --spacing-7: 100px;
+  --spacing-8: 150px;
+  --spacing-9: 200px;
 
   /* Font sizes */
   --font-small: 12px;

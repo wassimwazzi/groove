@@ -1,7 +1,7 @@
 .Page-inset {
   max-width: var(--content-width);
   margin: 0 auto;
-  padding-bottom: var(--spacing-4);
+  padding-bottom: var(--spacing-5);
 }
 
 .Page-title {
@@ -23,5 +23,5 @@
 }
 
 .Page section + section {
-  margin-top: var(--spacing-4);
+  margin-top: var(--spacing-5);
 }

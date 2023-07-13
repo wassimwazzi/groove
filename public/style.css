@@ -33,14 +33,13 @@ h4,
 h5,
 h6 {
   font-family: var(--font-family-primary);
-  /* color: var(--primary-color-light); */
+  margin-bottom: var(--spacing-4);
 }
 
 p,
 span,
 a {
   font-family: var(--font-family-secondary);
-  /* color: var(--primary-color-light); */
 }
 
 ul.footer {
