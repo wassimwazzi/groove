@@ -13,7 +13,7 @@
     "format-staged": "prettier --write",
     "pre-commit": "lint-staged",
     "prepare": "husky install",
-    "test": "nyc mocha test/**/*.spec.js"
+    "test": "nyc mocha --recursive test"
   },
   "type": "module",
   "dependencies": {
