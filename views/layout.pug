@@ -6,6 +6,7 @@ html
     link(rel='stylesheet', href='/vars.css')
     link(rel='stylesheet', href='/nav.css')
     link(rel='stylesheet', href='/image.css')
+    link(rel='stylesheet', href='/flash.css')
     block head
   
   body
@@ -16,5 +17,10 @@ html
           a(class=(currentPage === 'Home' ? 'active' : '') href='/') Home
           a(class=(currentPage === 'About' ? 'active' : '') href='/about') About
           a(class=(currentPage === 'Contact' ? 'active' : '') href='/contact') Contact
+
+      //- Flash message if any
+      //- if flash
+      .flash(class='error')
+        p= 'This is a flash message!'
 
       block content

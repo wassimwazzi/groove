@@ -1,0 +1,11 @@
+.flash {
+  margin: 0 auto;  /* Add this line to center the div horizontally */
+  margin-bottom: 20px;
+  padding: 0 20px;
+  text-align: center;
+  width: fit-content;
+}
+
+.flash.error {
+  border: 1px solid #f02009;
+}
