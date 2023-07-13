@@ -2,6 +2,7 @@ import SpotifyAuthenticator from '../../../utils/authenticators/spotify_authenti
 import { expect } from 'chai'
 import sinon from 'sinon'
 import querystring from 'querystring'
+import nock from 'nock'
 
 describe('SpotifyAuthenticator', () => {
   describe('constructor', () => {
@@ -140,50 +141,45 @@ describe('SpotifyAuthenticator', () => {
       )
     })
 
-    // it('sets the tokens', () => {
-    //   const res = {
-    //     redirect: sinon.spy(),
-    //     clearCookie: sinon.spy(),
-    //   };
+    it('sets the tokens', async () => {
+      const res = {
+        redirect: sinon.spy(),
+        clearCookie: sinon.spy(),
+      }
 
-    //   const authenticator = new SpotifyAuthenticator();
+      const authenticator = new SpotifyAuthenticator()
 
-    //   const req = {
-    //     query: {
-    //       code: 'code',
-    //       state: 'state',
-    //     },
-    //     cookies: {
-    //       [authenticator.stateKey]: 'state',
-    //     },
-    //     session: {},
-    //   };
+      const req = {
+        query: {
+          code: 'code',
+          state: 'state',
+        },
+        cookies: {
+          [authenticator.stateKey]: 'state',
+        },
+        session: {},
+      }
 
-    //   // Stub the request.post method
-    //   const request = {
-    //     post: sinon.stub(),
-    //   };
+      const expectedResponse = {
+        statusCode: 200,
+        body: {
+          access_token: 'accessToken',
+          refresh_token: 'refreshToken',
+          expires_in: 3600,
+        },
+      }
 
-    //   const expectedResponse = {
-    //     statusCode: 200,
-    //     body: {
-    //       access_token: 'accessToken',
-    //       refresh_token: 'refreshToken',
-    //       expires_in: 3600,
-    //     }
-    //   };
+      nock('https://accounts.spotify.com').post('/api/token').reply(200, expectedResponse.body)
 
-    //   request.post.callsArgWith(1, null, expectedResponse, expectedResponse.body);
+      await authenticator.callback(req, res)
 
-    //   authenticator.callback(req, res);
+      sinon.assert.calledWith(res.clearCookie, authenticator.stateKey)
 
-    //   sinon.assert.calledWith(res.clearCookie, authenticator.stateKey);
+      expect(req.session.spotifyAccessToken).to.equal(expectedResponse.body.access_token)
+      expect(req.session.spotifyRefreshToken).to.equal(expectedResponse.body.refresh_token)
+      expect(req.session.spotifyTokenExpiresAt).to.be.a('number')
 
-    //   expect(req.session.spotifyAccessToken).to.equal(expectedResponse.body.access_token);
-    //   expect(req.session.spotifyRefreshToken).to.equal(expectedResponse.body.refresh_token);
-    //   expect(req.session.spotifyTokenExpiresAt).to.be.a('number');
-
-    //   sinon.assert.calledWith(res.redirect, '/dashboard');
-    // });
+      sinon.assert.calledWith(res.redirect, '/dashboard')
+    })
   })
 })

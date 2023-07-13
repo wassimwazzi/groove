@@ -1,6 +1,6 @@
 // import SpotifyWebApi from 'spotify-web-api-node';
 import BaseAuthenticator from './base_authenticator.js'
-import request from 'request'
+import fetch from 'node-fetch'
 import querystring from 'querystring'
 import { spotifyClientId, spotifyClientSecret } from '../../config.js'
 
@@ -62,10 +62,9 @@ class SpotifyAuthenticator extends BaseAuthenticator {
    * @returns {Object} response
    * @memberof SpotifyAuthenticator
    */
-  callback(req, res) {
+  async callback(req, res) {
     const code = req.query.code || null
     const state = req.query.state || null
-    console.log(req.cookies)
     const storedState = req.cookies ? req.cookies[this.stateKey] : null
 
     if (state === null || state !== storedState) {
@@ -86,26 +85,32 @@ class SpotifyAuthenticator extends BaseAuthenticator {
         },
         headers: {
           Authorization: 'Basic ' + Buffer.from(spotifyClientId + ':' + spotifyClientSecret).toString('base64'),
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-        json: true,
       }
 
-      request.post(authOptions, function (error, response, body) {
-        console.log(body)
-        console.log(response.statusCode)
-        if (!error && response.statusCode === 200) {
-          const spotifyAccessToken = body.access_token
-          const spotifyRefreshToken = body.refresh_token
-          const expiresIn = body.expires_in
-          req.session.spotifyAccessToken = spotifyAccessToken
-          req.session.spotifyRefreshToken = spotifyRefreshToken
-          req.session.spotifyTokenExpiresAt = new Date().getTime() + expiresIn * 1000
-
-          res.redirect('/dashboard')
-        } else {
-          res.redirect('/dashboard')
+      try {
+        const response = await fetch(authOptions.url, {
+          method: 'POST',
+          headers: authOptions.headers,
+          body: new URLSearchParams(authOptions.form).toString(),
+        })
+        const body = await response.json()
+        if (!response.ok) {
+          res.redirect('/')
         }
-      })
+        const spotifyAccessToken = body.access_token
+        const spotifyRefreshToken = body.refresh_token
+        const expiresIn = body.expires_in
+        req.session.spotifyAccessToken = spotifyAccessToken
+        req.session.spotifyRefreshToken = spotifyRefreshToken
+        req.session.spotifyTokenExpiresAt = new Date().getTime() + expiresIn * 1000
+
+        res.redirect('/dashboard')
+      } catch (error) {
+        console.log(error)
+        res.redirect('/')
+      }
     }
   }
 }
