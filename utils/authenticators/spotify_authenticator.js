@@ -94,10 +94,8 @@ class SpotifyAuthenticator extends BaseAuthenticator {
         })
         const body = await response.json()
         if (!response.ok) {
-          console.log(body)
           return onError(body.error)
         }
-        console.log('success')
         const spotifyAccessToken = body.access_token
         const spotifyRefreshToken = body.refresh_token
         const expiresIn = body.expires_in

@@ -129,6 +129,39 @@ describe('SpotifyAuthenticator', () => {
       sinon.assert.notCalled(onSuccess)
     })
 
+    it('calls onError when spotify returns an error', async () => {
+      const res = {
+        redirect: sinon.spy(),
+        clearCookie: sinon.spy(),
+      }
+
+      const req = {
+        query: {
+          code: 'code',
+          state: 'state',
+        },
+        cookies: {
+          [spotifyAuthenticator.stateKey]: 'state',
+        },
+      }
+
+      const expectedResponse = {
+        statusCode: 400,
+        body: {
+          error: 'error',
+        },
+      }
+
+      nock('https://accounts.spotify.com').post('/api/token').reply(expectedResponse.statusCode, expectedResponse.body)
+
+      await spotifyAuthenticator.callback(req, res, onSuccess, onError)
+
+      sinon.assert.notCalled(res.redirect)
+      sinon.assert.calledOnce(onError)
+      sinon.assert.calledWith(onError, expectedResponse.body.error)
+      sinon.assert.notCalled(onSuccess)
+    })
+
     it('sets the tokens', async () => {
       const res = {
         redirect: sinon.spy(),
