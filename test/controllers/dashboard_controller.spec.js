@@ -1,6 +1,6 @@
 import sinon from 'sinon'
-import PlatformsManager from '../../../utils/platforms_manager.js'
-import dashboardController from '../../../controllers/dashboard_controller.js'
+import PlatformsManager from '../../utils/platforms_manager.js'
+import dashboardController from '../../controllers/dashboard_controller.js'
 
 describe('authController', () => {
   let req
