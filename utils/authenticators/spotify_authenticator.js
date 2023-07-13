@@ -59,21 +59,18 @@ class SpotifyAuthenticator extends BaseAuthenticator {
    *
    * @param {Object} req
    * @param {Object} res
+   * @param {Function} onSuccess
+   * @param {Function} onError
    * @returns {Object} response
    * @memberof SpotifyAuthenticator
    */
-  async callback(req, res) {
+  async callback(req, res, onSuccess, onError) {
     const code = req.query.code || null
     const state = req.query.state || null
     const storedState = req.cookies ? req.cookies[this.stateKey] : null
 
     if (state === null || state !== storedState) {
-      res.redirect(
-        '/' +
-          querystring.stringify({
-            error: 'state_mismatch',
-          }),
-      )
+      onError('state_mismatch')
     } else {
       res.clearCookie(this.stateKey)
       const authOptions = {
@@ -97,8 +94,10 @@ class SpotifyAuthenticator extends BaseAuthenticator {
         })
         const body = await response.json()
         if (!response.ok) {
-          res.redirect('/')
+          console.log(body)
+          return onError(body.error)
         }
+        console.log('success')
         const spotifyAccessToken = body.access_token
         const spotifyRefreshToken = body.refresh_token
         const expiresIn = body.expires_in
@@ -106,10 +105,10 @@ class SpotifyAuthenticator extends BaseAuthenticator {
         req.session.spotifyRefreshToken = spotifyRefreshToken
         req.session.spotifyTokenExpiresAt = new Date().getTime() + expiresIn * 1000
 
-        res.redirect('/dashboard')
+        onSuccess()
       } catch (error) {
         console.log(error)
-        res.redirect('/')
+        onError(error)
       }
     }
   }

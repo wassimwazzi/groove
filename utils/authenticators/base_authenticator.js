@@ -63,11 +63,13 @@ class BaseAuthenticator {
    *
    * @param {Object} req
    * @param {Object} res
+   * @param {Function} onSuccess
+   * @param {Function} onError
    * @returns {Object} response
    * @memberof BaseAuthenticator
    * @abstract
    */
-  callback(req, res) {
+  callback(req, res, onSuccess, onError) {
     throw new Error(this.getPlatform() + ' does not implement callback()')
   }
 

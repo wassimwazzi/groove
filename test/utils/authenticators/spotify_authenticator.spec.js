@@ -4,24 +4,23 @@ import sinon from 'sinon'
 import querystring from 'querystring'
 import nock from 'nock'
 
+const spotifyAuthenticator = new SpotifyAuthenticator()
+
 describe('SpotifyAuthenticator', () => {
   describe('constructor', () => {
     it('should be callable', () => {
-      const spotifyAuthenticator = new SpotifyAuthenticator()
       expect(spotifyAuthenticator).to.be.an.instanceOf(SpotifyAuthenticator)
     })
   })
 
   describe('getPlatform', () => {
     it('should return the platform', () => {
-      const spotifyAuthenticator = new SpotifyAuthenticator()
       expect(spotifyAuthenticator.getPlatform()).to.equal('spotify')
     })
   })
 
   describe('isLoggedIn', () => {
     it('should return false when user is not logged in', () => {
-      const spotifyAuthenticator = new SpotifyAuthenticator()
       const req = {
         session: {
           accessToken: null,
@@ -32,7 +31,6 @@ describe('SpotifyAuthenticator', () => {
     })
 
     it('should return true when user is logged in', () => {
-      const spotifyAuthenticator = new SpotifyAuthenticator()
       const req = {
         session: {
           spotifyAccessToken: 'accessToken',
@@ -51,14 +49,11 @@ describe('SpotifyAuthenticator', () => {
         redirect: sinon.spy(),
       }
 
-      // Create a new instance of BaseAuthenticator
-      const authenticator = new SpotifyAuthenticator()
-
       // Call the authenticate method
-      authenticator.authenticate({}, res)
+      spotifyAuthenticator.authenticate({}, res)
 
       // Assert that the cookie is set with the correct parameters;
-      sinon.assert.calledWith(res.cookie, authenticator.stateKey, sinon.match.string)
+      sinon.assert.calledWith(res.cookie, spotifyAuthenticator.stateKey, sinon.match.string)
 
       // Assert that the redirect is called with the correct parameters
       sinon.assert.calledWith(
@@ -67,9 +62,9 @@ describe('SpotifyAuthenticator', () => {
           'https://accounts.spotify.com/authorize?' +
             querystring.stringify({
               response_type: 'code',
-              client_id: authenticator.spotifyClientId,
+              client_id: spotifyAuthenticator.spotifyClientId,
               scope: 'user-read-private user-read-email user-library-read',
-              redirect_uri: authenticator.redirectUri,
+              redirect_uri: spotifyAuthenticator.redirectUri,
               state: sinon.match.string,
             }),
         ),
@@ -78,13 +73,20 @@ describe('SpotifyAuthenticator', () => {
   })
 
   describe('callback', () => {
-    it('redirects to home page when state is null', () => {
+    const spotifyAuthenticator = new SpotifyAuthenticator()
+    const onSuccess = sinon.spy()
+    const onError = sinon.spy()
+
+    beforeEach(() => {
+      onSuccess.resetHistory()
+      onError.resetHistory()
+    })
+
+    it('calls onError when state is null', () => {
       // Create a mock response object
       const res = {
         redirect: sinon.spy(),
       }
-
-      const authenticator = new SpotifyAuthenticator()
 
       const req = {
         query: {
@@ -92,30 +94,22 @@ describe('SpotifyAuthenticator', () => {
           state: null,
         },
         cookies: {
-          [authenticator.stateKey]: 'state',
+          [spotifyAuthenticator.stateKey]: 'state',
         },
       }
 
-      authenticator.callback(req, res)
+      spotifyAuthenticator.callback(req, res, onSuccess, onError)
 
-      // Assert that the redirect is called with the correct parameters
-      sinon.assert.calledWith(
-        res.redirect,
-        sinon.match(
-          '/' +
-            querystring.stringify({
-              error: 'state_mismatch',
-            }),
-        ),
-      )
+      sinon.assert.notCalled(res.redirect)
+      sinon.assert.calledOnce(onError)
+      sinon.assert.calledWith(onError, 'state_mismatch')
+      sinon.assert.notCalled(onSuccess)
     })
 
-    it('redirects to home page when state is not equal to stored state', () => {
+    it('calls onError when state is not equal to stored state', () => {
       const res = {
         redirect: sinon.spy(),
       }
-
-      const authenticator = new SpotifyAuthenticator()
 
       const req = {
         query: {
@@ -123,22 +117,16 @@ describe('SpotifyAuthenticator', () => {
           state: 'state',
         },
         cookies: {
-          [authenticator.stateKey]: null,
+          [spotifyAuthenticator.stateKey]: null,
         },
       }
 
-      authenticator.callback(req, res)
+      spotifyAuthenticator.callback(req, res, onSuccess, onError)
 
-      // Assert that the redirect is called with the correct parameters
-      sinon.assert.calledWith(
-        res.redirect,
-        sinon.match(
-          '/' +
-            querystring.stringify({
-              error: 'state_mismatch',
-            }),
-        ),
-      )
+      sinon.assert.notCalled(res.redirect)
+      sinon.assert.calledOnce(onError)
+      sinon.assert.calledWith(onError, 'state_mismatch')
+      sinon.assert.notCalled(onSuccess)
     })
 
     it('sets the tokens', async () => {
@@ -147,15 +135,13 @@ describe('SpotifyAuthenticator', () => {
         clearCookie: sinon.spy(),
       }
 
-      const authenticator = new SpotifyAuthenticator()
-
       const req = {
         query: {
           code: 'code',
           state: 'state',
         },
         cookies: {
-          [authenticator.stateKey]: 'state',
+          [spotifyAuthenticator.stateKey]: 'state',
         },
         session: {},
       }
@@ -171,15 +157,17 @@ describe('SpotifyAuthenticator', () => {
 
       nock('https://accounts.spotify.com').post('/api/token').reply(200, expectedResponse.body)
 
-      await authenticator.callback(req, res)
+      await spotifyAuthenticator.callback(req, res, onSuccess, onError)
 
-      sinon.assert.calledWith(res.clearCookie, authenticator.stateKey)
+      sinon.assert.calledWith(res.clearCookie, spotifyAuthenticator.stateKey)
 
       expect(req.session.spotifyAccessToken).to.equal(expectedResponse.body.access_token)
       expect(req.session.spotifyRefreshToken).to.equal(expectedResponse.body.refresh_token)
       expect(req.session.spotifyTokenExpiresAt).to.be.a('number')
 
-      sinon.assert.calledWith(res.redirect, '/dashboard')
+      sinon.assert.notCalled(res.redirect)
+      sinon.assert.notCalled(onError)
+      sinon.assert.calledOnce(onSuccess)
     })
   })
 })
