@@ -1,4 +1,5 @@
 import SpotifyAuthenticator from './authenticators/spotify_authenticator.js'
+import NoAuthenticator from './authenticators/no_authenticator.js'
 
 /**
  * Class to manage platforms
@@ -17,6 +18,10 @@ class PlatformsManager {
    * @memberof PlatformsManager
    */
   static getAuthenticator(platform) {
+    if (!PlatformsManager.authenticators[platform]) {
+      console.log('No authenticator for platform ' + platform)
+      return new NoAuthenticator()
+    }
     return new PlatformsManager.authenticators[platform]()
   }
 

@@ -1,11 +1,14 @@
-// import { getData } from '../utils/get_data.js'
+import titelize from '../utils/titelize.js'
 import PlatformsManager from '../utils/platforms_manager.js'
 
 export default async (req, res) => {
-  const LoggedInPlatforms = PlatformsManager.getLoggedInPlatforms(req)
-  if (LoggedInPlatforms.length < 1) {
+  const platform = req.query.platform
+  const authenticator = PlatformsManager.getAuthenticator(platform)
+  if (!authenticator.isLoggedIn(req)) {
+    req.flash('alert', 'Connect to one of the platforms first')
     res.redirect('/')
     return
   }
-  res.render('dashboard', { platforms: LoggedInPlatforms })
+
+  res.render('dashboard', { platform: titelize(platform) })
 }

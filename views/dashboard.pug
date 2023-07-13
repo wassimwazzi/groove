@@ -1,9 +1,6 @@
 extends inset_layout.pug
 
 block inset_content
-    h1 Dashboard
-    
     .horizontal-align-centered
-        for platform in platforms
-            .vertical-align
-            img(src='../images/' + platform + '-logo.svg', class='logo-image')
+        h1 Dashboard for
+        img(src='../images/' + platform + '-logo.svg', class='logo-image' style='padding-left: var(--spacing-2)')

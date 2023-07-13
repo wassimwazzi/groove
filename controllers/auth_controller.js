@@ -14,7 +14,7 @@ const callback = function (req, res) {
     res,
     () => {
       req.flash('notice', 'Successfully logged in')
-      res.redirect('/dashboard')
+      res.redirect('/dashboard?platform=' + platform)
     },
     (error) => {
       req.flash('error', error)
