@@ -18,9 +18,12 @@ html
           a(class=(currentPage === 'About' ? 'active' : '') href='/about') About
           a(class=(currentPage === 'Contact' ? 'active' : '') href='/contact') Contact
 
-      //- Flash message if any
-      //- if flash
-      .flash(class='error')
-        p= 'This is a flash message!'
-
+      //- if messages
+      //-   .FlashList
+      //-     for message in Object.keys(messages)
+      //-       .FlashMessage(class="FlashMessage--" + message)
+      //-         .FlashMessage-inner
+      //-           p= messages[message]
+      include partials/_flash.pug
+  
       block content

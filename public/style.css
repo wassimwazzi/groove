@@ -2,6 +2,7 @@ body {
   width: 100%;
   margin: 0;
   background-color: var(--primary-color-dark);
+  color: var(--primary-color-light);
 }
 
 .body-content {
@@ -32,14 +33,14 @@ h4,
 h5,
 h6 {
   font-family: var(--font-family-primary);
-  color: var(--primary-color-light);
+  /* color: var(--primary-color-light); */
 }
 
 p,
 span,
 a {
   font-family: var(--font-family-secondary);
-  color: var(--primary-color-light);
+  /* color: var(--primary-color-light); */
 }
 
 ul.footer {

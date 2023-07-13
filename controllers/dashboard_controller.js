@@ -7,6 +7,5 @@ export default async (req, res) => {
     res.redirect('/')
     return
   }
-
   res.render('dashboard', { platforms: LoggedInPlatforms })
 }

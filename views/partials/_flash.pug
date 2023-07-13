@@ -1,0 +1,6 @@
+if messages
+    .FlashList
+        for message in Object.keys(messages)
+            .FlashMessage(class="FlashMessage--" + message)
+                .FlashMessage-inner
+                    p= messages[message]

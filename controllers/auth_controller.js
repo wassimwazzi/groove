@@ -1,4 +1,3 @@
-import { queryString } from 'express'
 import PlatformManager from '../utils/platforms_manager.js'
 
 const login = function (req, res) {
@@ -14,10 +13,12 @@ const callback = function (req, res) {
     req,
     res,
     () => {
+      req.flash('notice', 'Successfully logged in')
       res.redirect('/dashboard')
     },
     (error) => {
-      res.redirect('/?' + queryString.stringify(error))
+      req.flash('error', error)
+      res.redirect('/')
     },
   )
 }

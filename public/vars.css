@@ -1,47 +1,98 @@
-/* Colors */
-
-/* Primary colors */
 :root {
+  /* Colors */
+  /* Primary colors */
   --primary-color-dark: rgb(40, 45, 48);
   --primary-color-beige: rgb(243, 229, 214);
   --primary-color-brown: rgb(204, 98, 35);
   --primary-color-light: rgb(255, 255, 255);
-}
 
-/* Secondary colors */
-:root {
+  /* Secondary colors */
   --secondary-color-dark: rgb(57, 62, 63);
   --secondary-color-light: rgb(228, 221, 221);
-}
 
-/* Spacing */
-:root {
+  /* Imported colors */
+  /* Neutral */
+  --a1-neutral: #393939;
+  --a2-neutral: #929292;
+  --a3-neutral: #ebebeb;
+  --a4-neutral: #ffffff;
+
+  /* Primary */
+  --b1-coral: #f26865;
+  --b2-dark-green: #00535b;
+  --b3-green: #008375;
+  --b4-yellow: #f9a021;
+  --b5-blue: #247091;
+
+  /* Secondary */
+  --c1-grey:#727272;
+  --c2-black: #0a1c23;
+  --c3-blue: #134588;
+  --c4-blue: #2166ac;
+  --c5-blue: #4393c3;
+  --c6-blue: #92c5de;
+  --c7-blue: #d1efff;
+  --c8-green: #326c10;
+  --c9-green: #4d9221;
+  --c10-green: #7fbc41;
+  --c11-green: #afea67;
+  --c12-green: #d9f0d3;
+  --c13-red: #c2182b;
+  --c14-orange: #f45d42;
+  --c15-orange: #fea146;
+  --c16-yellow: #ffcd46;
+
+  /* Semantic */
+  --d1-finalized-green: #0f7a5c;
+  --d2-finalized-background: #d0f5eb;
+  --e1-returned-red: #db1e2d;
+  --e2-returned-background: #f8d2d5;
+  --f1-in-progress-blue: #4451e8;
+  --f2-in-progress-background: #dadcfa;
+  --g1-new-yellow: #dbac1e;
+  --g2-new-background: #f8eed1;
+
+  /* Additional */
+  --h1--hover-yellow: #ffc471;
+  --h2--hover-blue: #3a7e9c;
+
+  /* Spacing */
   --spacing-1: 5px;
   --spacing-2: 10px;
   --spacing-3: 20px;
   --spacing-4: 50px;
   --spacing-5: 100px;
   --spacing-6: 200px;
-}
 
-/* Font sizes */
-:root {
+  /* Font sizes */
   --font-small: 12px;
   --font-medium: 16px;
   --font-large: 20px;
   --font-xlarge: 48px;
-}
 
-/* Font families */
-:root {
+
+  /* Font families */
   --font-family-primary: 'Times New Roman', serif;
   --font-family-secondary: 'Helevectica', sans-serif;
-}
 
-/* Font weights */
-:root {
+  /* Font weights */
   --font-weight-light: 300;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-bold: 700;
+
+  /* Line heights */
+  --line-light: 1px;
+  --line-medium: 2px;
+  --line-heavy: 3px;
+
+  /* Flash messages */
+  --alert-colour: var(--error-colour);
+  --notice-colour: var(--b3-green);
+  --error-colour: var(--b1-coral);
+
+  /* Border radius */
+  --radius-round: 30px;
+  --radius-medium: 20px;
+  --radius-small: 5px;
 }

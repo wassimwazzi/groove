@@ -4,6 +4,8 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import authRouter from './routers/auth_router.js'
 import dashboardRouter from './routers/dashboard_router.js'
+import flashMiddleware from './middleware/flash_middleware.js'
+import flash from 'connect-flash'
 
 export const app = express()
 
@@ -17,9 +19,12 @@ app
     session({
       secret: 'your-secret-key', // Replace with a strong secret key
       resave: false,
-      saveUninitialized: false,
+      saveUninitialized: true,
+      cookie: { secure: false }, // set secure to true if your using HTTPS
     }),
   )
+  .use(flash())
+  .use(flashMiddleware)
   .use('/images', express.static('images'))
   .use(authRouter)
   .use(dashboardRouter)

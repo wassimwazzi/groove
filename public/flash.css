@@ -1,11 +1,47 @@
-.flash {
-  margin: 0 auto;  /* Add this line to center the div horizontally */
-  margin-bottom: 20px;
-  padding: 0 20px;
-  text-align: center;
-  width: fit-content;
+.FlashList {
+  padding: var(--spacing-1) 0;
 }
 
-.flash.error {
-  border: 1px solid #f02009;
+.Flash--margin-top {
+  margin-top: var(--spacing-3);
+}
+
+.FlashMessage-inner {
+  margin-top: 1px;
+  padding: var(--spacing-2);
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-small);
+
+}
+
+.FlashMessage-inner .icon {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
+  margin-right: 6px;
+}
+
+.FlashMessage + .FlashMessage {
+  margin-top: var(--spacing-1);
+}
+
+.FlashMessage--notice .FlashMessage-inner {
+    border: var(--line-light) solid var(--notice-colour);
+    color: var(--notice-colour);
+  }
+
+.FlashMessage--alert .FlashMessage-inner {
+    border: var(--line-light) solid var(--alert-colour);
+    color: var(--alert-colour);
+  }
+
+.Flash--inverted {
+  background-color: var(--b1-coral);
+}
+
+.Flash--inverted .FlashMessage-inner {
+  border: var(--line-light) solid var(--a4-neutral);
+  color: var(--a4-neutral);
 }
