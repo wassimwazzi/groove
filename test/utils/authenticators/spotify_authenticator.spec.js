@@ -76,6 +76,22 @@ describe('SpotifyAuthenticator', () => {
     const spotifyAuthenticator = new SpotifyAuthenticator()
     const onSuccess = sinon.spy()
     const onError = sinon.spy()
+    const nullStateReq = {
+      query: {
+        code: 'code',
+        state: 'state',
+      },
+      cookies: {
+        [spotifyAuthenticator.stateKey]: null,
+      },
+      session: {},
+    }
+    const withStateReq = {
+      ...nullStateReq,
+      cookies: {
+        [spotifyAuthenticator.stateKey]: 'state',
+      },
+    }
 
     beforeEach(() => {
       onSuccess.resetHistory()
@@ -88,17 +104,7 @@ describe('SpotifyAuthenticator', () => {
         redirect: sinon.spy(),
       }
 
-      const req = {
-        query: {
-          code: 'code',
-          state: null,
-        },
-        cookies: {
-          [spotifyAuthenticator.stateKey]: 'state',
-        },
-      }
-
-      spotifyAuthenticator.callback(req, res, onSuccess, onError)
+      spotifyAuthenticator.callback(nullStateReq, res, onSuccess, onError)
 
       sinon.assert.notCalled(res.redirect)
       sinon.assert.calledOnce(onError)
@@ -111,17 +117,7 @@ describe('SpotifyAuthenticator', () => {
         redirect: sinon.spy(),
       }
 
-      const req = {
-        query: {
-          code: 'code',
-          state: 'state',
-        },
-        cookies: {
-          [spotifyAuthenticator.stateKey]: null,
-        },
-      }
-
-      spotifyAuthenticator.callback(req, res, onSuccess, onError)
+      spotifyAuthenticator.callback(nullStateReq, res, onSuccess, onError)
 
       sinon.assert.notCalled(res.redirect)
       sinon.assert.calledOnce(onError)
@@ -135,16 +131,6 @@ describe('SpotifyAuthenticator', () => {
         clearCookie: sinon.spy(),
       }
 
-      const req = {
-        query: {
-          code: 'code',
-          state: 'state',
-        },
-        cookies: {
-          [spotifyAuthenticator.stateKey]: 'state',
-        },
-      }
-
       const expectedResponse = {
         statusCode: 400,
         body: {
@@ -154,7 +140,7 @@ describe('SpotifyAuthenticator', () => {
 
       nock('https://accounts.spotify.com').post('/api/token').reply(expectedResponse.statusCode, expectedResponse.body)
 
-      await spotifyAuthenticator.callback(req, res, onSuccess, onError)
+      await spotifyAuthenticator.callback(withStateReq, res, onSuccess, onError)
 
       sinon.assert.notCalled(res.redirect)
       sinon.assert.calledOnce(onError)
@@ -168,17 +154,6 @@ describe('SpotifyAuthenticator', () => {
         clearCookie: sinon.spy(),
       }
 
-      const req = {
-        query: {
-          code: 'code',
-          state: 'state',
-        },
-        cookies: {
-          [spotifyAuthenticator.stateKey]: 'state',
-        },
-        session: {},
-      }
-
       const expectedResponse = {
         statusCode: 200,
         body: {
@@ -190,13 +165,13 @@ describe('SpotifyAuthenticator', () => {
 
       nock('https://accounts.spotify.com').post('/api/token').reply(200, expectedResponse.body)
 
-      await spotifyAuthenticator.callback(req, res, onSuccess, onError)
+      await spotifyAuthenticator.callback(withStateReq, res, onSuccess, onError)
 
       sinon.assert.calledWith(res.clearCookie, spotifyAuthenticator.stateKey)
 
-      expect(req.session.spotifyAccessToken).to.equal(expectedResponse.body.access_token)
-      expect(req.session.spotifyRefreshToken).to.equal(expectedResponse.body.refresh_token)
-      expect(req.session.spotifyTokenExpiresAt).to.be.a('number')
+      expect(withStateReq.session.spotifyAccessToken).to.equal(expectedResponse.body.access_token)
+      expect(withStateReq.session.spotifyRefreshToken).to.equal(expectedResponse.body.refresh_token)
+      expect(withStateReq.session.spotifyTokenExpiresAt).to.be.a('number')
 
       sinon.assert.notCalled(res.redirect)
       sinon.assert.notCalled(onError)
