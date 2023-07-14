@@ -20,7 +20,7 @@ app
       secret: 'your-secret-key', // Replace with a strong secret key
       resave: false,
       saveUninitialized: true,
-      cookie: { secure: false }, // set secure to true if your using HTTPS
+      cookie: { secure: false }, // set secure to true if using HTTPS
     }),
   )
   .use(flash())
