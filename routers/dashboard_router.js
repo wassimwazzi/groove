@@ -1,9 +1,10 @@
 import { Router } from 'express'
 import dashboardController from '../controllers/dashboard_controller.js'
+import requireLogin from '../middleware/require_login.js'
 
 const router = Router()
 
-router.get('/dashboard', dashboardController)
+router.get('/dashboard', requireLogin, dashboardController)
 router.get('/', function (req, res) {
   res.render('index', { currentPage: 'Home' })
 })
