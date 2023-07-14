@@ -6,6 +6,10 @@
   width: 100%;
 }
 
+.playlists-container.collapsed {
+  width: 40%;
+}
+
 .playlists-container > ul {
   list-style-type: none ;
 }
@@ -19,6 +23,10 @@
   width: 100%;
   border: var(--line-light) solid var(--secondary-color-dark);
   border-radius: var(--radius-round);
+}
+
+.playlist-item.active {
+  background-color: var(--secondary-color-light);
 }
 
 .playlist-image {

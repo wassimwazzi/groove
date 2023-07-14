@@ -32,9 +32,26 @@ block inset_content
 
     script.
         function togglePlaylist(playlist) {
-            playlist.classList.toggle('collapsed');
-            // display playlist songs by remove display: none
             const songs = document.querySelector('.playlist-songs');
-            console.log(songs);
-            songs.style.display = songs.style.display === 'none' ? 'block' : 'none';
+            // if playlist is active, then uncollapse the container
+            if (playlist.classList.contains('active')) {
+                document.querySelector('.playlists-container').classList.toggle('collapsed');
+                playlist.classList.toggle('active')
+                songs.style.display = 'none';
+            } else {
+                const activePlaylist = document.querySelector('.playlist-item.active');
+                // TODO new songs = ...
+                playlist.classList.toggle('active');
+                /** 
+                 * if an activePlaylist exists, then we are selecting a new playlist,
+                 * so don't collapse the container, and untoggle the active playlist
+                 */
+                if (activePlaylist) {
+                    activePlaylist.classList.toggle('active');
+                } else {
+                    document.querySelector('.playlists-container').classList.toggle('collapsed');
+                    // TODO: code to fetch songs for playlist
+                    songs.style.display = 'block';
+                }
+            }
         }
