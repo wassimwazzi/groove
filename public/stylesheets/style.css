@@ -3,6 +3,14 @@ body {
   margin: 0;
   background-color: var(--primary-color-dark);
   color: var(--primary-color-light);
+  /* Hide for now */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
 }
 
 .body-content {
@@ -40,6 +48,11 @@ p,
 span,
 a {
   font-family: var(--font-family-secondary);
+}
+
+a {
+  color: var(--primary-color-light);
+  text-decoration: none;
 }
 
 ul.footer {

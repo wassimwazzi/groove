@@ -3,7 +3,7 @@
   align-items: stretch;
   justify-content: space-between;
   width: 100%;
-  height: 100%;
+  height: 100%; /* Remove to make songs list bigger */
 }
 
 .playlists-container {
@@ -78,6 +78,7 @@
   margin: var(--spacing-2);
   transition: flex-basis 0.3s ease-in-out;
   overflow-y: scroll;
+  /* height: fit-content;  add to make songs list bigger */
 }
 
 .playlist-songs.Spotify {
@@ -105,13 +106,13 @@
   border-radius: var(--radius-medium);
 }
 
-.songs {
+.song-list {
   list-style-type: none;
   padding: 0;
 }
 
-.song-item {
-  margin-bottom: 10px;
+.song-list-item {
+  margin-bottom: var(--spacing-2)
 }
 
 .border-column {

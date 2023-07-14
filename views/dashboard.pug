@@ -23,13 +23,7 @@ block inset_content
                             p(class='playlist-name') #{playlist.name}
 
         div.playlist-songs(style="display: none;" class=platform)
-            ul.songs
-                li.song-item
-                    | Song 1
-                li.song-item
-                    | Song 2
-                li.song-item
-                    | Song 3
+            ul.song-list
 
     script.
         function togglePlaylist(playlist) {

@@ -8,8 +8,8 @@ function fetchPlaylistSongs(playlistId, platform) {
       songsList.innerHTML = ''
       tracks.forEach(({ track }) => {
         songsList.innerHTML += `
-          <li>
-            <a href="/songs/${track.id}">${track.name}</a>
+          <li class="song-list-item">
+            <a href="${track.preview_url}">${track.name}</a>
           </li>
         `
       })
