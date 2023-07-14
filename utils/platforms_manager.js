@@ -1,5 +1,6 @@
 import SpotifyAuthenticator from './authenticators/spotify_authenticator.js'
 import NoAuthenticator from './authenticators/no_authenticator.js'
+import SpotifyCommunicator from './communicators/spotify_communicator.js'
 
 /**
  * Class to manage platforms
@@ -8,6 +9,10 @@ import NoAuthenticator from './authenticators/no_authenticator.js'
 class PlatformsManager {
   static authenticators = {
     spotify: SpotifyAuthenticator,
+  }
+
+  static communicators = {
+    spotify: SpotifyCommunicator,
   }
 
   /**
@@ -37,6 +42,21 @@ class PlatformsManager {
       const authenticator = PlatformsManager.getAuthenticator(platform)
       return authenticator.isLoggedIn(req)
     })
+  }
+
+  /**
+   * get communicator for platform.
+   *
+   * @param {string} platform
+   * @returns {T extends BaseCommunicator} communicator
+   * @memberof PlatformsManager
+   */
+  static getCommunicator(platform) {
+    if (!PlatformsManager.communicators[platform]) {
+      console.log('No communicator for platform ' + platform)
+      return null
+    }
+    return new PlatformsManager.communicators[platform]()
   }
 }
 
