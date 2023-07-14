@@ -42,7 +42,7 @@ describe('SpotifyCommunicator', () => {
       const getPlaylistTracksStub = sinon.stub(SpotifyWebApi.prototype, 'getPlaylistTracks').returns({
         body: { items: ['track1', 'track2'] },
       })
-      const tracks = await spotifyCommunicator.getTracks(req, 'playlistId')
+      const tracks = await spotifyCommunicator.getPlaylistTracks(req, 'playlistId')
       sinon.assert.calledOnce(getPlaylistTracksStub)
       sinon.assert.calledWith(getPlaylistTracksStub, 'playlistId')
       expect(tracks).to.deep.equal(['track1', 'track2'])

@@ -36,10 +36,10 @@ class BaseCommunicator {
    * @abstract
    * @memberof BaseCommunicator
    * @instance
-   * @function getTracks
+   * @function getPlaylistTracks
    * @throws {TypeError} - If the method is not implemented.
    */
-  getTracks(_req, _playlistId) {
+  getPlaylistTracks(_req, _playlistId) {
     throw new TypeError('getTracks method must be implemented.')
   }
 

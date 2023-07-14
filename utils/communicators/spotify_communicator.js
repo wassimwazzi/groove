@@ -39,9 +39,9 @@ export default class SpotifyCommunicator extends BaseCommunicator {
    * @returns {Object} The tracks of the playlist.
    * @memberof SpotifyCommunicator
    * @instance
-   * @function getTracks
+   * @function getPlaylistTracks
    */
-  async getTracks(req, playlistId) {
+  async getPlaylistTracks(req, playlistId) {
     this.spotifyApi.setAccessToken(req.session.spotifyAccessToken)
     const data = await this.spotifyApi.getPlaylistTracks(playlistId)
     return data.body.items

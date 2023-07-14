@@ -5,6 +5,5 @@ export default async (req, res) => {
   const platform = req.query.platform
   const communicator = PlatformsManager.getCommunicator(platform)
   const playlists = await communicator.getPlaylists(req)
-  console.log(playlists)
   res.render('dashboard', { platform: titelize(platform), playlists: playlists })
 }
