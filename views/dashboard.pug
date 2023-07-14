@@ -6,6 +6,10 @@ append head
 
 block inset_content
     div(data-platform=platform, id='platform')
+    div(id='refresh-page' style='display: none;')
+        - var messages = {alert: 'Ops! Looks like you have been logged out. Refresh the page to continue.'}
+        include partials/_flash.pug
+
     .horizontal-align-centered
         h1 Dashboard for
         img(src='../images/' + platform + '-logo.svg', class='dashboard-logo' style='padding-left: var(--spacing-2)')
@@ -29,26 +33,28 @@ block inset_content
         function togglePlaylist(playlist) {
             const songs = document.querySelector('.playlist-songs');
             const platform = document.querySelector('#platform').dataset.platform;
-            // if playlist is active, then uncollapse the container
-            if (playlist.classList.contains('active')) {
-                document.querySelector('.playlists-container').classList.toggle('collapsed');
-                playlist.classList.toggle('active')
-                songs.style.display = 'none';
-            } else {
-                const activePlaylist = document.querySelector('.playlist-item.active');
-                // TODO new songs = ...
-                fetchPlaylistSongs(playlist.id, platform);
-                playlist.classList.toggle('active');
-                /** 
-                 * if an activePlaylist exists, then we are selecting a new playlist,
-                 * so don't collapse the container, and untoggle the active playlist
-                 */
-                if (activePlaylist) {
-                    activePlaylist.classList.toggle('active');
-                } else {
+            requestAnimationFrame(async () => {
+                // if playlist is active, then uncollapse the container
+                if (playlist.classList.contains('active')) {
                     document.querySelector('.playlists-container').classList.toggle('collapsed');
-                    // TODO: code to fetch songs for playlist
-                    songs.style.display = 'block';
+                    playlist.classList.toggle('active')
+                    songs.style.display = 'none';
+                } else {
+                    const activePlaylist = document.querySelector('.playlist-item.active');
+                    // TODO new songs = ...
+                    await fetchPlaylistSongs(playlist.id, platform);
+                    playlist.classList.toggle('active');
+                    /** 
+                    * if an activePlaylist exists, then we are selecting a new playlist,
+                    * so don't collapse the container, and untoggle the active playlist
+                    */
+                    if (activePlaylist) {
+                        activePlaylist.classList.toggle('active');
+                    } else {
+                        document.querySelector('.playlists-container').classList.toggle('collapsed');
+                        // TODO: code to fetch songs for playlist
+                        songs.style.display = 'block';
+                    }
                 }
-            }
+            })
         }
