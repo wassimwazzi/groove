@@ -13,7 +13,9 @@ block inset_content
     .horizontal-align-centered
         h1 Dashboard for
         img(src='../images/' + platform + '-logo.svg', class='dashboard-logo' style='padding-left: var(--spacing-2)')
-  
+    
+    h2 Your Playlists
+
     .playlist-and-songs-container
         div.playlists-container
             ul.playlists
@@ -41,8 +43,9 @@ block inset_content
                     songs.style.display = 'none';
                 } else {
                     const activePlaylist = document.querySelector('.playlist-item.active');
-                    // TODO new songs = ...
                     await fetchPlaylistSongs(playlist.id, platform);
+                    await sleep(100);
+
                     playlist.classList.toggle('active');
                     /** 
                     * if an activePlaylist exists, then we are selecting a new playlist,

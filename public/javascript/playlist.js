@@ -1,5 +1,15 @@
+// cache to track which playlists have been loaded to avoid unnecessary requests
+const loadedPlaylists = {}
+
 // eslint-disable-next-line no-unused-vars
 function fetchPlaylistSongs(playlistId, platform) {
+  if (loadedPlaylists[playlistId]) {
+    const playlistSongs = document.querySelector('.playlist-songs')
+    const songsList = playlistSongs.querySelector('ul')
+    songsList.innerHTML = loadedPlaylists[playlistId]
+    return
+  }
+
   fetch(`/api/playlists/${playlistId}/tracks?platform=${platform}`)
     .then((response) => {
       if (!response.ok) {
@@ -27,5 +37,6 @@ function fetchPlaylistSongs(playlistId, platform) {
           </a>
         `
       })
+      loadedPlaylists[playlistId] = songsList.innerHTML
     })
 }
