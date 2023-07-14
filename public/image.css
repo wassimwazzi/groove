@@ -26,6 +26,11 @@
   height: auto;
 }
 
+.dashboard-logo {
+  width: 200px;
+  height: auto;
+}
+
 .logo-link {
   margin: var(--spacing-3);
   text-decoration: none;
