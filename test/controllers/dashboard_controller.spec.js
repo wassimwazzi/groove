@@ -35,7 +35,7 @@ describe('dashboardController', () => {
     await dashboardController(req, res)
 
     sinon.assert.calledOnce(res.render)
-    sinon.assert.calledWithMatch(res.render, 'dashboard', { platform: 'Spotify' })
+    sinon.assert.calledWithMatch(res.render, 'dashboard', { platform: 'spotify' })
     sinon.assert.notCalled(res.redirect)
     sinon.assert.notCalled(req.flash)
   })
@@ -47,6 +47,6 @@ describe('dashboardController', () => {
 
     sinon.assert.calledOnce(getCommunicatorStub)
     sinon.assert.calledOnce(res.render)
-    sinon.assert.calledWith(res.render, 'dashboard', { platform: 'Spotify', playlists: [] })
+    sinon.assert.calledWith(res.render, 'dashboard', { platform: 'spotify', playlists: [] })
   })
 })

@@ -19,6 +19,13 @@
   --secondary-color-dark: rgb(57, 62, 63);
   --secondary-color-light: rgb(228, 221, 221);
 
+  /* Platform Colors */
+  --spotify-color: rgb(29, 185, 84);
+  --apple-music-color: rgb(252, 60, 68);
+  --youtube-music-color: rgb(255, 0, 0);
+  --deezer-color: rgb(0, 185, 255);
+  --soundcloud-color: rgb(242, 111, 35);
+
   /* Imported colors */
   /* Neutral */
   --a1-neutral: #393939;

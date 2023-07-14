@@ -1,15 +1,17 @@
-// function fetchPlaylistSongs(playlistId) {
-//   fetch(`/api/playlists/${playlistId}/songs`)
-//     .then((response) => response.json())
-//     .then((songs) => {
-//       const playlistSongs = document.querySelector('.playlist-songs')
-//       playlistSongs.innerHTML = ''
-//       songs.forEach((song) => {
-//         playlistSongs.innerHTML += `
-//           <li>
-//             <a href="/songs/${song.id}">${song.title}</a>
-//           </li>
-//         `
-//       })
-//     })
-// }
+// eslint-disable-next-line no-unused-vars
+function fetchPlaylistSongs(playlistId, platform) {
+  fetch(`/api/playlists/${playlistId}/tracks?platform=${platform}`)
+    .then((response) => response.json())
+    .then((tracks) => {
+      const playlistSongs = document.querySelector('.playlist-songs')
+      const songsList = playlistSongs.querySelector('ul')
+      songsList.innerHTML = ''
+      tracks.forEach(({ track }) => {
+        songsList.innerHTML += `
+          <li>
+            <a href="/songs/${track.id}">${track.name}</a>
+          </li>
+        `
+      })
+    })
+}

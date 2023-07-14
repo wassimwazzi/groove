@@ -5,22 +5,24 @@ append head
     script(src='./javascript/playlist.js')
 
 block inset_content
+    div(data-platform=platform, id='platform')
     .horizontal-align-centered
         h1 Dashboard for
         img(src='../images/' + platform + '-logo.svg', class='dashboard-logo' style='padding-left: var(--spacing-2)')
   
-    div.playlists-container
-        ul.playlists
-            each playlist in playlists
-                li.playlist-item(onclick="togglePlaylist(this)" id=playlist.id)
-                    .horizontal-align-left
-                        if playlist.images.length > 0
-                            img(src=playlist.images[0].url, class='playlist-image')
-                        else
-                            img(src="../images/playlist-placeholder-" + platform + ".jpg", class="playlist-image")
-                        p(class='playlist-name') #{playlist.name}
+    .playlist-and-songs-container
+        div.playlists-container
+            ul.playlists
+                each playlist in playlists
+                    li.playlist-item(onclick="togglePlaylist(this)" id=playlist.id class=platform)
+                        .horizontal-align-left
+                            if playlist.images.length > 0
+                                img(src=playlist.images[0].url, class='playlist-image')
+                            else
+                                img(src="../images/playlist-placeholder-" + platform + ".jpg", class="playlist-image")
+                            p(class='playlist-name') #{playlist.name}
 
-        div.playlist-songs(style="display: none;")
+        div.playlist-songs(style="display: none;" class=platform)
             ul.songs
                 li.song-item
                     | Song 1
@@ -28,11 +30,11 @@ block inset_content
                     | Song 2
                 li.song-item
                     | Song 3
-    div.border-column
 
     script.
         function togglePlaylist(playlist) {
             const songs = document.querySelector('.playlist-songs');
+            const platform = document.querySelector('#platform').dataset.platform;
             // if playlist is active, then uncollapse the container
             if (playlist.classList.contains('active')) {
                 document.querySelector('.playlists-container').classList.toggle('collapsed');
@@ -41,6 +43,7 @@ block inset_content
             } else {
                 const activePlaylist = document.querySelector('.playlist-item.active');
                 // TODO new songs = ...
+                fetchPlaylistSongs(playlist.id, platform);
                 playlist.classList.toggle('active');
                 /** 
                  * if an activePlaylist exists, then we are selecting a new playlist,
