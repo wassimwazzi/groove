@@ -44,7 +44,6 @@ block inset_content
                 } else {
                     const activePlaylist = document.querySelector('.playlist-item.active');
                     await fetchPlaylistSongs(playlist.id, platform);
-                    await sleep(100);
 
                     playlist.classList.toggle('active');
                     /** 
