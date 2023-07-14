@@ -13,6 +13,7 @@
   justify-content: left;
   width: 100%;
   transition: width 1s ease;
+  overflow-y: scroll;
 }
 
 .playlists-container.collapsed {
@@ -74,7 +75,7 @@
 
 .playlist-songs {
   flex: 1;
-  padding: var(--spacing-6);
+  padding: var(--spacing-5) var(--spacing-6);
   margin: var(--spacing-2);
   transition: flex-basis 0.3s ease-in-out;
   overflow-y: scroll;
@@ -109,10 +110,20 @@
 .song-list {
   list-style-type: none;
   padding: 0;
+  font-size: var(--font-large);
 }
 
 .song-list-item {
-  margin-bottom: var(--spacing-2)
+  margin-bottom: var(--spacing-4);
+  display: flex;
+  align-items: center;
+}
+
+.song-list-item > img {
+  width: 15%;
+  object-fit: cover;
+  border-radius: var(--radius-round);
+  margin-right: var(--spacing-3);
 }
 
 .border-column {

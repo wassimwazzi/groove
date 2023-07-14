@@ -7,10 +7,12 @@ function fetchPlaylistSongs(playlistId, platform) {
       const songsList = playlistSongs.querySelector('ul')
       songsList.innerHTML = ''
       tracks.forEach(({ track }) => {
+        const image = track.album && track.album.images.length > 0 ? track.album.images[0].url : ''
         songsList.innerHTML += `
-          <li class="song-list-item">
-            <a href="${track.preview_url}">${track.name}</a>
-          </li>
+          <a href="${track.preview_url}" class="song-list-item">
+            ${image ? `<img src="${image}" alt="Album Cover">` : ''}
+            <span>${track.name}</span>
+          </a>
         `
       })
     })
