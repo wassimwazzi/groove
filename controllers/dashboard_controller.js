@@ -1,5 +1,6 @@
 import titelize from '../utils/titelize.js'
 import PlatformsManager from '../utils/platforms_manager.js'
+// import SpotifyCommunicator from '../utils/communicators/spotify_communicator.js'
 
 export default async (req, res) => {
   const platform = req.query.platform
@@ -9,6 +10,8 @@ export default async (req, res) => {
     res.redirect('/')
     return
   }
-
+  // const communicator = new SpotifyCommunicator()
+  // const playlists = await communicator.getPlaylists(req)
+  // console.log(playlists)
   res.render('dashboard', { platform: titelize(platform) })
 }

@@ -1,4 +1,3 @@
-// import SpotifyWebApi from 'spotify-web-api-node';
 import BaseAuthenticator from './base_authenticator.js'
 import fetch from 'node-fetch'
 import querystring from 'querystring'
@@ -10,14 +9,31 @@ import { spotifyClientId, spotifyClientSecret } from '../../config.js'
 class SpotifyAuthenticator extends BaseAuthenticator {
   constructor() {
     super()
-    // this._authenticator = new SpotifyWebApi({
-    //     spotifyClientId: process.env.SPOTIFY_CLIENT_ID,
-    //     spotifyClientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-    //     redirectUri: 'http://localhost:3000/callback',
-    // });
     this.spotifyClientId = spotifyClientId
     this.spotifyClientSecret = spotifyClientSecret
     this.stateKey = 'spotify_auth_state'
+    this.requiredScopes = [
+      // Spotify Connect
+      'user-read-playback-state',
+      'user-modify-playback-state',
+      'user-read-currently-playing',
+      // Playback
+      'streaming',
+      'app-remote-control',
+      // Playlists
+      'playlist-read-private',
+      'playlist-read-collaborative',
+      'playlist-modify-public',
+      'playlist-modify-private',
+      // Follow
+      'user-follow-modify',
+      'user-follow-read',
+      // Users
+      'user-read-private',
+      'user-read-email',
+      // Library
+      'user-library-read',
+    ]
   }
 
   getPlatform() {
@@ -41,7 +57,7 @@ class SpotifyAuthenticator extends BaseAuthenticator {
     res.cookie(this.stateKey, state)
 
     // request authorization
-    const scope = 'user-read-private user-read-email user-library-read'
+    const scope = this.requiredScopes.join(' ')
     res.redirect(
       'https://accounts.spotify.com/authorize?' +
         querystring.stringify({

@@ -63,7 +63,7 @@ describe('SpotifyAuthenticator', () => {
             querystring.stringify({
               response_type: 'code',
               client_id: spotifyAuthenticator.spotifyClientId,
-              scope: 'user-read-private user-read-email user-library-read',
+              scope: spotifyAuthenticator.requiredScopes.join(' '),
               redirect_uri: spotifyAuthenticator.redirectUri,
               state: sinon.match.string,
             }),
