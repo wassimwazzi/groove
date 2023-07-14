@@ -4,6 +4,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import authRouter from './routers/auth_router.js'
 import dashboardRouter from './routers/dashboard_router.js'
+import playlistsRouter from './routers/playlists_router.js'
 import flashMiddleware from './middleware/flash_middleware.js'
 import flash from 'connect-flash'
 
@@ -28,6 +29,7 @@ app
   .use('/images', express.static('images'))
   .use(authRouter)
   .use(dashboardRouter)
+  .use(playlistsRouter)
 
 const listener = app.listen(3000, function () {
   console.log('Your app is listening on http://localhost:' + listener.address().port)
