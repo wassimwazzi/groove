@@ -1,7 +1,8 @@
 extends inset_layout.pug
 
 append head 
-    link(rel='stylesheet', href='./playlist.css')
+    link(rel='stylesheet', href='./stylesheets/playlist.css')
+    script(src='./javascript/playlist.js')
 
 block inset_content
     .horizontal-align-centered
@@ -19,10 +20,21 @@ block inset_content
                             img(src="../images/playlist-placeholder-" + platform + ".jpg", class="playlist-image")
                         p(class='playlist-name') #{playlist.name}
 
-        //- div.playlist-songs
-        //- ul.songs
-        //-     each song in selectedPlaylist.songs
-        //-     li.song-item
-        //-         | #{song.name}
+        div.playlist-songs(style="display: none;")
+            ul.songs
+                li.song-item
+                    | Song 1
+                li.song-item
+                    | Song 2
+                li.song-item
+                    | Song 3
     div.border-column
 
+    script.
+        function togglePlaylist(playlist) {
+            playlist.classList.toggle('collapsed');
+            // display playlist songs by remove display: none
+            const songs = document.querySelector('.playlist-songs');
+            console.log(songs);
+            songs.style.display = songs.style.display === 'none' ? 'block' : 'none';
+        }
