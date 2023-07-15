@@ -3,9 +3,10 @@ const loadedPlaylists = {}
 
 // eslint-disable-next-line no-unused-vars
 function fetchPlaylistSongs(playlistId, platform) {
+  const playlistSongs = document.querySelector('.playlist-songs')
+  const songsList = playlistSongs.querySelector('ul')
+  songsList.innerHTML = `<div class="loader ${platform}"></div>`
   if (loadedPlaylists[playlistId]) {
-    const playlistSongs = document.querySelector('.playlist-songs')
-    const songsList = playlistSongs.querySelector('ul')
     songsList.innerHTML = loadedPlaylists[playlistId]
     return
   }
@@ -21,13 +22,11 @@ function fetchPlaylistSongs(playlistId, platform) {
       return response.json()
     })
     .then((tracks) => {
-      const playlistSongs = document.querySelector('.playlist-songs')
-      const songsList = playlistSongs.querySelector('ul')
-      songsList.innerHTML = ''
+      let innerHTML = ''
       tracks.forEach(({ track }) => {
         const image = track.album && track.album.images.length > 0 ? track.album.images[0].url : ''
         const artists = track.artists.map((artist) => artist.name).join(' & ')
-        songsList.innerHTML += `
+        innerHTML += `
           <a href="${track.preview_url}" class="song-list-item">
             ${image ? `<img src="${image}" alt="Album Cover">` : ''}
             <div class="song-info">
@@ -37,6 +36,7 @@ function fetchPlaylistSongs(playlistId, platform) {
           </a>
         `
       })
+      songsList.innerHTML = innerHTML
       loadedPlaylists[playlistId] = songsList.innerHTML
     })
 }
