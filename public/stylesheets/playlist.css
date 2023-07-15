@@ -142,6 +142,8 @@
   align-items: flex-start;
   justify-content: center;
   width: 100%;
+  white-space: nowrap; 
+  overflow-x: scroll;
 }
 
 .song-info > .artist {
