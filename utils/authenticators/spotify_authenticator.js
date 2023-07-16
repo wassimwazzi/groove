@@ -132,6 +132,9 @@ class SpotifyAuthenticator extends BaseAuthenticator {
    */
   async refreshSession(req) {
     const spotifyRefreshToken = req.session.spotifyRefreshToken
+    if (!spotifyRefreshToken) {
+      return false
+    }
     const response = await fetch('https://accounts.spotify.com/api/token', {
       method: 'post',
       headers: {

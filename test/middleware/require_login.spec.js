@@ -35,8 +35,8 @@ describe('requireLogin', () => {
     sinon.restore()
   })
 
-  it('should redirect to homepage if the platform is not selected', () => {
-    requireLogin(req, res, next)
+  it('should redirect to homepage if the platform is not selected', async () => {
+    await requireLogin(req, res, next)
 
     sinon.assert.calledOnce(res.redirect)
     sinon.assert.calledWith(res.redirect, '/')
@@ -44,12 +44,12 @@ describe('requireLogin', () => {
     sinon.assert.notCalled(next)
   })
 
-  it('should redirect to homepage if the user is not logged in', () => {
+  it('should redirect to homepage if the user is not logged in', async () => {
     req.query.platform = 'spotify'
     isLoggedInStub.returns(false)
     refreshSessionStub.returns(false)
 
-    requireLogin(req, res, next)
+    await requireLogin(req, res, next)
 
     sinon.assert.calledOnce(res.redirect)
     sinon.assert.calledWith(res.redirect, '/')
@@ -57,12 +57,12 @@ describe('requireLogin', () => {
     sinon.assert.notCalled(next)
   })
 
-  it('should return 401 if the user is not logged in and the request is an API request', () => {
+  it('should return 401 if the user is not logged in and the request is an API request', async () => {
     req.query.platform = 'spotify'
     isLoggedInStub.returns(false)
     req.url = '/api/playlists'
 
-    requireLogin(req, res, next)
+    await requireLogin(req, res, next)
 
     sinon.assert.notCalled(res.redirect)
     sinon.assert.notCalled(req.flash)
@@ -73,23 +73,23 @@ describe('requireLogin', () => {
     sinon.assert.notCalled(next)
   })
 
-  it('should call next if the user is logged in', () => {
+  it('should call next if the user is logged in', async () => {
     req.query.platform = 'spotify'
     isLoggedInStub.returns(true)
 
-    requireLogin(req, res, next)
+    await requireLogin(req, res, next)
 
     sinon.assert.notCalled(res.redirect)
     sinon.assert.notCalled(req.flash)
     sinon.assert.calledOnce(next)
   })
 
-  it('should call next if the user is not logged in but the session is refreshed', () => {
+  it('should call next if the user is not logged in but the session is refreshed', async () => {
     req.query.platform = 'spotify'
     isLoggedInStub.returns(false)
     refreshSessionStub.returns(true)
 
-    requireLogin(req, res, next)
+    await requireLogin(req, res, next)
 
     sinon.assert.calledOnce(refreshSessionStub)
     sinon.assert.notCalled(res.redirect)

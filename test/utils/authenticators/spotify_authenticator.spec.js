@@ -181,31 +181,51 @@ describe('SpotifyAuthenticator', () => {
   })
 
   describe('refreshSession', () => {
+    let req
     it('should return false when the session  cannot be refreshed', async () => {
-      const req = {
+      req = {
         session: {
           spotifyRefreshToken: null,
         },
       }
-      const mock = nock('https://accounts.spotify.com').post('/api/token').reply(400, { error: 'error' })
+      const mock = nock('https://accounts.spotify.com')
+        .post('/api/token', {
+          grant_type: 'refresh_token',
+          refresh_token: req.session.spotifyRefreshToken,
+        })
+        .reply(400, { error: 'error' })
       expect(await spotifyAuthenticator.refreshSession(req)).to.be.false // eslint-disable-line no-unused-expressions
       assert(mock.isDone())
     })
 
     it('should return true when the session can be refreshed', async () => {
-      const req = {
+      req = {
         session: {
           spotifyRefreshToken: 'refreshToken',
         },
       }
-      const mock = nock('https://accounts.spotify.com').post('/api/token').reply(200, {
-        access_token: 'accessToken',
-        expires_in: 3600,
-      })
+      const mock = nock('https://accounts.spotify.com')
+        .post('/api/token', {
+          grant_type: 'refresh_token',
+          refresh_token: req.session.spotifyRefreshToken,
+        })
+        .reply(200, {
+          access_token: 'accessToken',
+          expires_in: 3600,
+        })
       expect(await spotifyAuthenticator.refreshSession(req)).to.be.true // eslint-disable-line no-unused-expressions
       assert(mock.isDone())
       expect(req.session.spotifyAccessToken).to.equal('accessToken')
       expect(req.session.spotifyTokenExpiresAt).to.be.a('number')
+    })
+
+    it('should not call the api when there is no refresh token', async () => {
+      req = {
+        session: {},
+      }
+      const mock = nock('https://accounts.spotify.com').post('/api/token').reply(200, {})
+      expect(await spotifyAuthenticator.refreshSession(req)).to.be.false // eslint-disable-line no-unused-expressions
+      assert(!mock.isDone())
     })
   })
 })

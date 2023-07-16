@@ -1,9 +1,9 @@
 import PlatformsManager from '../utils/platforms_manager.js'
 
-const requireLogin = (req, res, next) => {
+const requireLogin = async (req, res, next) => {
   const platform = req.query.platform
   const authenticator = PlatformsManager.getAuthenticator(platform)
-  if (!authenticator.isLoggedIn(req) && !authenticator.refreshSession(req)) {
+  if (!authenticator.isLoggedIn(req) && !(await authenticator.refreshSession(req))) {
     if (req.url.includes('api')) {
       res.status(401).send({ error: 'Connect to one of the platforms first' })
       return
@@ -12,7 +12,6 @@ const requireLogin = (req, res, next) => {
     res.redirect('/')
     return
   }
-  console.log('next')
   next()
 }
 
