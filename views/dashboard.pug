@@ -6,13 +6,14 @@ append head
 block inset_content
     div(data-platform=platform, id='platform')
     div(id='refresh-page' style='display: none;')
-        - var messages = {alert: 'Ops! Looks like you have been logged out. Refresh the page to continue.'}
+        - var messages = {alert: 'Oops! Looks like you have been logged out. Refresh the page to continue.'}
         include partials/_flash.pug
 
     .horizontal-align-centered
         h1 Dashboard for
         img(src='../images/' + platform + '-logo.svg', class='dashboard-logo' style='padding-left: var(--spacing-2)')
     
+    include partials/music_players/_spotify_player.pug
     h2 Your Playlists
 
     .playlist-and-songs-container
@@ -29,6 +30,7 @@ block inset_content
 
         div.playlist-songs(style="display: none;" class=platform)
             ul.song-list
+    
 
     script.
         function togglePlaylist(playlist) {
