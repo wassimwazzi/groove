@@ -11,14 +11,6 @@ export default class SpotifyCommunicator extends BaseCommunicator {
   }
 
   /**
-   * Set the access token for the Spotify API.
-   * @param {string} accessToken - The access token.
-   */
-  setAccessToken(accessToken) {
-    this.spotifyApi.setAccessToken(accessToken)
-  }
-
-  /**
    * Gets all the playlists of the user.
    * @param {Object} req - The request object.
    * @returns {Object} The playlists of the user.

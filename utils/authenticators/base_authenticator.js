@@ -74,6 +74,19 @@ class BaseAuthenticator {
   }
 
   /**
+   * Refresh session
+   *
+   * @param {Object} _req
+   * @param {Object} _res
+   * @returns {boolean} true if session is refreshed, false otherwise
+   * @memberof BaseAuthenticator
+   * @abstract
+   */
+  refreshSession(_req, _res) {
+    throw new Error('Method "refreshSession()" must be implemented.')
+  }
+
+  /**
    * Generates a random string containing numbers and letters
    * @param  {number} length The length of the string
    * @return {string} The generated string

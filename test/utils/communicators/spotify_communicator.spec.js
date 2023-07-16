@@ -13,16 +13,6 @@ describe('SpotifyCommunicator', () => {
     })
   })
 
-  describe('setAccessToken', () => {
-    it('should set the access token', () => {
-      const spotifyCommunicator = new SpotifyCommunicator()
-      const setAccessTokenStub = sinon.stub(SpotifyWebApi.prototype, 'setAccessToken')
-      spotifyCommunicator.setAccessToken('access_token')
-      sinon.assert.calledOnce(setAccessTokenStub)
-      sinon.assert.calledWith(setAccessTokenStub, 'access_token')
-    })
-  })
-
   describe('getPlaylists', () => {
     it('should get the playlists', async () => {
       const spotifyCommunicator = new SpotifyCommunicator()

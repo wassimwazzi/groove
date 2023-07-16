@@ -1,6 +1,7 @@
 /**
  * absract Base communicator class.
  * Used to communicate with 3rd party music platforms.
+ * Assumes that the user is already logged in. So make sure to login before using this class.
  *
  * @class BaseCommunicator
  * @abstract

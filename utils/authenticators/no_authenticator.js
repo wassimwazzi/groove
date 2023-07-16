@@ -19,6 +19,10 @@ class NoAuthenticator extends BaseAuthenticator {
     req.flash('alert', 'Connect to one of the platforms first')
     res.redirect('/')
   }
+
+  refreshSession(_req, _res) {
+    return false
+  }
 }
 
 export default NoAuthenticator

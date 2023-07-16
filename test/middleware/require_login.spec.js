@@ -3,12 +3,15 @@ import PlatformsManager from '../../utils/platforms_manager.js'
 import sinon from 'sinon'
 
 describe('requireLogin', () => {
-  const next = sinon.stub()
+  let next
   let res
   let req
   let isLoggedInStub
+  let refreshSessionStub
+  let authenticatorStub
 
   beforeEach(() => {
+    next = sinon.stub()
     res = {
       redirect: sinon.stub(),
       status: sinon.stub().returnsThis(),
@@ -20,9 +23,12 @@ describe('requireLogin', () => {
       url: '',
     }
     isLoggedInStub = sinon.stub()
-    sinon.stub(PlatformsManager, 'getAuthenticator').returns({
+    refreshSessionStub = sinon.stub()
+    authenticatorStub = {
       isLoggedIn: isLoggedInStub,
-    })
+      refreshSession: refreshSessionStub,
+    }
+    sinon.stub(PlatformsManager, 'getAuthenticator').returns(authenticatorStub)
   })
 
   afterEach(() => {
@@ -41,6 +47,7 @@ describe('requireLogin', () => {
   it('should redirect to homepage if the user is not logged in', () => {
     req.query.platform = 'spotify'
     isLoggedInStub.returns(false)
+    refreshSessionStub.returns(false)
 
     requireLogin(req, res, next)
 
@@ -72,6 +79,19 @@ describe('requireLogin', () => {
 
     requireLogin(req, res, next)
 
+    sinon.assert.notCalled(res.redirect)
+    sinon.assert.notCalled(req.flash)
+    sinon.assert.calledOnce(next)
+  })
+
+  it('should call next if the user is not logged in but the session is refreshed', () => {
+    req.query.platform = 'spotify'
+    isLoggedInStub.returns(false)
+    refreshSessionStub.returns(true)
+
+    requireLogin(req, res, next)
+
+    sinon.assert.calledOnce(refreshSessionStub)
     sinon.assert.notCalled(res.redirect)
     sinon.assert.notCalled(req.flash)
     sinon.assert.calledOnce(next)

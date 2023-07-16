@@ -126,6 +126,32 @@ class SpotifyAuthenticator extends BaseAuthenticator {
       }
     }
   }
+
+  /**
+   * Refresh session
+   */
+  async refreshSession(req) {
+    const spotifyRefreshToken = req.session.spotifyRefreshToken
+    const response = await fetch('https://accounts.spotify.com/api/token', {
+      method: 'post',
+      headers: {
+        Authorization: 'Basic ' + Buffer.from(spotifyClientId + ':' + spotifyClientSecret).toString('base64'),
+      },
+      body: new URLSearchParams({
+        grant_type: 'refresh_token',
+        refresh_token: spotifyRefreshToken,
+      }),
+      json: true,
+    })
+    const data = await response.json()
+    if (!response.ok) {
+      console.log("Couldn't refresh session\n", data)
+      return false
+    }
+    req.session.spotifyAccessToken = data.access_token
+    req.session.spotifyTokenExpiresAt = new Date().getTime() + data.expires_in * 1000
+    return true
+  }
 }
 
 export default SpotifyAuthenticator

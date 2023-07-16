@@ -3,6 +3,7 @@ import { expect } from 'chai'
 import sinon from 'sinon'
 import querystring from 'querystring'
 import nock from 'nock'
+import { assert } from 'console'
 
 const spotifyAuthenticator = new SpotifyAuthenticator()
 
@@ -176,6 +177,35 @@ describe('SpotifyAuthenticator', () => {
       sinon.assert.notCalled(res.redirect)
       sinon.assert.notCalled(onError)
       sinon.assert.calledOnce(onSuccess)
+    })
+  })
+
+  describe('refreshSession', () => {
+    it('should return false when the session  cannot be refreshed', async () => {
+      const req = {
+        session: {
+          spotifyRefreshToken: null,
+        },
+      }
+      const mock = nock('https://accounts.spotify.com').post('/api/token').reply(400, { error: 'error' })
+      expect(await spotifyAuthenticator.refreshSession(req)).to.be.false // eslint-disable-line no-unused-expressions
+      assert(mock.isDone())
+    })
+
+    it('should return true when the session can be refreshed', async () => {
+      const req = {
+        session: {
+          spotifyRefreshToken: 'refreshToken',
+        },
+      }
+      const mock = nock('https://accounts.spotify.com').post('/api/token').reply(200, {
+        access_token: 'accessToken',
+        expires_in: 3600,
+      })
+      expect(await spotifyAuthenticator.refreshSession(req)).to.be.true // eslint-disable-line no-unused-expressions
+      assert(mock.isDone())
+      expect(req.session.spotifyAccessToken).to.equal('accessToken')
+      expect(req.session.spotifyTokenExpiresAt).to.be.a('number')
     })
   })
 })
