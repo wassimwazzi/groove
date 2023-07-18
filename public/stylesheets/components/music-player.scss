@@ -1,7 +1,6 @@
 // Insperation: https://dribbble.com/shots/1962035-Freebie-Music-Player-Dark-Version
-
-$player-height: 190px;
-$player-width: 430px;
+$player-height: 20vh;
+$player-width: 100%;
 
 @mixin unselectable() {
   -webkit-touch-callout: none;
@@ -14,13 +13,13 @@ $player-width: 430px;
 .player {
   height: $player-height;
   width: $player-width;
-  background-color: #1E2125;
-  position: absolute;
+  background-color: var(--secondary-color-dark);
+  position: fixed;
   @include unselectable();
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
+  bottom: 0;
+  left: 0;
+  // transform: translate(-50%, -50%);
+  // -webkit-transform: translate(-50%, -50%);
 
   ul {
      list-style: none;
@@ -40,7 +39,7 @@ $player-width: 430px;
   }
 }
 
-.info {
+.player .song-info {
 
   h1 {
      margin-top: 15px;

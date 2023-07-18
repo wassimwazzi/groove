@@ -153,6 +153,7 @@ class SpotifyAuthenticator extends BaseAuthenticator {
     }
     req.session.spotifyAccessToken = data.access_token
     req.session.spotifyTokenExpiresAt = new Date().getTime() + data.expires_in * 1000
+    console.log('Session refreshed')
     return true
   }
 }

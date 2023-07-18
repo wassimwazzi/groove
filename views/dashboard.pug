@@ -13,24 +13,28 @@ block inset_content
         h1 Dashboard for
         img(src='../images/' + platform + '-logo.svg', class='dashboard-logo' style='padding-left: var(--spacing-2)')
     
-    h2 Your Playlists
+    .dashboard-items
+        .your-playlists
+            h2 Your Playlists
 
-    .playlist-and-songs-container
-        div.playlists-container
-            ul.playlists
-                each playlist in playlists
-                    li.playlist-item(onclick="togglePlaylist(this)" id=playlist.id class=platform)
-                        .horizontal-align-left
-                            if playlist.images.length > 0
-                                img(src=playlist.images[0].url, class='playlist-image')
-                            else
-                                img(src="../images/playlist-placeholder-" + platform + ".jpg", class="playlist-image")
-                            p(class='playlist-name') #{playlist.name}
+            .playlist-and-songs-container
+                div.playlists-container
+                    ul.playlists
+                        each playlist in playlists
+                            li.playlist-item(onclick="togglePlaylist(this)" id=playlist.id class=platform)
+                                .horizontal-align-left
+                                    if playlist.images.length > 0
+                                        img(src=playlist.images[0].url, class='playlist-image')
+                                    else
+                                        img(src="../images/playlist-placeholder-" + platform + ".jpg", class="playlist-image")
+                                    p(class='playlist-name') #{playlist.name}
 
-        div.playlist-songs(style="display: none;" class=platform)
-            ul.song-list
+                div.playlist-songs(style="display: none;" class=platform)
+                    ul.song-list
 
-    include partials/music_player.pug  
+        include partials/music_player.pug
+        //- .sticky-bar
+        //-     | This is a sticky bar  
 
     script.
         function togglePlaylist(playlist) {
