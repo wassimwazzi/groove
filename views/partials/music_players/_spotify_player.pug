@@ -1,9 +1,5 @@
 script(src="https://sdk.scdn.co/spotify-player.js")
 
-iframe(style="border-radius:12px", src="https://open.spotify.com/embed/track/5DS9LiyEdw2zY8bM6kjjgM?utm_source=generator", width="100%", height="352", frameBorder="0", allowfullscreen="", allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture", loading="lazy")
-
-
-div(id='music-player')
 div(id='spotify-access-token' data-token=token)
 <button id="togglePlay">Toggle Play</button>
 .song-player
@@ -19,13 +15,29 @@ script.
         const token = document.querySelector('#spotify-access-token').dataset.token;
         console.log(token)
         const player = new Spotify.Player({
-            name: 'Web Playback SDK Quick Start Player',
+            name: 'Groove',
             getOAuthToken: cb => { cb(token); },
             volume: 0.5
         });
         // Ready
         player.addListener('ready', ({ device_id }) => {
             console.log('Ready with Device ID', device_id);
+            // set the device to the player
+            fetch('https://api.spotify.com/v1/me/player', {
+                method: 'PUT',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    device_ids: [device_id],
+                    play: false
+                }),
+            }).then( res => {
+                console.log(res)
+            }).catch( err => {
+                console.log(err)
+            })
         });
 
         // Not Ready
@@ -45,8 +57,6 @@ script.
             console.error(message);
         });
 
-        player.connect();
-
         document.getElementById('togglePlay').onclick = function() {
             player.togglePlay();
         };
@@ -54,11 +64,10 @@ script.
         player.addListener('player_state_changed', ( state => {
 
             if (!state) {
+                console.log("no state")
                 return;
             }
-            console.log('state_changed', state)
-            setTrack(state.track_window.current_track);
-            setPaused(state.paused);
+            console.log('state_changed ', state)
 
 
             //- player.getCurrentState().then( state => { 
@@ -66,6 +75,5 @@ script.
             //- });
         }));
 
-
-
+        player.connect();
     }
