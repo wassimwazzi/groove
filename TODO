@@ -1,0 +1,4 @@
+- Handle when Spotify SDK is disconnected. Ask user if they want to reconnect.
+- Handle song selection from dashboard to trigger play.
+- Server session secret
+- Mobile UI improvements
