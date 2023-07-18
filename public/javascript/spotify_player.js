@@ -1,0 +1,63 @@
+window.onSpotifyWebPlaybackSDKReady = () => {
+  const token = document.querySelector('#spotify-access-token').dataset.token
+  console.log(token)
+  // eslint-disable-next-line no-undef
+  const player = new Spotify.Player({
+    name: 'Groove',
+    getOAuthToken: (cb) => {
+      cb(token)
+    },
+    volume: 0.5,
+  })
+
+  player.addListener('ready', ({ device_id }) => {
+    // set the device to this player
+    fetch('https://api.spotify.com/v1/me/player', {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        device_ids: [device_id],
+        play: false,
+      }),
+    })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  })
+
+  player.addListener('not_ready', ({ device_id }) => {
+    console.log('Device ID has gone offline', device_id)
+  })
+
+  player.addListener('initialization_error', ({ message }) => {
+    console.error(message)
+  })
+
+  player.addListener('authentication_error', ({ message }) => {
+    console.error(message)
+  })
+
+  player.addListener('account_error', ({ message }) => {
+    console.error(message)
+  })
+
+  document.getElementById('togglePlay').onclick = function () {
+    player.togglePlay()
+  }
+
+  player.addListener('player_state_changed', (state) => {
+    if (!state) {
+      console.log('no state')
+      return
+    }
+    console.log('state_changed ', state)
+  })
+
+  player.connect()
+}
