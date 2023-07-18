@@ -47,6 +47,10 @@ describe('dashboardController', () => {
 
     sinon.assert.calledOnce(getCommunicatorStub)
     sinon.assert.calledOnce(res.render)
-    sinon.assert.calledWith(res.render, 'dashboard', { platform: 'spotify', playlists: [] })
+    sinon.assert.calledWith(res.render, 'dashboard', {
+      platform: 'spotify',
+      playlists: [],
+      token: req.session.spotifyAccessToken,
+    })
   })
 })

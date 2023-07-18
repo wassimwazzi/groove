@@ -84,23 +84,23 @@ $player-width: 100%;
         border-radius: 2px;
       }
     }
-    
+
     #timer {
       line-height: 0;
       font-size: 9pt;
       float: right;
       font-family: Arial, Sans-Serif;
     }
-    
+
     .controls {
       margin-top: 20px;
-    
+
       svg:nth-child(2) {
         margin-left: 5px;
         margin-right: 5px;
       }
     }
-    
+
     .play-music {
       padding: 0 3px;
       width: 30px;
@@ -108,31 +108,31 @@ $player-width: 100%;
       x: 0px;
       y: 0px;
       enable-background: new 0 0 25 25;
-    
+
       g {
         stroke: #fefefe;
         stroke-width: 1;
         stroke-miterlimit: 10;
-    
+
         path {
           fill: #fefefe;
         }
       }
     }
-    
+
     .play-music:hover {
       cursor: pointer;
       g {
         stroke: #8f4da9;
         cursor: pointer;
-    
+
         path {
           fill: #9b59b6;
           cursor: pointer;
         }
       }
     }
-    
+
     .step-backward {
       width: 18px;
       height: 18px;
@@ -140,12 +140,12 @@ $player-width: 100%;
       y: 0px;
       enable-background: new 0 0 25 25;
       margin-bottom: 5px;
-    
+
       g polygon {
         fill: #fefefe;
       }
     }
-    
+
     .step-foreward {
       width: 18px;
       height: 18px;
@@ -153,12 +153,12 @@ $player-width: 100%;
       y: 0px;
       enable-background: new 0 0 25 25;
       margin-bottom: 5px;
-    
+
       g polygon {
         fill: #fefefe;
       }
     }
-    
+
     .pause-music {
       x: 0px;
       y: 0px;
@@ -168,31 +168,29 @@ $player-width: 100%;
       position: absolute;
       margin-left: -38px;
       cursor: pointer;
-    
+
       rect {
         fill: white;
       }
     }
-    
+
     .pause-music:hover rect {
       fill: #8f4da9;
     }
-    
+
     .step-backward g polygon:hover,
     .step-foreward g polygon:hover {
       fill: #ef6dbc;
       cursor: pointer;
     }
-    
+
     .expend {
       padding: 0.5px;
       cursor: pointer;
-    
+
       svg:hover g polygon {
         fill: #ef6dbc;
       }
     }
   }
 }
-
-
