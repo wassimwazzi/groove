@@ -49,8 +49,25 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   })
 
   window.addEventListener('toggleMusic', () => {
-    console.log('toggleMusic')
     player.togglePlay()
+  })
+
+  window.addEventListener('nextTrack', () => {
+    player.nextTrack()
+  })
+
+  window.addEventListener('previousTrack', () => {
+    player.previousTrack()
+  })
+
+  window.addEventListener('seek', (e) => {
+    // e.detail is the time in ms to seek to
+    player.seek(e.detail)
+  })
+
+  window.addEventListener('setVolume', (e) => {
+    // e.detail is the volume to set, between 0 and 1
+    player.setVolume(e.detail)
   })
 
   player.addListener('player_state_changed', (state) => {
@@ -58,7 +75,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       console.log('no state')
       return
     }
-    console.log('state_changed ', state)
+    // console.log('state_changed ', state)
   })
 
   player.connect()

@@ -54,8 +54,18 @@ script.
   const playhead = document.getElementById("elapsed");
   const timeline = document.getElementById("slider");
   const timer = document.getElementById("timer");
-  const togglePlayEvent = new CustomEvent('toggleMusic', {detail: {music: music} });
   var duration;
+
+  // Events sent by the music player.
+  // Platform specific implementation should listen for these events.
+  const getTogglePlayEvent = () => new CustomEvent('toggleMusic', {});
+  const getNextTrackEvent = () => new CustomEvent('nextTrack', {});
+  const getPreviousTrackEvent = () => new CustomEvent('previousTrack', {});
+  const getSetTrackEvent = (trackId) => new CustomEvent('setTrack', { detail: { trackId } });
+  const getSeekToEvent = (time) => new CustomEvent('seekTo', { detail: { time } }); // time in ms
+  const getSetVolumeEvent = (volume) => new CustomEvent('setVolume', { detail: { volume } }); // volume in [0, 1]
+  const getSetShuffleEvent = (shuffle) => new CustomEvent('setShuffle', { detail: { shuffle } }); // shuffle is a boolean
+  
   pauseButton.style.visibility = "hidden";
 
   var timelineWidth = timeline.offsetWidth - playhead.offsetWidth;
@@ -74,13 +84,13 @@ script.
   }
 
   playButton.onclick = function() {
-    window.dispatchEvent(togglePlayEvent);
+    window.dispatchEvent(getTogglePlayEvent());
     playButton.style.visibility = "hidden";
     pauseButton.style.visibility = "visible";
   }
 
   pauseButton.onclick = function() {
-    window.dispatchEvent(togglePlayEvent);
+    window.dispatchEvent(getTogglePlayEvent());
     playButton.style.visibility = "visible";
     pauseButton.style.visibility = "hidden";
   }
