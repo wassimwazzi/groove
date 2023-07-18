@@ -1,3 +1,7 @@
+# add sass output to gitignore
+public/stylesheets/output.css.map
+public/stylesheets/output.css
+
 # Logs
 logs
 *.log
