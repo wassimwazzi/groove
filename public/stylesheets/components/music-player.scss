@@ -39,7 +39,7 @@ $player-width: 100%;
   }
 }
 
-.music-player .song-info {
+.music-player .player-song-info {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -48,16 +48,18 @@ $player-width: 100%;
     margin-top: 15px;
     margin-left: 180px;
     line-height: 0;
+    margin-bottom: var(--spacing-1);
   }
 
   h4 {
     margin-left: 180px;
-    line-height: 20px;
     color: var(--c1-grey);
+    margin-bottom: 0;
   }
 
   h2 {
     margin-left: 180px;
+    margin-bottom: 0;
   }
 
   .info-wrapper {
@@ -70,6 +72,7 @@ $player-width: 100%;
     margin-left: 180px;
     display: flex;
     flex-direction: column;
+    margin-top: var(--spacing-3);
 
     .slider {
       width: 182px;

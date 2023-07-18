@@ -29,7 +29,7 @@ function fetchPlaylistSongs(playlistId, platform) {
         innerHTML += `
           <a href="${track.preview_url}" class="song-list-item">
             ${image ? `<img src="${image}" alt="Album Cover">` : ''}
-            <div class="song-info">
+            <div class="playlist-song-info">
               <span class="name">${track.name}</span>
               <span class="artist">${artists}</span>
             </div>

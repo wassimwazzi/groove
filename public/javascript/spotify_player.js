@@ -86,7 +86,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       name: current_track.name,
       artist: current_track.artists.map((artist) => artist.name).join(' & '),
       album: current_track.album.name,
-      image: current_track.album.images.length > 0 ? current_track.album.images[0].url : '',
+      cover: current_track.album.images.length > 0 ? current_track.album.images[0].url : '',
       duration: duration / 1000,
       position: position / 1000,
       paused,
