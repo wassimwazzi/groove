@@ -77,14 +77,14 @@ $player-width: 100%;
     .slider {
       width: 182px;
       height: 4px;
-      background: #151518;
+      background: var(--c2-black);
       border-radius: 2px;
       div {
         width: 4px;
         height: 4px;
         margin-top: 1px;
-        background: #ef6dbc;
         border-radius: 2px;
+        @include platform-color(background);
       }
     }
 

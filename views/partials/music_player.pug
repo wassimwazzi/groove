@@ -1,51 +1,40 @@
 if platform == 'spotify'
   include music_players/_spotify_player.pug
 
-<div id="js-music-player" class="music-player" style="display: none;">
-    <ul>
-        <li class="cover">
-            <img/>
-        </li>
-        <li class="player-song-info">
-            <div class="info-wrapper">
-                <div id="js-music-title" class="music-title"></div>
-                <div id="js-music-artist" class="music-artist"></div>
-                //- <h2>I Need You Back</h2>
-            </div>
+#js-music-player.music-player(style="display: none;")
+  ul
+    li.cover
+      img
+    li.player-song-info
+      .info-wrapper
+        #js-music-title.music-title
+        #js-music-artist.music-artist
+        //- <h2>I Need You Back</h2>
+      .button-items
+        audio#js-music(loop="false")
+        .slider#js-music-slider
+          div#js-slider-elapsed(class=platform)
+        p#js-music-timer.timer 0:00
+        .controls
+          span#js-prev-track.expend
+            svg.step-backward(viewBox="0 0 25 25" xml:space="preserve")
+              g
+                polygon(points="4.9,4.3 9,4.3 9,11.6 21.4,4.3 21.4,20.7 9,13.4 9,20.7 4.9,20.7")
+          svg#js-play-music.play-music(viewBox="0 0 25 25" xml:space="preserve")
+            defs
+              rect(x="-49.5" y="-132.9" width="446.4" height="366.4")
+            g
+              circle(fill="none" cx="12.5" cy="12.5" r="10.8")
+              path(fill-rule="evenodd" clip-rule="evenodd" d="M8.7,6.9V18c0,0,0.2,1.4,1.8,0l8.1-4.8c0,0,1.2-1.1-1-2L9.8,6.5 C9.8,6.5,9.1,6,8.7,6.9z")
+          svg#js-pause-music.pause-music(viewBox="0 0 25 25" xml:space="preserve" style="visibility: hidden;")
+            g
+              rect(x="6" y="4.6" width="3.8" height="15.7")
+              rect(x="14" y="4.6" width="3.9" height="15.7")
+          span#js-next-track.expend
+            svg.step-foreward(viewBox="0 0 25 25" xml:space="preserve")
+              g
+                polygon(points="20.7,4.3 16.6,4.3 16.6,11.6 4.3,4.3 4.3,20.7 16.7,13.4 16.6,20.7 20.7,20.7")
 
-            <div class="button-items">
-                <audio id="js-music" loop="false">
-                </audio>
-                <div id="js-music-slider" class="slider"><div id="js-slider-elapsed"></div></div>
-                <p id="js-music-timer" class="timer">0:00</p>
-                <div class="controls">
-                    <span id="js-prev-track" class="expend"><svg class="step-backward" viewBox="0 0 25 25" xml:space="preserve">
-                        <g><polygon points="4.9,4.3 9,4.3 9,11.6 21.4,4.3 21.4,20.7 9,13.4 9,20.7 4.9,20.7"/></g>
-                    </svg></span>
-
-                    <svg id="js-play-music" class="play-music" viewBox="0 0 25 25" xml:space="preserve">
-                        <defs><rect x="-49.5" y="-132.9" width="446.4" height="366.4"/></defs>
-                            <g><circle fill="none" cx="12.5" cy="12.5" r="10.8"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.7,6.9V18c0,0,0.2,1.4,1.8,0l8.1-4.8c0,0,1.2-1.1-1-2L9.8,6.5 C9.8,6.5,9.1,6,8.7,6.9z"/>
-                            </g>
-                    </svg>
-                    
-
-                    <svg id="js-pause-music" class="pause-music" viewBox="0 0 25 25" xml:space="preserve" style="visibility: hidden;">
-                        <g>
-                            <rect x="6" y="4.6" width="3.8" height="15.7"/>
-                            <rect x="14" y="4.6" width="3.9" height="15.7"/>
-                        </g>
-                    </svg>
-
-                    <span id="js-next-track" class="expend"><svg class="step-foreward" viewBox="0 0 25 25" xml:space="preserve">
-                        <g><polygon points="20.7,4.3 16.6,4.3 16.6,11.6 4.3,4.3 4.3,20.7 16.7,13.4 16.6,20.7 20.7,20.7"/></g>
-                    </svg></span>
-                </div>
-            </div>
-        </li>
-    </ul>
-</div>
 
 script.
   const musicPlayer = document.getElementById("js-music-player");
@@ -67,7 +56,6 @@ script.
   let albumName = "";
   let albumCover = ""; // src of the album cover image
   let isPaused = true;
-  let timelineWidth = timeline.offsetWidth - playHeadDefaultWidth;
 
   toggleControlsClickable();
 
@@ -100,7 +88,7 @@ script.
     position = e.detail.position;
     isPaused = e.detail.paused;
     intervalTimer = clearInterval(intervalTimer); // always clear first so we don't have multiple timers running
-    updatePosition();
+    updatePosition(false);
     if (isPaused) {
       playButton.style.visibility = "visible";
       pauseButton.style.visibility = "hidden";
@@ -109,7 +97,7 @@ script.
       pauseButton.style.visibility = "visible";
       intervalTimer = setInterval(updatePosition, 1000);
     }
-    timer.innerHTML = formatTime(position);
+    timer.innerHTML = `${formatTime(position)} / ${formatTime(duration)}`;
     setMusicPlayerDisplay();
   }, false);
 
@@ -119,7 +107,6 @@ script.
     const musicCover = document.querySelector(".cover img");
     musicTitle.innerHTML = "<h2>" + trackName + "</h2>";
     musicArtist.innerHTML = "<h4>" + artistName + "</h4>";
-    console.log("cover: " + albumCover)
     musicCover.src = albumCover;
     musicPlayer.style.display = '';
   }
@@ -154,9 +141,12 @@ script.
     return timeString;
   }
 
-  function updatePosition() {
-    position += 1;
-    timer.innerHTML = formatTime(position);
+  function updatePosition(inc=true) {
+    if (inc) {
+      position += 1;
+    }
+    timer.innerHTML = `${formatTime(position)} / ${formatTime(duration)}`;
+    let timelineWidth = timeline.offsetWidth - playHeadDefaultWidth;
     let playPercent = timelineWidth * (position / duration);
     playhead.style.width = playPercent + "px";
   }
