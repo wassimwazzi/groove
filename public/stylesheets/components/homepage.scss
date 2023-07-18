@@ -11,4 +11,9 @@
 .card.third {
   background-color: var(--primary-color-brown);
   width: 100%;
+  height: 100%;
+}
+
+.homepage {
+  min-height: max-content;
 }
