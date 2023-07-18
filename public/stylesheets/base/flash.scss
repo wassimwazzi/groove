@@ -3,12 +3,7 @@
 }
 
 .FlashList-inset {
-  max-width: var(--content-width);
-  margin: 0 auto;
-}
-
-.Flash--margin-top {
-  margin-top: var(--spacing-3);
+  @include inset;
 }
 
 .FlashMessage-inner {
@@ -17,35 +12,44 @@
   display: flex;
   align-items: center;
   border-radius: var(--radius-small);
+
+  .icon {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    min-height: 28px;
+    margin-right: 6px;
+  }
 }
 
-.FlashMessage-inner .icon {
-  width: 28px;
-  height: 28px;
-  min-width: 28px;
-  min-height: 28px;
-  margin-right: 6px;
-}
 
 .FlashMessage + .FlashMessage {
   margin-top: var(--spacing-1);
 }
 
-.FlashMessage--notice .FlashMessage-inner {
+.FlashMessage--notice {
   border: var(--line-light) solid var(--notice-colour);
   color: var(--notice-colour);
+
+  .FlashMessage-inner {
+    border: var(--line-light) solid var(--alert-colour);
+    color: var(--alert-colour);
+  }
 }
 
-.FlashMessage--alert .FlashMessage-inner {
-  border: var(--line-light) solid var(--alert-colour);
-  color: var(--alert-colour);
+.FlashMessage--alert {
+  .FlashMessage-inner {
+    border: var(--line-light) solid var(--alert-colour);
+    color: var(--alert-colour);
+  }
 }
 
 .Flash--inverted {
   background-color: var(--b1-coral);
+
+  .FlashMessage-inner {
+    border: var(--line-light) solid var(--a4-neutral);
+    color: var(--a4-neutral);
+  }
 }
 
-.Flash--inverted .FlashMessage-inner {
-  border: var(--line-light) solid var(--a4-neutral);
-  color: var(--a4-neutral);
-}
