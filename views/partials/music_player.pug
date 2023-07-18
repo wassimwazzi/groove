@@ -16,7 +16,7 @@ if platform == 'spotify'
             <div class="button-items">
                 <audio id="js-music" loop="false">
                 </audio>
-                <div id="js-music-slider"><div id="js-slider-elapsed"></div></div>
+                <div id="js-music-slider" class="slider"><div id="js-slider-elapsed"></div></div>
                 <p id="js-music-timer" class="timer">0:00</p>
                 <div class="controls">
                     <span id="js-prev-track" class="expend"><svg class="step-backward" viewBox="0 0 25 25" xml:space="preserve">
@@ -57,8 +57,11 @@ script.
   const playhead = document.getElementById("js-slider-elapsed");
   const timeline = document.getElementById("js-music-slider");
   const timer = document.getElementById("js-music-timer");
+  const playHeadDefaultWidth = playhead.offsetWidth;
   let isPlayerReady = false;
   let duration = 0; // in seconds
+  let position = 0; // in seconds
+  let intervalTimer;
   let trackName = "";
   let artistName = "";
   let albumName = "";
@@ -82,7 +85,6 @@ script.
   // This event should be triggered when the player is ready to receive events.  
   musicPlayer.addEventListener("setPlayerReady", (e) => {
     const isReady = e.detail;
-    console.log("setting player ready to", isReady);
     isPlayerReady = isReady;
     toggleControlsClickable();
   }, false);
@@ -94,21 +96,23 @@ script.
     albumName = e.detail.album;
     albumCover = e.detail.cover;
     duration = e.detail.duration;
+    position = e.detail.position;
     isPaused = e.detail.paused;
+    intervalTimer = clearInterval(intervalTimer); // always clear first so we don't have multiple timers running
+    updatePosition();
     if (isPaused) {
       playButton.style.visibility = "visible";
       pauseButton.style.visibility = "hidden";
     } else {
       playButton.style.visibility = "hidden";
       pauseButton.style.visibility = "visible";
+      intervalTimer = setInterval(updatePosition, 1000);
     }
-    playhead.style.width = "0px";
-    timer.innerHTML = "0:00";
+    timer.innerHTML = formatTime(position);
   }, false);
 
   pauseButton.style.visibility = "hidden";
-  let timelineWidth = timeline.offsetWidth - playhead.offsetWidth;
-  music.addEventListener("timeupdate", timeUpdate, false);
+  let timelineWidth = timeline.offsetWidth - playHeadDefaultWidth;
 
   function toggleControlsClickable() {
     if (isPlayerReady) {
@@ -117,7 +121,6 @@ script.
       prevTrackButton.style.pointerEvents = "auto";
       nextTrackButton.style.pointerEvents = "auto";
     } else {
-      console.log("player not ready")
       playButton.style.pointerEvents = "none";
       pauseButton.style.pointerEvents = "none";
       prevTrackButton.style.pointerEvents = "none";
@@ -125,29 +128,42 @@ script.
     }
   }
 
-  function timeUpdate() {
-    if (duration == 0) {
-      return;
-    }
-    let playPercent = timelineWidth * (music.currentTime / duration);
-    playhead.style.width = playPercent + "px";
+  function formatTime(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
 
-    let secondsIn = Math.floor(((music.currentTime / duration) / 3.5) * 100);
-    if (secondsIn <= 9) {
-      timer.innerHTML = "0:0" + secondsIn;
-    } else {
-      timer.innerHTML = "0:" + secondsIn;
+    let timeString = '';
+
+    if (hours > 0) {
+      timeString += hours.toString().padStart(2, '0') + ':';
     }
+
+    timeString += minutes.toString().padStart(2, '0') + ':';
+    timeString += remainingSeconds.toString().padStart(2, '0');
+
+    return timeString;
+  }
+
+  function updatePosition() {
+    position += 1;
+    timer.innerHTML = formatTime(position);
+    let playPercent = timelineWidth * (position / duration);
+    playhead.style.width = playPercent + "px";
   }
 
   playButton.onclick = function() {
     window.dispatchEvent(getTogglePlayEvent());
     playButton.style.visibility = "hidden";
     pauseButton.style.visibility = "visible";
+    if (!intervalTimer) {
+      intervalTimer = clearInterval(intervalTimer);
+    }
   }
 
   pauseButton.onclick = function() {
     window.dispatchEvent(getTogglePlayEvent());
+    intervalTimer = clearInterval(intervalTimer)
     playButton.style.visibility = "visible";
     pauseButton.style.visibility = "hidden";
   }

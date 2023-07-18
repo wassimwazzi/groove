@@ -2,7 +2,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   const token = document.querySelector('#spotify-access-token').dataset.token
   const musicPlayer = document.getElementById('js-music-player')
   let currentTrackId
-  console.log(token)
   // eslint-disable-next-line no-undef
   const player = new Spotify.Player({
     name: 'Groove',
@@ -30,7 +29,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
           console.log('error', response)
           return
         }
-        console.log('Device set')
         musicPlayer.dispatchEvent(
           new CustomEvent('setPlayerReady', {
             detail: true,
@@ -80,7 +78,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     player.setVolume(e.detail)
   })
 
-  player.addListener('player_state_changed', ({ paused, duration, track_window: { current_track } }) => {
+  player.addListener('player_state_changed', ({ position, paused, duration, track_window: { current_track } }) => {
     if (!current_track || current_track.id === currentTrackId) {
       return
     }
@@ -90,6 +88,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       album: current_track.album.name,
       image: current_track.album.images.length > 0 ? current_track.album.images[0].url : '',
       duration: duration / 1000,
+      position: position / 1000,
       paused,
     }
     musicPlayer.dispatchEvent(
