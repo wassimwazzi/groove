@@ -9,8 +9,10 @@
   margin-bottom: var(--spacing-3);
 }
 
-.Page-titles .Page-title {
-  margin-bottom: var(--spacing-1);
+.Page-titles {
+  .Page-title {
+    margin-bottom: var(--spacing-1);
+  }
 }
 
 .Page h2,

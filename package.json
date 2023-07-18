@@ -27,6 +27,7 @@
     "nodemon": "^2.0.15",
     "pug": "^3.0.0",
     "request": "^2.88.2",
+    "sass": "^1.63.6",
     "spotify-web-api-node": "^5.0.2"
   },
   "license": "MIT",

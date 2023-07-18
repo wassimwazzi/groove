@@ -16,26 +16,7 @@
   -webkit-transform: translateZ(0);
   -ms-transform: translateZ(0);
   transform: translateZ(0);
-}
-
-.loader.Spotify {
-  color: var(--spotify-color);
-}
-
-.loader.AppleMusic {
-  color: var(--apple-music-color);
-}
-
-.loader.Youtube {
-  color: var(--youtube-music-color);
-}
-
-.loader.Deezer {
-  color: var(--deezer-color);
-}
-
-.loader.SoundCloud {
-  color: var(--soundcloud-color);
+  @include platform-color(color);
 }
 
 .loader:before,
