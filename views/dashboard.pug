@@ -13,7 +13,6 @@ block inset_content
         h1 Dashboard for
         img(src='../images/' + platform + '-logo.svg', class='dashboard-logo' style='padding-left: var(--spacing-2)')
     
-    include partials/music_player.pug
     h2 Your Playlists
 
     .playlist-and-songs-container
@@ -30,7 +29,8 @@ block inset_content
 
         div.playlist-songs(style="display: none;" class=platform)
             ul.song-list
-    
+
+    include partials/music_player.pug  
 
     script.
         function togglePlaylist(playlist) {
