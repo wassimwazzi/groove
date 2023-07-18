@@ -1,32 +1,17 @@
 if platform == 'spotify'
   include music_players/_spotify_player.pug
 
-//- .music-player
-//-   .song-info
-//-     .song-image
-//-       img(src="../images/playlist-placeholder-spotify.jpg", class="now-playing-cover")
-//-     .song-details
-//-       .song-name
-//-       .song-artist
-//-   .controls
-//-     .playback-controls
-//-       button#prev-btn Previous
-//-       button#play-pause-btn Play/Pause
-//-       button#next-btn Next
-
-//-     .progress-bar
-
-//-   input#volume-control(type="range" min="0" max="1" step="0.01" value="1")
-
 <div class="player">
     <ul>
         <li class="cover">
             <img src="http://i1285.photobucket.com/albums/a583/TheGreatOzz1/Hosted-Images/Noisy-Freeks-Image_zps4kilrxml.png"/>
         </li>
         <li class="song-info">
-            <h1>The Noisy Freaks</h1>
-            <h4>Premiere</h4>
-            <h2>I Need You Back</h2>
+            <div class="info-wrapper">
+                <h1>The Noisy Freaks</h1>
+                <h4>Premiere</h4>
+                <h2>I Need You Back</h2>
+            </div>
 
             <div class="button-items">
                 <audio id="music" preload="auto" loop="false">
@@ -63,8 +48,6 @@ if platform == 'spotify'
         </li>
     </ul>
 </div>
-
-<p class="social"><a target="_blank" href="https://twitter.com/kirkbyo_" class="twitter">Twitter</a> | <a target="_blank" href="https://github.com/kirkbyo" class="github">Github</a></p>
 
 script.
   var music = document.getElementById("music");
