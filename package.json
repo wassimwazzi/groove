@@ -2,9 +2,9 @@
   "name": "groove",
   "version": "0.0.1",
   "description": "Groove",
-  "main": "server.js",
+  "private": true,
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "nodemon src/server.js",
     "sass-watch": "sass --watch public/stylesheets/application.scss public/stylesheets/output.css",
     "eslint": "eslint --ext js,jsx,ts,tsx .",
     "eslint-fix": "eslint . --ext js,jsx --fix",
@@ -14,7 +14,7 @@
     "format-staged": "prettier --write",
     "pre-commit": "lint-staged",
     "prepare": "husky install",
-    "test": "nyc mocha --recursive test"
+    "test": "nyc mocha --recursive src/test"
   },
   "type": "module",
   "dependencies": {
@@ -49,7 +49,9 @@
     "nyc": "^15.1.0",
     "pre-commit": "^1.2.2",
     "prettier": "^3.0.0",
-    "sinon": "^15.2.0"
+    "sinon": "^15.2.0",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
   },
   "lint-staged": {
     "*.{js,jsx}": [
