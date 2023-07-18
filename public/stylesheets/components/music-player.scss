@@ -10,7 +10,7 @@ $player-width: 100%;
   user-select: none;
 }
 
-.player {
+.music-player {
   height: $player-height;
   width: $player-width;
   background-color: var(--secondary-color-dark);
@@ -39,7 +39,7 @@ $player-width: 100%;
   }
 }
 
-.player .song-info {
+.music-player .song-info {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -85,7 +85,7 @@ $player-width: 100%;
       }
     }
 
-    #timer {
+    .timer {
       line-height: 0;
       font-size: 9pt;
       float: right;

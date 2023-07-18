@@ -1,6 +1,7 @@
-console.log('included spotify_player.js')
 window.onSpotifyWebPlaybackSDKReady = () => {
   const token = document.querySelector('#spotify-access-token').dataset.token
+  const musicPlayer = document.getElementById('js-music-player')
+  let currentTrackId
   console.log(token)
   // eslint-disable-next-line no-undef
   const player = new Spotify.Player({
@@ -24,11 +25,20 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         play: false,
       }),
     })
-      .then((res) => {
-        console.log(res)
+      .then((response) => {
+        if (!response.ok) {
+          console.log('error', response)
+          return
+        }
+        console.log('Device set')
+        musicPlayer.dispatchEvent(
+          new CustomEvent('setPlayerReady', {
+            detail: true,
+          }),
+        )
       })
       .catch((err) => {
-        console.log(err)
+        console.log("Couldn't set device: ", err)
       })
   })
 
@@ -70,12 +80,23 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     player.setVolume(e.detail)
   })
 
-  player.addListener('player_state_changed', (state) => {
-    if (!state) {
-      console.log('no state')
+  player.addListener('player_state_changed', ({ paused, duration, track_window: { current_track } }) => {
+    if (!current_track || current_track.id === currentTrackId) {
       return
     }
-    // console.log('state_changed ', state)
+    const trackDetails = {
+      name: current_track.name,
+      artist: current_track.artists.map((artist) => artist.name).join(' & '),
+      album: current_track.album.name,
+      image: current_track.album.images.length > 0 ? current_track.album.images[0].url : '',
+      duration: duration / 1000,
+      paused,
+    }
+    musicPlayer.dispatchEvent(
+      new CustomEvent('setTrack', {
+        detail: trackDetails,
+      }),
+    )
   })
 
   player.connect()

@@ -1,7 +1,7 @@
 if platform == 'spotify'
   include music_players/_spotify_player.pug
 
-<div class="player">
+<div id="js-music-player" class="music-player">
     <ul>
         <li class="cover">
             <img src="http://i1285.photobucket.com/albums/a583/TheGreatOzz1/Hosted-Images/Noisy-Freeks-Image_zps4kilrxml.png"/>
@@ -16,8 +16,8 @@ if platform == 'spotify'
             <div class="button-items">
                 <audio id="js-music" loop="false">
                 </audio>
-                <div id="slider"><div id="elapsed"></div></div>
-                <p id="timer">0:00</p>
+                <div id="js-music-slider"><div id="js-slider-elapsed"></div></div>
+                <p id="js-music-timer" class="timer">0:00</p>
                 <div class="controls">
                     <span id="js-prev-track" class="expend"><svg class="step-backward" viewBox="0 0 25 25" xml:space="preserve">
                         <g><polygon points="4.9,4.3 9,4.3 9,11.6 21.4,4.3 21.4,20.7 9,13.4 9,20.7 4.9,20.7"/></g>
@@ -48,15 +48,24 @@ if platform == 'spotify'
 </div>
 
 script.
+  const musicPlayer = document.getElementById("js-music-player");
   const music = document.getElementById("js-music");
   const playButton = document.getElementById("js-play-music");
   const pauseButton = document.getElementById("js-pause-music");
   const prevTrackButton = document.getElementById("js-prev-track");
   const nextTrackButton = document.getElementById("js-next-track");
-  const playhead = document.getElementById("elapsed");
-  const timeline = document.getElementById("slider");
-  const timer = document.getElementById("timer");
-  var duration;
+  const playhead = document.getElementById("js-slider-elapsed");
+  const timeline = document.getElementById("js-music-slider");
+  const timer = document.getElementById("js-music-timer");
+  let isPlayerReady = false;
+  let duration = 0; // in seconds
+  let trackName = "";
+  let artistName = "";
+  let albumName = "";
+  let albumCover = "";
+  let isPaused = true;
+
+  toggleControlsClickable();
 
   // Events sent by the music player.
   // Platform specific implementation should listen for these events.
@@ -67,17 +76,63 @@ script.
   const getSeekToEvent = (time) => new CustomEvent('seekTo', { detail: { time } }); // time in ms
   const getSetVolumeEvent = (volume) => new CustomEvent('setVolume', { detail: { volume } }); // volume in [0, 1]
   const getSetShuffleEvent = (shuffle) => new CustomEvent('setShuffle', { detail: { shuffle } }); // shuffle is a boolean
-  
-  pauseButton.style.visibility = "hidden";
 
-  var timelineWidth = timeline.offsetWidth - playhead.offsetWidth;
+  // Events sent to the music player.
+
+  // This event should be triggered when the player is ready to receive events.  
+  musicPlayer.addEventListener("setPlayerReady", (e) => {
+    const isReady = e.detail;
+    console.log("setting player ready to", isReady);
+    isPlayerReady = isReady;
+    toggleControlsClickable();
+  }, false);
+
+  // This event should be triggered when a new track is loaded.
+  musicPlayer.addEventListener("setTrack", (e) => {
+    trackName = e.detail.name;
+    artistName = e.detail.artist;
+    albumName = e.detail.album;
+    albumCover = e.detail.cover;
+    duration = e.detail.duration;
+    isPaused = e.detail.paused;
+    if (isPaused) {
+      playButton.style.visibility = "visible";
+      pauseButton.style.visibility = "hidden";
+    } else {
+      playButton.style.visibility = "hidden";
+      pauseButton.style.visibility = "visible";
+    }
+    playhead.style.width = "0px";
+    timer.innerHTML = "0:00";
+  }, false);
+
+  pauseButton.style.visibility = "hidden";
+  let timelineWidth = timeline.offsetWidth - playhead.offsetWidth;
   music.addEventListener("timeupdate", timeUpdate, false);
 
+  function toggleControlsClickable() {
+    if (isPlayerReady) {
+      playButton.style.pointerEvents = "auto";
+      pauseButton.style.pointerEvents = "auto";
+      prevTrackButton.style.pointerEvents = "auto";
+      nextTrackButton.style.pointerEvents = "auto";
+    } else {
+      console.log("player not ready")
+      playButton.style.pointerEvents = "none";
+      pauseButton.style.pointerEvents = "none";
+      prevTrackButton.style.pointerEvents = "none";
+      nextTrackButton.style.pointerEvents = "none";
+    }
+  }
+
   function timeUpdate() {
-    var playPercent = timelineWidth * (music.currentTime / duration);
+    if (duration == 0) {
+      return;
+    }
+    let playPercent = timelineWidth * (music.currentTime / duration);
     playhead.style.width = playPercent + "px";
 
-    var secondsIn = Math.floor(((music.currentTime / duration) / 3.5) * 100);
+    let secondsIn = Math.floor(((music.currentTime / duration) / 3.5) * 100);
     if (secondsIn <= 9) {
       timer.innerHTML = "0:0" + secondsIn;
     } else {
@@ -104,7 +159,3 @@ script.
   nextTrackButton.onclick = function() {
     window.dispatchEvent(getNextTrackEvent());
   }
-
-  music.addEventListener("canplaythrough", function () {
-    duration = music.duration;
-  }, false);
