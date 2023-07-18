@@ -1,3 +1,4 @@
+console.log('included spotify_player.js')
 window.onSpotifyWebPlaybackSDKReady = () => {
   const token = document.querySelector('#spotify-access-token').dataset.token
   console.log(token)
@@ -47,9 +48,10 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     console.error(message)
   })
 
-  document.getElementById('togglePlay').onclick = function () {
+  window.addEventListener('toggleMusic', () => {
+    console.log('toggleMusic')
     player.togglePlay()
-  }
+  })
 
   player.addListener('player_state_changed', (state) => {
     if (!state) {

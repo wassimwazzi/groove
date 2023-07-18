@@ -101,7 +101,7 @@ $player-width: 100%;
       }
     }
     
-    #play {
+    .play-music {
       padding: 0 3px;
       width: 30px;
       height: 30px;
@@ -120,7 +120,7 @@ $player-width: 100%;
       }
     }
     
-    #play:hover {
+    .play-music:hover {
       cursor: pointer;
       g {
         stroke: #8f4da9;
@@ -159,7 +159,7 @@ $player-width: 100%;
       }
     }
     
-    #pause {
+    .pause-music {
       x: 0px;
       y: 0px;
       enable-background: new 0 0 25 25;
@@ -174,7 +174,7 @@ $player-width: 100%;
       }
     }
     
-    #pause:hover rect {
+    .pause-music:hover rect {
       fill: #8f4da9;
     }
     
