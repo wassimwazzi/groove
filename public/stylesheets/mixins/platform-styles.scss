@@ -1,0 +1,11 @@
+@use '../variables' as vars;
+
+@mixin platform-color($properties...) {
+  @each $platform, $color in vars.$platform-colors {
+    &.#{$platform} {
+      @each $property in $properties {
+        #{$property}: $color;
+      }
+    }
+  }
+}

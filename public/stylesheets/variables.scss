@@ -6,6 +6,15 @@ $desktop-width: 1025px;
 $breakpoint-tablet: 1024px;
 $breakpoint-mobile: 767px;
 
+/* Platforms */
+$platform-colors: (
+  'spotify': var(--spotify-color),
+  'apple-music': var(--apple-music-color),
+  'youtube-music': var(--youtube-music-color),
+  'deezer': var(--deezer-color),
+  'soundcloud': var(--soundcloud-color),
+);
+
 :root {
   /* Colors */
   /* Primary colors */

@@ -3,13 +3,13 @@ const loadedPlaylists = {}
 
 // eslint-disable-next-line no-unused-vars
 function fetchPlaylistSongs(playlistId, platform) {
-  const playlistSongs = document.querySelector('.playlist-songs')
-  const songsList = playlistSongs.querySelector('ul')
-  songsList.innerHTML = `<div class="loader ${platform}"></div>`
   if (loadedPlaylists[playlistId]) {
     songsList.innerHTML = loadedPlaylists[playlistId]
     return
   }
+  const playlistSongs = document.querySelector('.playlist-songs')
+  const songsList = playlistSongs.querySelector('ul')
+  songsList.innerHTML = `<div class="loader ${platform}"></div>`
 
   fetch(`/api/playlists/${playlistId}/tracks?platform=${platform}`)
     .then((response) => {

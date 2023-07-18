@@ -22,18 +22,14 @@
   }
 }
 
-
 .FlashMessage + .FlashMessage {
   margin-top: var(--spacing-1);
 }
 
 .FlashMessage--notice {
-  border: var(--line-light) solid var(--notice-colour);
-  color: var(--notice-colour);
-
   .FlashMessage-inner {
-    border: var(--line-light) solid var(--alert-colour);
-    color: var(--alert-colour);
+    border: var(--line-light) solid var(--notice-colour);
+    color: var(--notice-colour);
   }
 }
 
@@ -52,4 +48,3 @@
     color: var(--a4-neutral);
   }
 }
-
