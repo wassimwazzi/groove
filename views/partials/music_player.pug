@@ -19,7 +19,7 @@ if platform == 'spotify'
                 <div id="slider"><div id="elapsed"></div></div>
                 <p id="timer">0:00</p>
                 <div class="controls">
-                    <span class="expend"><svg class="step-backward" viewBox="0 0 25 25" xml:space="preserve">
+                    <span id="js-prev-track" class="expend"><svg class="step-backward" viewBox="0 0 25 25" xml:space="preserve">
                         <g><polygon points="4.9,4.3 9,4.3 9,11.6 21.4,4.3 21.4,20.7 9,13.4 9,20.7 4.9,20.7"/></g>
                     </svg></span>
 
@@ -38,7 +38,7 @@ if platform == 'spotify'
                         </g>
                     </svg>
 
-                    <span class="expend"><svg class="step-foreward" viewBox="0 0 25 25" xml:space="preserve">
+                    <span id="js-next-track" class="expend"><svg class="step-foreward" viewBox="0 0 25 25" xml:space="preserve">
                         <g><polygon points="20.7,4.3 16.6,4.3 16.6,11.6 4.3,4.3 4.3,20.7 16.7,13.4 16.6,20.7 20.7,20.7"/></g>
                     </svg></span>
                 </div>
@@ -51,6 +51,8 @@ script.
   const music = document.getElementById("js-music");
   const playButton = document.getElementById("js-play-music");
   const pauseButton = document.getElementById("js-pause-music");
+  const prevTrackButton = document.getElementById("js-prev-track");
+  const nextTrackButton = document.getElementById("js-next-track");
   const playhead = document.getElementById("elapsed");
   const timeline = document.getElementById("slider");
   const timer = document.getElementById("timer");
@@ -93,6 +95,14 @@ script.
     window.dispatchEvent(getTogglePlayEvent());
     playButton.style.visibility = "visible";
     pauseButton.style.visibility = "hidden";
+  }
+
+  prevTrackButton.onclick = function() {
+    window.dispatchEvent(getPreviousTrackEvent());
+  }
+
+  nextTrackButton.onclick = function() {
+    window.dispatchEvent(getNextTrackEvent());
   }
 
   music.addEventListener("canplaythrough", function () {
