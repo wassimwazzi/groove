@@ -75,6 +75,7 @@ script.
   musicPlayer.addEventListener("setPlayerReady", (e) => {
     const isReady = e.detail;
     isPlayerReady = isReady;
+    console.log("Player is " + (isReady ? "ready" : "not ready"));
     toggleControlsClickable();
   }, false);
 

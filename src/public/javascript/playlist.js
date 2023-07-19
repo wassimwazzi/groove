@@ -2,7 +2,10 @@
 const loadedPlaylists = {}
 
 // eslint-disable-next-line no-unused-vars
-function fetchPlaylistSongs(playlistId, platform) {
+function fetchPlaylistSongs(playlist, platform) {
+  const playlistId = playlist.id
+  const ownerId = playlist.ownerId
+  console.log('ownerId', ownerId, 'playlistId', playlistId)
   if (loadedPlaylists[playlistId]) {
     songsList.innerHTML = loadedPlaylists[playlistId]
     return
@@ -26,11 +29,14 @@ function fetchPlaylistSongs(playlistId, platform) {
       tracks.forEach(({ track }) => {
         const image = track.album && track.album.images.length > 0 ? track.album.images[0].url : ''
         const artists = track.artists.map((artist) => artist.name).join(' & ')
+        const playlistContext = `spotify:user:${ownerId}:playlist:${playlistId}`
         innerHTML += `
-          <a href="${track.preview_url}" class="song-list-item">
+          <a class="song-list-item" onClick="setCurrentTracks('${platform}', ['${track.uri}'], '${playlistContext}')">
             ${image ? `<img src="${image}" alt="Album Cover">` : ''}
             <div class="playlist-song-info">
-              <span class="name">${track.name}</span>
+              <span class="name">
+                ${track.name}
+              </span>
               <span class="artist">${artists}</span>
             </div>
           </a>
@@ -38,5 +44,28 @@ function fetchPlaylistSongs(playlistId, platform) {
       })
       songsList.innerHTML = innerHTML
       loadedPlaylists[playlistId] = songsList.innerHTML
+    })
+}
+
+// eslint-disable-next-line no-unused-vars
+function setCurrentTracks(platform, tracks, context) {
+  fetch(`/api/player/current?platform=${platform}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ tracks, context }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        console.log('error', response)
+        document.querySelector('#refresh-page').style.display = 'block'
+        window.scrollTo(0, 0)
+        return
+      }
+      return response.json()
+    })
+    .catch((error) => {
+      console.log(error)
     })
 }

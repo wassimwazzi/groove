@@ -1,4 +1,4 @@
-import { getPlaylistTracks } from '../../controllers/playlists_controller.js'
+import { getPlaylistTracks } from '../../controllers/api/playlists_controller.js'
 import PlatformsManager from '../../utils/platforms_manager.js'
 import sinon from 'sinon'
 

@@ -21,7 +21,7 @@ block inset_content
                 div.playlists-container
                     ul.playlists
                         each playlist in playlists
-                            li.playlist-item(onclick="togglePlaylist(this)" id=playlist.id class=platform)
+                            li.playlist-item(onclick="togglePlaylist(this)" data-id=playlist.id data-owner-id=playlist.owner.id class=platform)
                                 .horizontal-align-left
                                     if playlist.images.length > 0
                                         img(src=playlist.images[0].url, class='playlist-image')
@@ -38,6 +38,8 @@ block inset_content
         function togglePlaylist(playlist) {
             const songs = document.querySelector('.playlist-songs');
             const platform = document.querySelector('#platform').dataset.platform;
+            const id = playlist.dataset.id;
+            const ownerId = playlist.dataset.ownerId;
             requestAnimationFrame(async () => {
                 // if playlist is active, then uncollapse the container
                 if (playlist.classList.contains('active')) {
@@ -46,7 +48,7 @@ block inset_content
                     songs.style.display = 'none';
                 } else {
                     const activePlaylist = document.querySelector('.playlist-item.active');
-                    await fetchPlaylistSongs(playlist.id, platform);
+                    await fetchPlaylistSongs({id, ownerId}, platform);
 
                     playlist.classList.toggle('active');
                     /** 

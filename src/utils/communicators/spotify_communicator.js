@@ -38,4 +38,24 @@ export default class SpotifyCommunicator extends BaseCommunicator {
     const data = await this.spotifyApi.getPlaylistTracks(playlistId)
     return data.body.items
   }
+
+  /**
+   * Sets the current tracks of the player.
+   * @param {Object} req - The request object.
+   * @param {Array} tracks - The tracks to set.
+   * @param {string} context - The context of the tracks.
+   * @memberof SpotifyCommunicator
+   * @instance
+   * @function setCurrentTracks
+   */
+  async setCurrentTracks(req, tracks, context) {
+    this.spotifyApi.setAccessToken(req.session.spotifyAccessToken)
+    if (tracks.length > 0) {
+      await this.spotifyApi.play({ uris: tracks })
+    } else if (context) {
+      await this.spotifyApi.play({ context_uri: context })
+    } else {
+      console.log('No tracks or context provided')
+    }
+  }
 }

@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser'
 import authRouter from './routers/auth_router.js'
 import dashboardRouter from './routers/dashboard_router.js'
 import playlistsRouter from './routers/playlists_router.js'
+import playerRouter from './routers/player_router.js'
 import flashMiddleware from './middleware/flash_middleware.js'
 import flash from 'connect-flash'
 
@@ -13,6 +14,7 @@ export const app = express()
 app.set('views', './src/views')
 app.set('view engine', 'pug')
 app
+  .use(express.json())
   .use(express.static('src/public'))
   .use(cors())
   .use(cookieParser())
@@ -30,6 +32,7 @@ app
   .use(authRouter)
   .use(dashboardRouter)
   .use(playlistsRouter)
+  .use(playerRouter)
 
 const listener = app.listen(3000, function () {
   console.log('Your app is listening on http://localhost:' + listener.address().port)

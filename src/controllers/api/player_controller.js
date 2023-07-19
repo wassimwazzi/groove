@@ -1,9 +1,11 @@
-// import PlatformsManager from '../../utils/platforms_manager.js'
+import PlatformsManager from '../../utils/platforms_manager.js'
 
-// async function setPlayerTrack(req, res) {
-//   const platform = req.query.platform
-//   // trackId, context
-//   const communicator = PlatformsManager.getCommunicator(platform)
-//   const track = await communicator.setPlayerTrack(req, trackId)
-//   res.send(track)
-// }
+async function setPlayerTrack(req, res) {
+  const platform = req.query.platform
+  const { tracks, context } = req.body
+  const communicator = PlatformsManager.getCommunicator(platform)
+  await communicator.setCurrentTracks(req, tracks, context)
+  res.send()
+}
+
+export { setPlayerTrack }
