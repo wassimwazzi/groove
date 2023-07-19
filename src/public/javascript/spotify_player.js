@@ -78,7 +78,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
   window.addEventListener('setVolume', (e) => {
     // e.detail is the volume to set, between 0 and 1
-    player.setVolume(e.detail)
+    player.setVolume(e.detail.volume)
   })
 
   player.addListener('player_state_changed', ({ position, paused, duration, track_window: { current_track } }) => {
@@ -93,6 +93,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       duration: duration / 1000,
       elapsedTime: position / 1000,
       paused,
+      volume: player.getVolume(),
     }
     musicPlayer.dispatchEvent(
       new CustomEvent('setTrack', {

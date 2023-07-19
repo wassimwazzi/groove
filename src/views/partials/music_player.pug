@@ -36,7 +36,7 @@ if platform == 'spotify'
       .volume
         img(src='../../images/volume-on.svg', class='volume-icon')
         #js-volume-slider.volume-slider
-          div#js-slider-volume-head(class=platform)
+          div#js-volume-slider-head(class=platform)
 
 script.
   const musicPlayer = document.getElementById("js-music-player");
@@ -48,9 +48,9 @@ script.
   const sliderHead = document.getElementById("js-slider-elapsed");
   const posSlider = document.getElementById("js-music-slider");
   const timer = document.getElementById("js-music-timer");
-  const sliderHeadDefaultWidth = 4;
-  const volumeSlider = document.getElementById("js-slider-volume");
-  const volumeSliderHead = document.getElementById("js-slider-volume-head");
+  const sliderHeadDefaultSize = 4;
+  const volumeSlider = document.getElementById("js-volume-slider");
+  const volumeSliderHead = document.getElementById("js-volume-slider-head");
   let isPlayerReady = false;
   let duration = 0; // in seconds
   let elapsedTime = 0; // in seconds
@@ -60,7 +60,9 @@ script.
   let albumName = "";
   let albumCover = ""; // src of the album cover image
   let isPaused = true;
-  let dragging = false;
+  let volume = 0.5;
+  let posDragging = false;
+  let volDragging = false;
 
   toggleControlsClickable();
 
@@ -93,8 +95,10 @@ script.
     duration = e.detail.duration;
     elapsedTime = e.detail.elapsedTime;
     isPaused = e.detail.paused;
+    volume = e.detail.volume;
     intervalTimer = clearInterval(intervalTimer); // always clear first so we don't have multiple timers running
     updateSlider(false);
+    volumeSliderHead.style.bottom = volume * volumeSlider.offsetHeight + "px";
     if (isPaused) {
       playButton.style.visibility = "visible";
       pauseButton.style.visibility = "hidden";
@@ -147,24 +151,6 @@ script.
     return timeString;
   }
 
-  function setTime() {
-    timer.innerHTML = `${formatTime(elapsedTime)} / ${formatTime(duration)}`;
-  }
-
-  function setSliderPosition() {
-    let sliderWidth = posSlider.offsetWidth - sliderHeadDefaultWidth;
-    let playPercent = sliderWidth * (elapsedTime / duration);
-    sliderHead.style.width = playPercent + "px";
-  }
-
-  function updateSlider(inc=true) {
-    if (inc) {
-      elapsedTime += 1;
-    }
-    setTime();
-    setSliderPosition();
-  }
-
   playButton.onclick = function() {
     window.dispatchEvent(getTogglePlayEvent());
     playButton.style.visibility = "hidden";
@@ -190,6 +176,29 @@ script.
   }
 
   // slider control
+  function setTime() {
+    timer.innerHTML = `${formatTime(elapsedTime)} / ${formatTime(duration)}`;
+  }
+
+  function setSliderPosition() {
+    let sliderWidth = posSlider.offsetWidth - sliderHeadDefaultSize;
+    let playPercent = sliderWidth * (elapsedTime / duration);
+    sliderHead.style.width = playPercent + "px";
+  }
+
+  function setVolumeSliderPosition(mouseY) {
+    let relativePosition = volumeSlider.getBoundingClientRect().bottom - mouseY;
+    relativePosition = Math.min(volumeSlider.offsetHeight, Math.max(0, relativePosition)) // ensure position is within size
+    volumeSliderHead.style.bottom = relativePosition + "px";
+  }
+
+  function updateSlider(inc=true) {
+    if (inc) {
+      elapsedTime += 1;
+    }
+    setTime();
+    setSliderPosition();
+  }
    // Function to calculate the percentage
   function calculatePercentage(position, size) {
     position = Math.min(size, Math.max(0, position)) // ensure position is within size
@@ -206,23 +215,40 @@ script.
 
   // Event listeners for slider head movement
   posSlider.addEventListener('mousedown', (e) => {
-    dragging = true;
+    posDragging = true;
     elapsedTime = sliderTimeFromMousePosition(e.clientX);
     updateSlider(false);
   });
 
+  volumeSlider.addEventListener('mousedown', (e) => {
+    volDragging = true;
+    setVolumeSliderPosition(e.clientY);
+  });
+
   document.addEventListener('mouseup', (e) => {
-    if (dragging) {
-      dragging = false;
+    if (posDragging) {
+      posDragging = false;
       elapsedTime = sliderTimeFromMousePosition(e.clientX);
       updateSlider(false);
       window.dispatchEvent(getSeekToEvent(elapsedTime));
+    } else if (volDragging) {
+      volDragging = false;
+      setVolumeSliderPosition(e.clientY);
+      const percentage = calculatePercentage(e.clientY, volumeSlider.offsetHeight);
+      const volume = percentage / 100;
+      window.dispatchEvent(getSetVolumeEvent(volume));
     }
   });
 
   document.addEventListener('mousemove', (e) => {
-    if (dragging) {
+    if (posDragging) {
       elapsedTime = sliderTimeFromMousePosition(e.clientX);
       updateSlider(false);
+    } else if (volDragging) {
+      setVolumeSliderPosition(e.clientY);
+      const percentage = calculatePercentage(e.clientY, volumeSlider.offsetHeight);
+      const volume = percentage / 100;
+      window.dispatchEvent(getSetVolumeEvent(volume));
     }
   });
+
