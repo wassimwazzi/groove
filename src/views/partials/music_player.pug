@@ -98,7 +98,8 @@ script.
     volume = e.detail.volume;
     intervalTimer = clearInterval(intervalTimer); // always clear first so we don't have multiple timers running
     updateSlider(false);
-    volumeSliderHead.style.bottom = volume * volumeSlider.offsetHeight + "px";
+    volumeSliderHead.style.height = volume * volumeSlider.offsetHeight + "px";
+    toggleVolumeIcon();
     if (isPaused) {
       playButton.style.visibility = "visible";
       pauseButton.style.visibility = "hidden";
@@ -189,7 +190,16 @@ script.
   function setVolumeSliderPosition(mouseY) {
     let relativePosition = volumeSlider.getBoundingClientRect().bottom - mouseY;
     relativePosition = Math.min(volumeSlider.offsetHeight, Math.max(0, relativePosition)) // ensure position is within size
-    volumeSliderHead.style.bottom = relativePosition + "px";
+    volumeSliderHead.style.height = relativePosition + "px";
+    toggleVolumeIcon()
+  }
+
+  function toggleVolumeIcon() {
+    if (volume == 0) {
+      document.querySelector(".volume-icon").src = "../../images/volume-mute.svg";
+    } else {
+      document.querySelector(".volume-icon").src = "../../images/volume-on.svg";
+    }
   }
 
   function updateSlider(inc=true) {
@@ -234,8 +244,9 @@ script.
     } else if (volDragging) {
       volDragging = false;
       setVolumeSliderPosition(e.clientY);
-      const percentage = calculatePercentage(e.clientY, volumeSlider.offsetHeight);
-      const volume = percentage / 100;
+      const relY = volumeSlider.getBoundingClientRect().bottom - e.clientY;
+      const percentage = calculatePercentage(relY, volumeSlider.offsetHeight);
+      volume = percentage / 100;
       window.dispatchEvent(getSetVolumeEvent(volume));
     }
   });
@@ -246,8 +257,9 @@ script.
       updateSlider(false);
     } else if (volDragging) {
       setVolumeSliderPosition(e.clientY);
-      const percentage = calculatePercentage(e.clientY, volumeSlider.offsetHeight);
-      const volume = percentage / 100;
+      const relY = volumeSlider.getBoundingClientRect().bottom - e.clientY;
+      const percentage = calculatePercentage(relY, volumeSlider.offsetHeight);
+      volume = percentage / 100;
       window.dispatchEvent(getSetVolumeEvent(volume));
     }
   });

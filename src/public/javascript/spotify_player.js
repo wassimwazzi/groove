@@ -81,26 +81,29 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     player.setVolume(e.detail.volume)
   })
 
-  player.addListener('player_state_changed', ({ position, paused, duration, track_window: { current_track } }) => {
-    if (!current_track || current_track.id === currentTrackId) {
-      return
-    }
-    const trackDetails = {
-      name: current_track.name,
-      artist: current_track.artists.map((artist) => artist.name).join(' & '),
-      album: current_track.album.name,
-      cover: current_track.album.images.length > 0 ? current_track.album.images[0].url : '',
-      duration: duration / 1000,
-      elapsedTime: position / 1000,
-      paused,
-      volume: player.getVolume(),
-    }
-    musicPlayer.dispatchEvent(
-      new CustomEvent('setTrack', {
-        detail: trackDetails,
-      }),
-    )
-  })
+  player.addListener(
+    'player_state_changed',
+    async ({ position, paused, duration, track_window: { current_track } }) => {
+      if (!current_track || current_track.id === currentTrackId) {
+        return
+      }
+      const trackDetails = {
+        name: current_track.name,
+        artist: current_track.artists.map((artist) => artist.name).join(' & '),
+        album: current_track.album.name,
+        cover: current_track.album.images.length > 0 ? current_track.album.images[0].url : '',
+        duration: duration / 1000,
+        elapsedTime: position / 1000,
+        paused,
+        volume: await player.getVolume(),
+      }
+      musicPlayer.dispatchEvent(
+        new CustomEvent('setTrack', {
+          detail: trackDetails,
+        }),
+      )
+    },
+  )
 
   player.connect()
 }
