@@ -72,8 +72,8 @@
   --font-large: 20px;
   --font-xlarge: 48px;
   /* Font families */
-  --font-family-primary: 'Times New Roman', serif;
-  --font-family-secondary: 'Helevectica', sans-serif;
+  --font-family-primary: "Times New Roman", serif;
+  --font-family-secondary: "Helevectica", sans-serif;
   /* Font weights */
   --font-weight-light: 300;
   --font-weight-regular: 400;
@@ -195,8 +195,8 @@
   --font-large: 20px;
   --font-xlarge: 48px;
   /* Font families */
-  --font-family-primary: 'Times New Roman', serif;
-  --font-family-secondary: 'Helevectica', sans-serif;
+  --font-family-primary: "Times New Roman", serif;
+  --font-family-secondary: "Helevectica", sans-serif;
   /* Font weights */
   --font-weight-light: 300;
   --font-weight-regular: 400;
@@ -351,7 +351,7 @@
   text-decoration: none;
 }
 .navbar-links a.active::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   bottom: -3px;
@@ -563,7 +563,7 @@ p {
 .loader:before,
 .loader:after {
   position: absolute;
-  content: '';
+  content: "";
 }
 
 .loader:before {
@@ -753,7 +753,7 @@ p {
 }
 
 .music-player {
-  height: 20vh;
+  height: 15vh;
   width: 100%;
   background-color: var(--secondary-color-dark);
   position: fixed;
@@ -778,8 +778,8 @@ p {
   left: 0;
 }
 .cover img {
-  height: 20vh;
-  width: 20vh;
+  height: 15vh;
+  width: 15vh;
 }
 
 .music-player .player-song-info {
@@ -805,25 +805,27 @@ p {
 .music-player .player-song-info .info-wrapper {
   display: flex;
   flex-direction: column;
-  margin-right: 10px;
+  margin-right: var(--spacing-2);
+  width: 50%;
 }
 .music-player .player-song-info .button-items {
-  margin-left: 180px;
+  margin-left: var(--spacing-5);
+  width: 50%;
   display: flex;
   flex-direction: column;
   margin-top: var(--spacing-3);
 }
 .music-player .player-song-info .button-items .slider {
   width: 182px;
-  height: 4px;
+  height: 8px;
   background: var(--c2-black);
-  border-radius: 2px;
+  border-radius: var(--radius-small);
 }
 .music-player .player-song-info .button-items .slider div {
   width: 4px;
-  height: 4px;
+  height: 8px;
   margin-top: 1px;
-  border-radius: 2px;
+  border-radius: var(--radius-small);
 }
 .music-player .player-song-info .button-items .slider div.spotify {
   background: var(--spotify-color);

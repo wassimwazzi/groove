@@ -68,9 +68,12 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     player.previousTrack()
   })
 
-  window.addEventListener('seek', (e) => {
-    // e.detail is the time in ms to seek to
-    player.seek(e.detail)
+  window.addEventListener('seek', async (e) => {
+    const ms = e.detail.seconds * 1000
+    if (!ms) {
+      return
+    }
+    player.seek(ms)
   })
 
   window.addEventListener('setVolume', (e) => {

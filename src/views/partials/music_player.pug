@@ -43,10 +43,10 @@ script.
   const pauseButton = document.getElementById("js-pause-music");
   const prevTrackButton = document.getElementById("js-prev-track");
   const nextTrackButton = document.getElementById("js-next-track");
-  const playhead = document.getElementById("js-slider-elapsed");
-  const timeline = document.getElementById("js-music-slider");
+  const sliderHead = document.getElementById("js-slider-elapsed");
+  const slider = document.getElementById("js-music-slider");
   const timer = document.getElementById("js-music-timer");
-  const playHeadDefaultWidth = 4;
+  const sliderHeadDefaultWidth = 4;
   let isPlayerReady = false;
   let duration = 0; // in seconds
   let position = 0; // in seconds
@@ -56,6 +56,7 @@ script.
   let albumName = "";
   let albumCover = ""; // src of the album cover image
   let isPaused = true;
+  let dragging = false;
 
   toggleControlsClickable();
 
@@ -65,7 +66,7 @@ script.
   const getNextTrackEvent = () => new CustomEvent('nextTrack', {});
   const getPreviousTrackEvent = () => new CustomEvent('previousTrack', {});
   const getSetTrackEvent = (trackId) => new CustomEvent('setTrack', { detail: { trackId } });
-  const getSeekToEvent = (time) => new CustomEvent('seekTo', { detail: { time } }); // time in ms
+  const getSeekToEvent = (seconds) => new CustomEvent('seek', { detail: { seconds } }); // time in s
   const getSetVolumeEvent = (volume) => new CustomEvent('setVolume', { detail: { volume } }); // volume in [0, 1]
   const getSetShuffleEvent = (shuffle) => new CustomEvent('setShuffle', { detail: { shuffle } }); // shuffle is a boolean
 
@@ -147,9 +148,9 @@ script.
       position += 1;
     }
     timer.innerHTML = `${formatTime(position)} / ${formatTime(duration)}`;
-    let timelineWidth = timeline.offsetWidth - playHeadDefaultWidth;
-    let playPercent = timelineWidth * (position / duration);
-    playhead.style.width = playPercent + "px";
+    let sliderWidth = slider.offsetWidth - sliderHeadDefaultWidth;
+    let playPercent = sliderWidth * (position / duration);
+    sliderHead.style.width = playPercent + "px";
   }
 
   playButton.onclick = function() {
@@ -175,3 +176,54 @@ script.
   nextTrackButton.onclick = function() {
     window.dispatchEvent(getNextTrackEvent());
   }
+
+  // slider control
+   // Function to calculate the percentage
+  function calculatePercentage() {
+    const sliderWidth = slider.clientWidth;
+    const headPosition = parseFloat(sliderHead.style.left) || 0;
+    const percentage = (headPosition / sliderWidth) * 100;
+    return Math.round(percentage);
+  }
+
+  // Function to update the head position
+  function setHeadPosition(newPosition) {
+    const minPosition = 0;
+    const maxPosition = slider.clientWidth;
+
+    if (newPosition >= minPosition && newPosition <= maxPosition) {
+      sliderHead.style.left = newPosition + 'px';
+      sliderHead.style.width = newPosition + 'px';
+    }
+  }
+
+  // Event listeners for slider head movement
+  slider.addEventListener('mousedown', (e) => {
+    dragging = true;
+  });
+
+  document.addEventListener('mouseup', (e) => {
+    if (dragging) {
+      dragging = false;
+      const percentage = calculatePercentage();
+      const seconds = Math.round(percentage * duration / 100);
+      window.dispatchEvent(getSeekToEvent(seconds));
+    }
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (dragging) {
+      const sliderLeft = slider.getBoundingClientRect().left;
+      const newPosition = e.clientX - sliderLeft;
+
+      setHeadPosition(newPosition);
+    }
+  });
+
+  // Set the head position when clicked on the slider track
+  slider.addEventListener('mousedown', (e) => {
+    const sliderLeft = slider.getBoundingClientRect().left;
+    const newPosition = e.clientX - sliderLeft;
+
+    setHeadPosition(newPosition);
+  });

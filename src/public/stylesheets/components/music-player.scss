@@ -78,14 +78,14 @@ $player-width: 100%;
 
     .slider {
       width: 182px;
-      height: 4px;
+      height: 8px;
       background: var(--c2-black);
-      border-radius: 2px;
+      border-radius: var(--radius-small);
       div {
         width: 4px;
-        height: 4px;
+        height: 8px;
         margin-top: 1px;
-        border-radius: 2px;
+        border-radius: var(--radius-small);
         @include platform-color(background);
       }
     }

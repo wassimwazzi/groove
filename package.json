@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon src/server.js",
-    "sass-watch": "sass --watch public/stylesheets/application.scss public/stylesheets/output.css",
+    "sass-watch": "sass --watch src/public/stylesheets/application.scss src/public/stylesheets/output.css",
     "eslint": "eslint --ext js,jsx,ts,tsx .",
     "eslint-fix": "eslint . --ext js,jsx --fix",
     "eslint-staged-fix": "eslint . --ext js,jsx --fix",
