@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "description": "Groove",
   "private": true,
+  "engines": { "node": "16.x" },
   "scripts": {
-    "start": "nodemon src/server.js",
-    "sass-watch": "sass --watch public/stylesheets/application.scss public/stylesheets/output.css",
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development",
     "eslint": "eslint --ext js,jsx,ts,tsx .",
     "eslint-fix": "eslint . --ext js,jsx --fix",
     "eslint-staged-fix": "eslint . --ext js,jsx --fix",
@@ -14,6 +15,8 @@
     "format-staged": "prettier --write",
     "pre-commit": "lint-staged",
     "prepare": "husky install",
+    "start": "nodemon src/server.js",
+    "sass-watch": "sass --watch src/public/stylesheets/application.scss src/public/stylesheets/output.css",
     "test": "nyc mocha --recursive src/test"
   },
   "type": "module",

@@ -1,3 +1,5 @@
+import PlatformsManager from '../../utils/platforms_manager.js'
+
 // cache to track which playlists have been loaded to avoid unnecessary requests
 const loadedPlaylists = {}
 
@@ -39,4 +41,10 @@ function fetchPlaylistSongs(playlistId, platform) {
       songsList.innerHTML = innerHTML
       loadedPlaylists[playlistId] = songsList.innerHTML
     })
+}
+
+// eslint-disable-next-line no-unused-vars
+function setPlayerTrack(trackURIs, contextURI, platform) {
+  const communicator = PlatformsManager.getCommunicator(platform)
+  communicator.setTrack(trackURIs, contextURI)
 }
