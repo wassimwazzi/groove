@@ -187,9 +187,9 @@ script.
 
   // slider control
    // Function to calculate the percentage
-  function calculatePercentage() {
+  function calculatePercentage(headPosition) {
     const sliderWidth = slider.clientWidth;
-    const headPosition = parseFloat(sliderHead.style.left) || 0;
+    headPosition = Math.min(sliderWidth, Math.max(0, headPosition)) // ensure headPosition is within sliderWidth
     const percentage = (headPosition / sliderWidth) * 100;
     return Math.round(percentage);
   }
@@ -205,33 +205,32 @@ script.
     }
   }
 
+  function sliderTimeFromMousePosition(mouseX) {
+    const sliderLeft = slider.getBoundingClientRect().left;
+    const relativePosition = mouseX - sliderLeft;
+    const percentage = calculatePercentage(relativePosition);
+    return percentage * duration / 100;
+  }
+
   // Event listeners for slider head movement
   slider.addEventListener('mousedown', (e) => {
     dragging = true;
+    elapsedTime = sliderTimeFromMousePosition(e.clientX);
+    updateSlider(false);
   });
 
   document.addEventListener('mouseup', (e) => {
     if (dragging) {
       dragging = false;
-      const percentage = calculatePercentage();
-      const seconds = Math.round(percentage * duration / 100);
-      window.dispatchEvent(getSeekToEvent(seconds));
+      elapsedTime = sliderTimeFromMousePosition(e.clientX);
+      updateSlider(false);
+      window.dispatchEvent(getSeekToEvent(elapsedTime));
     }
   });
 
   document.addEventListener('mousemove', (e) => {
     if (dragging) {
-      const sliderLeft = slider.getBoundingClientRect().left;
-      const newPosition = e.clientX - sliderLeft;
-
-      setHeadPosition(newPosition);
+      elapsedTime = sliderTimeFromMousePosition(e.clientX);
+      updateSlider(false);
     }
-  });
-
-  // Set the head position when clicked on the slider track
-  slider.addEventListener('mousedown', (e) => {
-    const sliderLeft = slider.getBoundingClientRect().left;
-    const newPosition = e.clientX - sliderLeft;
-
-    setHeadPosition(newPosition);
   });
