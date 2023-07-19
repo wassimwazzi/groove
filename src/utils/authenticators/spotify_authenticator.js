@@ -1,7 +1,7 @@
 import BaseAuthenticator from './base_authenticator.js'
 import fetch from 'node-fetch'
 import querystring from 'querystring'
-import { spotifyClientId, spotifyClientSecret } from '../../config.js'
+import { spotifyClientId, spotifyClientSecret } from '../../../config.js'
 
 /**
  * Spotify Authenticator

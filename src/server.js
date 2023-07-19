@@ -10,10 +10,10 @@ import flash from 'connect-flash'
 
 export const app = express()
 
-app.set('views', './views')
+app.set('views', './src/views')
 app.set('view engine', 'pug')
 app
-  .use(express.static('public'))
+  .use(express.static('src/public'))
   .use(cors())
   .use(cookieParser())
   .use(
