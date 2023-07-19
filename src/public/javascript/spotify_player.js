@@ -91,7 +91,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       album: current_track.album.name,
       cover: current_track.album.images.length > 0 ? current_track.album.images[0].url : '',
       duration: duration / 1000,
-      position: position / 1000,
+      elapsedTime: position / 1000,
       paused,
     }
     musicPlayer.dispatchEvent(

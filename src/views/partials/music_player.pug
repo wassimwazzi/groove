@@ -49,7 +49,7 @@ script.
   const sliderHeadDefaultWidth = 4;
   let isPlayerReady = false;
   let duration = 0; // in seconds
-  let position = 0; // in seconds
+  let elapsedTime = 0; // in seconds
   let intervalTimer;
   let trackName = "";
   let artistName = "";
@@ -87,19 +87,19 @@ script.
     albumName = e.detail.album;
     albumCover = e.detail.cover;
     duration = e.detail.duration;
-    position = e.detail.position;
+    elapsedTime = e.detail.elapsedTime;
     isPaused = e.detail.paused;
     intervalTimer = clearInterval(intervalTimer); // always clear first so we don't have multiple timers running
-    updatePosition(false);
+    updateSlider(false);
     if (isPaused) {
       playButton.style.visibility = "visible";
       pauseButton.style.visibility = "hidden";
     } else {
       playButton.style.visibility = "hidden";
       pauseButton.style.visibility = "visible";
-      intervalTimer = setInterval(updatePosition, 1000);
+      intervalTimer = setInterval(updateSlider, 1000);
     }
-    timer.innerHTML = `${formatTime(position)} / ${formatTime(duration)}`;
+    timer.innerHTML = `${formatTime(elapsedTime)} / ${formatTime(duration)}`;
     setMusicPlayerDisplay();
   }, false);
 
@@ -143,14 +143,22 @@ script.
     return timeString;
   }
 
-  function updatePosition(inc=true) {
-    if (inc) {
-      position += 1;
-    }
-    timer.innerHTML = `${formatTime(position)} / ${formatTime(duration)}`;
+  function setTime() {
+    timer.innerHTML = `${formatTime(elapsedTime)} / ${formatTime(duration)}`;
+  }
+
+  function setSliderPosition() {
     let sliderWidth = slider.offsetWidth - sliderHeadDefaultWidth;
-    let playPercent = sliderWidth * (position / duration);
+    let playPercent = sliderWidth * (elapsedTime / duration);
     sliderHead.style.width = playPercent + "px";
+  }
+
+  function updateSlider(inc=true) {
+    if (inc) {
+      elapsedTime += 1;
+    }
+    setTime();
+    setSliderPosition();
   }
 
   playButton.onclick = function() {
