@@ -211,6 +211,7 @@ $player-width: 100%;
       background: var(--c2-black);
       border-radius: var(--radius-small);
       margin-left: var(--spacing-2);
+      position: relative;
 
       div {
         width: 8px;
@@ -218,6 +219,8 @@ $player-width: 100%;
         margin-top: 1px;
         border-radius: var(--radius-small);
         @include platform-color(background);
+        position: absolute;
+        bottom: 0;
       }
     }
 

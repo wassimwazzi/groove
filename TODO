@@ -4,3 +4,4 @@
 - Handle when Spotify SDK is disconnected. Ask user if they want to reconnect.
 - Server session secret
 - Mobile UI improvements
+- Handle very long song name in music player

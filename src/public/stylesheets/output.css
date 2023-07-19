@@ -946,12 +946,15 @@ p {
   background: var(--c2-black);
   border-radius: var(--radius-small);
   margin-left: var(--spacing-2);
+  position: relative;
 }
 .music-player .player-song-info .volume .volume-slider div {
   width: 8px;
   height: 4px;
   margin-top: 1px;
   border-radius: var(--radius-small);
+  position: absolute;
+  bottom: 0;
 }
 .music-player .player-song-info .volume .volume-slider div.spotify {
   background: var(--spotify-color);
