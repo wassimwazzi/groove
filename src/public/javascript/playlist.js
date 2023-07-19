@@ -5,12 +5,12 @@ const loadedPlaylists = {}
 function fetchPlaylistSongs(playlist, platform) {
   const playlistId = playlist.id
   const ownerId = playlist.ownerId
+  const playlistSongs = document.querySelector('.playlist-songs')
+  const songsList = playlistSongs.querySelector('ul')
   if (loadedPlaylists[playlistId]) {
     songsList.innerHTML = loadedPlaylists[playlistId]
     return
   }
-  const playlistSongs = document.querySelector('.playlist-songs')
-  const songsList = playlistSongs.querySelector('ul')
   songsList.innerHTML = `<div class="loader ${platform}"></div>`
 
   fetch(`/api/playlists/${playlistId}/tracks?platform=${platform}`)
