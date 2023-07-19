@@ -5,7 +5,6 @@ const loadedPlaylists = {}
 function fetchPlaylistSongs(playlist, platform) {
   const playlistId = playlist.id
   const ownerId = playlist.ownerId
-  console.log('ownerId', ownerId, 'playlistId', playlistId)
   if (loadedPlaylists[playlistId]) {
     songsList.innerHTML = loadedPlaylists[playlistId]
     return
@@ -17,7 +16,7 @@ function fetchPlaylistSongs(playlist, platform) {
   fetch(`/api/playlists/${playlistId}/tracks?platform=${platform}`)
     .then((response) => {
       if (!response.ok) {
-        console.log('error')
+        console.log('error fetching playlist tracks', response)
         document.querySelector('#refresh-page').style.display = 'block'
         window.scrollTo(0, 0)
         return

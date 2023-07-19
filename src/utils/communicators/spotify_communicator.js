@@ -50,9 +50,14 @@ export default class SpotifyCommunicator extends BaseCommunicator {
    */
   async setCurrentTracks(req, tracks, context) {
     this.spotifyApi.setAccessToken(req.session.spotifyAccessToken)
-    if (tracks.length > 0) {
+    if (tracks.length > 0 && context) {
+      const offset = { uri: tracks[0] }
+      await this.spotifyApi.play({ context_uri: context, offset })
+    } else if (tracks.length > 0) {
+      console.log('tracks provided')
       await this.spotifyApi.play({ uris: tracks })
     } else if (context) {
+      console.log('context provided')
       await this.spotifyApi.play({ context_uri: context })
     } else {
       console.log('No tracks or context provided')
