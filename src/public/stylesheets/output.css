@@ -971,9 +971,9 @@ p {
 .music-player .player-song-info .volume .volume-slider div.soundcloud {
   background: var(--soundcloud-color);
 }
-.music-player .player-song-info .volume svg {
-  width: 24px;
-  height: 24px;
+.music-player .player-song-info .volume .volume-icon {
+  width: 20px;
+  height: 20px;
 }
 
 /*# sourceMappingURL=output.css.map */

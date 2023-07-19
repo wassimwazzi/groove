@@ -34,7 +34,7 @@ if platform == 'spotify'
               g
                 polygon(points="20.7,4.3 16.6,4.3 16.6,11.6 4.3,4.3 4.3,20.7 16.7,13.4 16.6,20.7 20.7,20.7")
       .volume
-        <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M15 23l-9.309-6h-5.691v-10h5.691l9.309-6v22zm-9-15.009v8.018l8 5.157v-18.332l-8 5.157zm14.228-4.219c2.327 1.989 3.772 4.942 3.772 8.229 0 3.288-1.445 6.241-3.77 8.229l-.708-.708c2.136-1.791 3.478-4.501 3.478-7.522s-1.342-5.731-3.478-7.522l.706-.706zm-2.929 2.929c1.521 1.257 2.476 3.167 2.476 5.299 0 2.132-.955 4.042-2.476 5.299l-.706-.706c1.331-1.063 2.182-2.729 2.182-4.591 0-1.863-.851-3.529-2.184-4.593l.708-.708zm-12.299 1.299h-4v8h4v-8z"/></svg>
+        img(src='../../images/volume-on.svg', class='volume-icon')
         #js-volume-slider.volume-slider
           div#js-slider-volume-head(class=platform)
 
@@ -46,9 +46,11 @@ script.
   const prevTrackButton = document.getElementById("js-prev-track");
   const nextTrackButton = document.getElementById("js-next-track");
   const sliderHead = document.getElementById("js-slider-elapsed");
-  const slider = document.getElementById("js-music-slider");
+  const posSlider = document.getElementById("js-music-slider");
   const timer = document.getElementById("js-music-timer");
   const sliderHeadDefaultWidth = 4;
+  const volumeSlider = document.getElementById("js-slider-volume");
+  const volumeSliderHead = document.getElementById("js-slider-volume-head");
   let isPlayerReady = false;
   let duration = 0; // in seconds
   let elapsedTime = 0; // in seconds
@@ -150,7 +152,7 @@ script.
   }
 
   function setSliderPosition() {
-    let sliderWidth = slider.offsetWidth - sliderHeadDefaultWidth;
+    let sliderWidth = posSlider.offsetWidth - sliderHeadDefaultWidth;
     let playPercent = sliderWidth * (elapsedTime / duration);
     sliderHead.style.width = playPercent + "px";
   }
@@ -196,14 +198,14 @@ script.
   }
 
   function sliderTimeFromMousePosition(mouseX) {
-    const sliderLeft = slider.getBoundingClientRect().left;
+    const sliderLeft = posSlider.getBoundingClientRect().left;
     const relativePosition = mouseX - sliderLeft;
-    const percentage = calculatePercentage(relativePosition, slider.offsetWidth);
+    const percentage = calculatePercentage(relativePosition, posSlider.offsetWidth);
     return percentage * duration / 100;
   }
 
   // Event listeners for slider head movement
-  slider.addEventListener('mousedown', (e) => {
+  posSlider.addEventListener('mousedown', (e) => {
     dragging = true;
     elapsedTime = sliderTimeFromMousePosition(e.clientX);
     updateSlider(false);
