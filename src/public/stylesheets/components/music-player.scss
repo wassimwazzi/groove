@@ -1,5 +1,5 @@
 // Insperation: https://dribbble.com/shots/1962035-Freebie-Music-Player-Dark-Version
-$player-height: 20vh;
+$player-height: 15vh;
 $player-width: 100%;
 
 @mixin unselectable() {
@@ -65,11 +65,13 @@ $player-width: 100%;
   .info-wrapper {
     display: flex;
     flex-direction: column;
-    margin-right: 10px;
+    margin-right: var(--spacing-2);
+    width: 50%;
   }
 
   .button-items {
-    margin-left: 180px;
+    margin-left: var(--spacing-5);
+    width: 50%;
     display: flex;
     flex-direction: column;
     margin-top: var(--spacing-3);
