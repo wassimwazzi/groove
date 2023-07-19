@@ -72,8 +72,8 @@
   --font-large: 20px;
   --font-xlarge: 48px;
   /* Font families */
-  --font-family-primary: 'Times New Roman', serif;
-  --font-family-secondary: 'Helevectica', sans-serif;
+  --font-family-primary: "Times New Roman", serif;
+  --font-family-secondary: "Helevectica", sans-serif;
   /* Font weights */
   --font-weight-light: 300;
   --font-weight-regular: 400;
@@ -195,8 +195,8 @@
   --font-large: 20px;
   --font-xlarge: 48px;
   /* Font families */
-  --font-family-primary: 'Times New Roman', serif;
-  --font-family-secondary: 'Helevectica', sans-serif;
+  --font-family-primary: "Times New Roman", serif;
+  --font-family-secondary: "Helevectica", sans-serif;
   /* Font weights */
   --font-weight-light: 300;
   --font-weight-regular: 400;
@@ -351,7 +351,7 @@
   text-decoration: none;
 }
 .navbar-links a.active::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   bottom: -3px;
@@ -563,7 +563,7 @@ p {
 .loader:before,
 .loader:after {
   position: absolute;
-  content: '';
+  content: "";
 }
 
 .loader:before {
@@ -767,6 +767,8 @@ p {
 }
 .music-player ul {
   list-style: none;
+  margin: 0;
+  padding: var(--spacing-2);
 }
 .music-player ul li {
   display: inline-block;
@@ -810,36 +812,35 @@ p {
 }
 .music-player .player-song-info .button-items {
   margin-left: var(--spacing-5);
-  width: 50%;
   display: flex;
   flex-direction: column;
   margin-top: var(--spacing-3);
 }
-.music-player .player-song-info .button-items .slider {
+.music-player .player-song-info .button-items .playback-slider {
   width: 182px;
   height: 8px;
   background: var(--c2-black);
   border-radius: var(--radius-small);
 }
-.music-player .player-song-info .button-items .slider div {
+.music-player .player-song-info .button-items .playback-slider div {
   width: 4px;
   height: 8px;
   margin-top: 1px;
   border-radius: var(--radius-small);
 }
-.music-player .player-song-info .button-items .slider div.spotify {
+.music-player .player-song-info .button-items .playback-slider div.spotify {
   background: var(--spotify-color);
 }
-.music-player .player-song-info .button-items .slider div.apple-music {
+.music-player .player-song-info .button-items .playback-slider div.apple-music {
   background: var(--apple-music-color);
 }
-.music-player .player-song-info .button-items .slider div.youtube-music {
+.music-player .player-song-info .button-items .playback-slider div.youtube-music {
   background: var(--youtube-music-color);
 }
-.music-player .player-song-info .button-items .slider div.deezer {
+.music-player .player-song-info .button-items .playback-slider div.deezer {
   background: var(--deezer-color);
 }
-.music-player .player-song-info .button-items .slider div.soundcloud {
+.music-player .player-song-info .button-items .playback-slider div.soundcloud {
   background: var(--soundcloud-color);
 }
 .music-player .player-song-info .button-items .timer {
@@ -931,6 +932,45 @@ p {
 }
 .music-player .player-song-info .button-items .expend svg:hover g polygon {
   fill: #ef6dbc;
+}
+.music-player .player-song-info .volume {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: var(--spacing-2);
+  margin-left: var(--spacing-4);
+}
+.music-player .player-song-info .volume .volume-slider {
+  width: 8px;
+  height: 100%;
+  background: var(--c2-black);
+  border-radius: var(--radius-small);
+  margin-left: var(--spacing-2);
+}
+.music-player .player-song-info .volume .volume-slider div {
+  width: 8px;
+  height: 4px;
+  margin-top: 1px;
+  border-radius: var(--radius-small);
+}
+.music-player .player-song-info .volume .volume-slider div.spotify {
+  background: var(--spotify-color);
+}
+.music-player .player-song-info .volume .volume-slider div.apple-music {
+  background: var(--apple-music-color);
+}
+.music-player .player-song-info .volume .volume-slider div.youtube-music {
+  background: var(--youtube-music-color);
+}
+.music-player .player-song-info .volume .volume-slider div.deezer {
+  background: var(--deezer-color);
+}
+.music-player .player-song-info .volume .volume-slider div.soundcloud {
+  background: var(--soundcloud-color);
+}
+.music-player .player-song-info .volume svg {
+  width: 24px;
+  height: 24px;
 }
 
 /*# sourceMappingURL=output.css.map */

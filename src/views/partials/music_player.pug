@@ -9,10 +9,9 @@ if platform == 'spotify'
       .info-wrapper
         #js-music-title.music-title
         #js-music-artist.music-artist
-        //- <h2>I Need You Back</h2>
       .button-items
         audio#js-music(loop="false")
-        .slider#js-music-slider
+        .playback-slider#js-music-slider
           div#js-slider-elapsed(class=platform)
         p#js-music-timer.timer 0:00
         .controls
@@ -34,7 +33,10 @@ if platform == 'spotify'
             svg.step-foreward(viewBox="0 0 25 25" xml:space="preserve")
               g
                 polygon(points="20.7,4.3 16.6,4.3 16.6,11.6 4.3,4.3 4.3,20.7 16.7,13.4 16.6,20.7 20.7,20.7")
-
+      .volume
+        <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M15 23l-9.309-6h-5.691v-10h5.691l9.309-6v22zm-9-15.009v8.018l8 5.157v-18.332l-8 5.157zm14.228-4.219c2.327 1.989 3.772 4.942 3.772 8.229 0 3.288-1.445 6.241-3.77 8.229l-.708-.708c2.136-1.791 3.478-4.501 3.478-7.522s-1.342-5.731-3.478-7.522l.706-.706zm-2.929 2.929c1.521 1.257 2.476 3.167 2.476 5.299 0 2.132-.955 4.042-2.476 5.299l-.706-.706c1.331-1.063 2.182-2.729 2.182-4.591 0-1.863-.851-3.529-2.184-4.593l.708-.708zm-12.299 1.299h-4v8h4v-8z"/></svg>
+        #js-volume-slider.volume-slider
+          div#js-slider-volume-head
 
 script.
   const musicPlayer = document.getElementById("js-music-player");
@@ -187,28 +189,16 @@ script.
 
   // slider control
    // Function to calculate the percentage
-  function calculatePercentage(headPosition) {
-    const sliderWidth = slider.clientWidth;
-    headPosition = Math.min(sliderWidth, Math.max(0, headPosition)) // ensure headPosition is within sliderWidth
-    const percentage = (headPosition / sliderWidth) * 100;
+  function calculatePercentage(position, size) {
+    position = Math.min(size, Math.max(0, position)) // ensure position is within size
+    const percentage = (position / size) * 100;
     return Math.round(percentage);
-  }
-
-  // Function to update the head position
-  function setHeadPosition(newPosition) {
-    const minPosition = 0;
-    const maxPosition = slider.clientWidth;
-
-    if (newPosition >= minPosition && newPosition <= maxPosition) {
-      sliderHead.style.left = newPosition + 'px';
-      sliderHead.style.width = newPosition + 'px';
-    }
   }
 
   function sliderTimeFromMousePosition(mouseX) {
     const sliderLeft = slider.getBoundingClientRect().left;
     const relativePosition = mouseX - sliderLeft;
-    const percentage = calculatePercentage(relativePosition);
+    const percentage = calculatePercentage(relativePosition, slider.offsetWidth);
     return percentage * duration / 100;
   }
 

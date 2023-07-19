@@ -18,11 +18,11 @@ $player-width: 100%;
   @include unselectable();
   bottom: 0;
   left: 0;
-  // transform: translate(-50%, -50%);
-  // -webkit-transform: translate(-50%, -50%);
 
   ul {
     list-style: none;
+    margin: 0;
+    padding: var(--spacing-2);
     li {
       display: inline-block;
     }
@@ -71,12 +71,11 @@ $player-width: 100%;
 
   .button-items {
     margin-left: var(--spacing-5);
-    width: 50%;
     display: flex;
     flex-direction: column;
     margin-top: var(--spacing-3);
 
-    .slider {
+    .playback-slider {
       width: 182px;
       height: 8px;
       background: var(--c2-black);
@@ -196,6 +195,35 @@ $player-width: 100%;
       svg:hover g polygon {
         fill: #ef6dbc;
       }
+    }
+  }
+
+  .volume {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: var(--spacing-2);
+    margin-left: var(--spacing-4);
+
+    .volume-slider {
+      width: 8px;
+      height: 100%;
+      background: var(--c2-black);
+      border-radius: var(--radius-small);
+      margin-left: var(--spacing-2);
+
+      div {
+        width: 8px;
+        height: 4px;
+        margin-top: 1px;
+        border-radius: var(--radius-small);
+        @include platform-color(background);
+      }
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
     }
   }
 }
