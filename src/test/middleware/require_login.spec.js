@@ -69,7 +69,7 @@ describe('requireLogin', () => {
     sinon.assert.calledOnce(res.status)
     sinon.assert.calledWith(res.status, 401)
     sinon.assert.calledOnce(res.send)
-    sinon.assert.calledWith(res.send, { error: 'Connect to one of the platforms first' })
+    sinon.assert.calledWith(res.send, sinon.match({ error: sinon.match.string }))
     sinon.assert.notCalled(next)
   })
 

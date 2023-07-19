@@ -11,7 +11,7 @@ class NoAuthenticator extends BaseAuthenticator {
   }
 
   authenticate(req, res) {
-    req.flash('alert', 'Connect to one of the platforms first')
+    req.flash('alert', 'This platform is not yet supported')
     res.redirect('/')
   }
 

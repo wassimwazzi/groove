@@ -38,7 +38,6 @@ class BaseAuthenticator {
    */
   login(req, res) {
     if (this.isLoggedIn(req)) {
-      console.log('User is already logged in')
       res.redirect('/dashboard?platform=' + this.getPlatform())
     } else {
       this.authenticate(req, res)

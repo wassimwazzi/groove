@@ -5,10 +5,10 @@ const requireLogin = async (req, res, next) => {
   const authenticator = PlatformsManager.getAuthenticator(platform)
   if (!authenticator.isLoggedIn(req) && !(await authenticator.refreshSession(req))) {
     if (req.url.includes('api')) {
-      res.status(401).send({ error: 'Connect to one of the platforms first' })
+      res.status(401).send({ error: 'Please connect to the platform before continuing' })
       return
     }
-    req.flash('alert', 'Connect to one of the platforms first')
+    req.flash('alert', 'Please connect to the platform before continuing')
     res.redirect('/')
     return
   }
