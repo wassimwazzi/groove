@@ -1,5 +1,6 @@
-- Handle song selection from dashboard to trigger play.
-- Seek song
+- Remove token from DOM and make all requests through server
+- Shuffle
+- Show grey around current playing song
 - Add liked songs to playlists https://developer.spotify.com/documentation/web-api/reference/get-users-saved-tracks
 - Handle when Spotify SDK is disconnected. Ask user if they want to reconnect.
 - Server session secret
