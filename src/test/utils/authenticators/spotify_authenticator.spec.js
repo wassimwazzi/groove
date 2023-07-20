@@ -50,8 +50,13 @@ describe('SpotifyAuthenticator', () => {
         redirect: sinon.spy(),
       }
 
+      const req = {
+        protocol: 'http',
+        hostname: 'localhost',
+      }
+
       // Call the authenticate method
-      spotifyAuthenticator.authenticate({}, res)
+      spotifyAuthenticator.authenticate(req, res)
 
       // Assert that the cookie is set with the correct parameters;
       sinon.assert.calledWith(res.cookie, spotifyAuthenticator.stateKey, sinon.match.string)
@@ -65,7 +70,7 @@ describe('SpotifyAuthenticator', () => {
               response_type: 'code',
               client_id: spotifyAuthenticator.spotifyClientId,
               scope: spotifyAuthenticator.requiredScopes.join(' '),
-              redirect_uri: spotifyAuthenticator.redirectUri,
+              redirect_uri: 'http://localhost:3000/callback?platform=spotify',
               state: sinon.match.string,
             }),
         ),

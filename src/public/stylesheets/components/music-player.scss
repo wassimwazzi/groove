@@ -42,8 +42,8 @@ $player-width: 100%;
   left: 0;
 
   img {
-    height:  min($player-height, $player-max-height); 
-    // width:  min($player-height, $player-max-height); 
+    height: min($player-height, $player-max-height);
+    // width:  min($player-height, $player-max-height);
   }
 }
 

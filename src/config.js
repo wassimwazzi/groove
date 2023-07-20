@@ -14,5 +14,4 @@ function valueOrError(key) {
 export const spotifyClientId = valueOrError('SPOTIFY_CLIENT_ID')
 export const spotifyClientSecret = valueOrError('SPOTIFY_CLIENT_SECRET')
 export const port = valueOrError('PORT')
-export const host = valueOrError('HOST')
 export const HTTP_SECURE = toBoolean(valueOrError('HTTP_SECURE'))

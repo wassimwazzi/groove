@@ -1,4 +1,4 @@
-import { host, port, HTTP_SECURE } from '../../config.js'
+import { port } from '../../config.js'
 /**
  * Abstract class for authenticators
  *
@@ -9,11 +9,14 @@ class BaseAuthenticator {
     if (this.constructor === BaseAuthenticator) {
       throw new TypeError('Abstract class "BaseAuthenticator" cannot be instantiated directly.')
     }
-    this.url = `${HTTP_SECURE ? 'https' : 'http'}://${host}:${port}`
   }
 
   getPlatform() {
     throw new Error('Method "getPlatform()" must be implemented.')
+  }
+
+  getUrl(req) {
+    return `${req.protocol}://${req.hostname}:${port}`
   }
 
   /**

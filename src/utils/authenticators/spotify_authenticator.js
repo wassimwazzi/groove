@@ -12,7 +12,6 @@ class SpotifyAuthenticator extends BaseAuthenticator {
     this.spotifyClientId = spotifyClientId
     this.spotifyClientSecret = spotifyClientSecret
     this.stateKey = 'spotify_auth_state'
-    this.redirectUri = `${this.url}/callback?platform=${this.getPlatform()}`
     this.requiredScopes = [
       // Spotify Connect
       'user-read-playback-state',
@@ -41,6 +40,10 @@ class SpotifyAuthenticator extends BaseAuthenticator {
     return 'spotify'
   }
 
+  redirectUri(req) {
+    return `${this.getUrl(req)}/callback?platform=${this.getPlatform()}`
+  }
+
   isLoggedIn(req) {
     return !!(req.session.spotifyAccessToken && new Date(req.session.spotifyTokenExpiresAt) > new Date())
   }
@@ -48,12 +51,12 @@ class SpotifyAuthenticator extends BaseAuthenticator {
   /**
    * Authenticate user
    *
-   * @param {Object} _req
+   * @param {Object} req
    * @param {Object} res
    * @returns {Object} response
    * @memberof SpotifyAuthenticator
    */
-  authenticate(_req, res) {
+  authenticate(req, res) {
     const state = BaseAuthenticator.generateRandomString(16)
     res.cookie(this.stateKey, state)
 
@@ -65,7 +68,7 @@ class SpotifyAuthenticator extends BaseAuthenticator {
           response_type: 'code',
           client_id: this.spotifyClientId,
           scope,
-          redirect_uri: this.redirectUri,
+          redirect_uri: this.redirectUri(req),
           state,
         }),
     )
@@ -94,7 +97,7 @@ class SpotifyAuthenticator extends BaseAuthenticator {
         url: 'https://accounts.spotify.com/api/token',
         form: {
           code,
-          redirect_uri: this.redirectUri,
+          redirect_uri: this.redirectUri(req),
           grant_type: 'authorization_code',
         },
         headers: {
