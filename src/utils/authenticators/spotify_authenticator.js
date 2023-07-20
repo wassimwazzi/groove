@@ -40,8 +40,8 @@ class SpotifyAuthenticator extends BaseAuthenticator {
     return 'spotify'
   }
 
-  redirectUri(req) {
-    return `${this.getUrl(req)}/callback?platform=${this.getPlatform()}`
+  redirectUri() {
+    return `${this.getUrl()}/callback?platform=${this.getPlatform()}`
   }
 
   isLoggedIn(req) {
@@ -51,12 +51,12 @@ class SpotifyAuthenticator extends BaseAuthenticator {
   /**
    * Authenticate user
    *
-   * @param {Object} req
+   * @param {Object} _req
    * @param {Object} res
    * @returns {Object} response
    * @memberof SpotifyAuthenticator
    */
-  authenticate(req, res) {
+  authenticate(_req, res) {
     const state = BaseAuthenticator.generateRandomString(16)
     res.cookie(this.stateKey, state)
 
@@ -68,7 +68,7 @@ class SpotifyAuthenticator extends BaseAuthenticator {
           response_type: 'code',
           client_id: this.spotifyClientId,
           scope,
-          redirect_uri: this.redirectUri(req),
+          redirect_uri: this.redirectUri(),
           state,
         }),
     )
@@ -97,7 +97,7 @@ class SpotifyAuthenticator extends BaseAuthenticator {
         url: 'https://accounts.spotify.com/api/token',
         form: {
           code,
-          redirect_uri: this.redirectUri(req),
+          redirect_uri: this.redirectUri(),
           grant_type: 'authorization_code',
         },
         headers: {

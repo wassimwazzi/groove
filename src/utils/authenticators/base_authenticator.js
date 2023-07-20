@@ -1,4 +1,4 @@
-import { port } from '../../config.js'
+import { url } from '../../config.js'
 /**
  * Abstract class for authenticators
  *
@@ -15,8 +15,8 @@ class BaseAuthenticator {
     throw new Error('Method "getPlatform()" must be implemented.')
   }
 
-  getUrl(req) {
-    return `${req.protocol}://${req.hostname}:${port}`
+  getUrl() {
+    return url
   }
 
   /**
