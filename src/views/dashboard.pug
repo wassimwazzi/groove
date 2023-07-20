@@ -46,6 +46,9 @@ block inset_content
                     document.querySelector('.playlists-container').classList.toggle('collapsed');
                     playlist.classList.toggle('active')
                     songs.style.display = 'none';
+                    setTimeout(() => {
+                        playlist.scrollIntoView({behavior: 'smooth', block: 'center'});
+                    }, 200);
                 } else {
                     const activePlaylist = document.querySelector('.playlist-item.active');
                     await fetchPlaylistSongs({id, ownerId}, platform);
@@ -58,8 +61,10 @@ block inset_content
                     if (activePlaylist) {
                         activePlaylist.classList.toggle('active');
                     } else {
-                        document.querySelector('.playlists-container').classList.toggle('collapsed');
-                        // TODO: code to fetch songs for playlist
+                        document.querySelector('.playlists-container').classList.toggle('collapsed')
+                        setTimeout(() => {
+                            playlist.scrollIntoView({behavior: 'smooth', block: 'center'});
+                        }, 200);
                         songs.style.display = 'block';
                     }
                 }
