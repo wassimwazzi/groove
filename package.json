@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon src/server.js",
+    "start:prod": "NODE_ENV=production node src/server.js",
     "sass-watch": "sass --watch src/public/stylesheets/application.scss src/public/stylesheets/output.css",
     "eslint": "eslint --ext js,jsx,ts,tsx .",
     "eslint-fix": "eslint . --ext js,jsx --fix",
