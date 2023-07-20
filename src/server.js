@@ -8,6 +8,7 @@ import playlistsRouter from './routers/playlists_router.js'
 import playerRouter from './routers/player_router.js'
 import flashMiddleware from './middleware/flash_middleware.js'
 import flash from 'connect-flash'
+import { port, host, HTTP_SECURE } from './config.js'
 
 export const app = express()
 
@@ -23,7 +24,7 @@ app
       secret: 'your-secret-key', // Replace with a strong secret key
       resave: false,
       saveUninitialized: true,
-      cookie: { secure: false }, // set secure to true if using HTTPS
+      cookie: { secure: HTTP_SECURE },
     }),
   )
   .use(flash())
@@ -34,6 +35,6 @@ app
   .use(playlistsRouter)
   .use(playerRouter)
 
-const listener = app.listen(3000, function () {
-  console.log('Your app is listening on http://localhost:' + listener.address().port)
+const listener = app.listen(port, host, () => {
+  console.log(`Server is listening on ${listener.address().address}:${listener.address().port}`)
 })
