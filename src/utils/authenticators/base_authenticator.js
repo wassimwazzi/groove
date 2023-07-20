@@ -1,3 +1,4 @@
+import { host, port, HTTP_SECURE } from '../../config.js'
 /**
  * Abstract class for authenticators
  *
@@ -8,7 +9,7 @@ class BaseAuthenticator {
     if (this.constructor === BaseAuthenticator) {
       throw new TypeError('Abstract class "BaseAuthenticator" cannot be instantiated directly.')
     }
-    this.redirectUri = 'http://localhost:3000/callback?platform=' + this.getPlatform()
+    this.url = `${HTTP_SECURE ? 'https' : 'http'}://${host}:${port}`
   }
 
   getPlatform() {

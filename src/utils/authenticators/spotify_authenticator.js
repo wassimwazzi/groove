@@ -12,6 +12,7 @@ class SpotifyAuthenticator extends BaseAuthenticator {
     this.spotifyClientId = spotifyClientId
     this.spotifyClientSecret = spotifyClientSecret
     this.stateKey = 'spotify_auth_state'
+    this.redirectUri = `${this.url}/callback?platform=${this.getPlatform()}`
     this.requiredScopes = [
       // Spotify Connect
       'user-read-playback-state',
