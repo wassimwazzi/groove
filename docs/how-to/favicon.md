@@ -8,6 +8,8 @@ In layout.pug, edit the header section to include the following:
 https://favicon.io/favicon-generator/
 Fonts I liked: leckerli one, pacifico, norican
 
+https://www.favicon.cc/
+
 ## Source for favicons
 https://www.flaticon.com/free-icons/dj
 
