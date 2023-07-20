@@ -1,5 +1,6 @@
 // Insperation: https://dribbble.com/shots/1962035-Freebie-Music-Player-Dark-Version
 $player-height: 15vh;
+$player-max-height: 150px;
 $player-width: 100%;
 
 @mixin unselectable() {
@@ -12,6 +13,7 @@ $player-width: 100%;
 
 .music-player {
   height: $player-height;
+  max-height: $player-max-height;
   width: $player-width;
   background-color: var(--secondary-color-dark);
   position: fixed;
@@ -23,8 +25,13 @@ $player-width: 100%;
     list-style: none;
     margin: 0;
     padding: var(--spacing-2);
+    height: 100%;
+    display: flex;
+
     li {
       display: inline-block;
+      height: 100%;
+      flex: 1;
     }
   }
 }
@@ -33,9 +40,10 @@ $player-width: 100%;
   position: absolute;
   top: 0;
   left: 0;
+
   img {
-    height: $player-height;
-    width: $player-height;
+    height:  min($player-height, $player-max-height); 
+    // width:  min($player-height, $player-max-height); 
   }
 }
 
@@ -202,8 +210,9 @@ $player-width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: end;
-    margin-bottom: var(--spacing-2);
+    margin-bottom: var(--spacing-4);
     margin-left: var(--spacing-4);
+    overflow: hidden;
 
     .volume-slider {
       width: 8px;
