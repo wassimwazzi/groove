@@ -2,6 +2,9 @@
 public/stylesheets/output.css.map
 public/stylesheets/output.css
 
+# certificates
+certs
+
 .DS_Store
 
 # Logs

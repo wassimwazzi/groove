@@ -2,10 +2,7 @@ import express from 'express'
 import session from 'express-session'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
-import authRouter from './routers/auth_router.js'
-import dashboardRouter from './routers/dashboard_router.js'
-import playlistsRouter from './routers/playlists_router.js'
-import playerRouter from './routers/player_router.js'
+import routes from './routers/routes.js'
 import flashMiddleware from './middleware/flash_middleware.js'
 import flash from 'connect-flash'
 import { port, host, HTTP_SECURE } from './config.js'
@@ -31,11 +28,8 @@ app
   .use(flash())
   .use(flashMiddleware)
   .use('/images', express.static('images'))
-  .use(authRouter)
-  .use(dashboardRouter)
-  .use(playlistsRouter)
-  .use(playerRouter)
+  .use(routes)
 
-const listener = app.listen(port, host, () => {
-  console.log(`Server is listening on ${listener.address().address}:${listener.address().port}`)
+app.listen(port, host, () => {
+  console.log(`Server is listening on ${host}:${port}`)
 })

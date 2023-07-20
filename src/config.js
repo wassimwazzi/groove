@@ -1,4 +1,5 @@
 import dotenv from 'dotenv'
+import toBoolean from 'to-boolean'
 
 // const Environment = {
 //   Development: 'dev',
@@ -27,4 +28,4 @@ export const spotifyClientId = valueOrError(process.env.SPOTIFY_CLIENT_ID)
 export const spotifyClientSecret = valueOrError(process.env.SPOTIFY_CLIENT_SECRET)
 export const port = valueOrError(process.env.PORT)
 export const host = valueOrError(process.env.HOST)
-export const HTTP_SECURE = valueOrError(process.env.HTTP_SECURE)
+export const HTTP_SECURE = toBoolean(valueOrError(process.env.HTTP_SECURE))
