@@ -9,6 +9,7 @@ import playerRouter from './routers/player_router.js'
 import flashMiddleware from './middleware/flash_middleware.js'
 import flash from 'connect-flash'
 import { port, host, HTTP_SECURE } from './config.js'
+import crypto from 'crypto'
 
 export const app = express()
 
@@ -21,7 +22,7 @@ app
   .use(cookieParser())
   .use(
     session({
-      secret: 'your-secret-key', // Replace with a strong secret key
+      secret: crypto.randomBytes(32).toString('hex'),
       resave: false,
       saveUninitialized: true,
       cookie: { secure: HTTP_SECURE },
