@@ -1,31 +1,18 @@
 import dotenv from 'dotenv'
 import toBoolean from 'to-boolean'
 
-// const Environment = {
-//   Development: 'dev',
-//   Production: 'prod',
-// }
+dotenv.config()
 
-// const envs = {
-//   [Environment.Development]: Environment.Development,
-//   [Environment.Production]: Environment.Production,
-// }
-
-// const environment = envs[process.env.NODE_ENV || 'dev']
-
-const environment = process.env.NODE_ENV || 'dev'
-const envFilePath = `.env.${environment}`
-dotenv.config({ path: envFilePath })
-
-function valueOrError(value) {
+function valueOrError(key) {
+  const value = process.env[key]
   if (!value) {
-    throw new Error(`Environment variable ${value} is missing`)
+    throw new Error(`Missing environment variable ${key}`)
   }
   return value
 }
 
-export const spotifyClientId = valueOrError(process.env.SPOTIFY_CLIENT_ID)
-export const spotifyClientSecret = valueOrError(process.env.SPOTIFY_CLIENT_SECRET)
-export const port = valueOrError(process.env.PORT)
-export const host = valueOrError(process.env.HOST)
-export const HTTP_SECURE = toBoolean(valueOrError(process.env.HTTP_SECURE))
+export const spotifyClientId = valueOrError('SPOTIFY_CLIENT_ID')
+export const spotifyClientSecret = valueOrError('SPOTIFY_CLIENT_SECRET')
+export const port = valueOrError('PORT')
+export const host = valueOrError('HOST')
+export const HTTP_SECURE = toBoolean(valueOrError('HTTP_SECURE'))
