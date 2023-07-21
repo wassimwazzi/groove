@@ -1,5 +1,6 @@
 .playlist-and-songs-container {
   display: flex;
+  flex-basis: auto;
   align-items: stretch;
   justify-content: space-between;
   width: 100%;
@@ -7,16 +8,14 @@
 }
 
 .playlists-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: left;
   width: 100%;
-  transition: width 0.5s linear;
+  max-width: 100%;
+  transition: all 0.5s linear;
   overflow-y: scroll;
+  flex: 2;
 
   &.collapsed {
-    width: 40%;
+    flex: 1;
   }
 
   ul {
@@ -59,15 +58,19 @@
 }
 
 .playlist-songs {
-  flex: 1;
-  padding: var(--spacing-5) var(--spacing-6);
-  margin: var(--spacing-2);
-  /* transition: flex-basis 0.3s ease-in-out; */
+  transition: all 0.3s ease-in-out;
+  flex: 0;
   overflow-y: scroll;
   /* height: fit-content;  add to make songs list bigger */
-  border: var(--line-light) solid var(--secondary-color-dark);
-  border-radius: var(--radius-round);
-  @include platform-color(border-color);
+
+  &.expanded {
+    flex: 1;
+    border: var(--line-light) solid var(--secondary-color-dark);
+    border-radius: var(--radius-round);
+    padding: var(--spacing-5) var(--spacing-6);
+    margin: var(--spacing-2);
+    @include platform-color(border-color);
+  }
 }
 
 .song-list {
