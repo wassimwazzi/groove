@@ -72,8 +72,8 @@
   --font-large: 20px;
   --font-xlarge: 48px;
   /* Font families */
-  --font-family-primary: "Times New Roman", serif;
-  --font-family-secondary: "Helevectica", sans-serif;
+  --font-family-primary: 'Times New Roman', serif;
+  --font-family-secondary: 'Helevectica', sans-serif;
   /* Font weights */
   --font-weight-light: 300;
   --font-weight-regular: 400;
@@ -195,8 +195,8 @@
   --font-large: 20px;
   --font-xlarge: 48px;
   /* Font families */
-  --font-family-primary: "Times New Roman", serif;
-  --font-family-secondary: "Helevectica", sans-serif;
+  --font-family-primary: 'Times New Roman', serif;
+  --font-family-secondary: 'Helevectica', sans-serif;
   /* Font weights */
   --font-weight-light: 300;
   --font-weight-regular: 400;
@@ -351,7 +351,7 @@
   text-decoration: none;
 }
 .navbar-links a.active::after {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   bottom: -3px;
@@ -563,7 +563,7 @@ p {
 .loader:before,
 .loader:after {
   position: absolute;
-  content: "";
+  content: '';
 }
 
 .loader:before {
@@ -724,7 +724,8 @@ p {
 .song-list-item:hover {
   cursor: pointer;
 }
-.song-list-item.now-playing, .song-list-item:hover {
+.song-list-item.now-playing,
+.song-list-item:hover {
   background-color: var(--secondary-color-dark);
   border-radius: var(--radius-medium);
 }

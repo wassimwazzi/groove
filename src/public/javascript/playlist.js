@@ -1,5 +1,6 @@
 // cache to track which playlists have been loaded to avoid unnecessary requests
 const loadedPlaylists = {}
+let nowPlaying = null
 
 // eslint-disable-next-line no-unused-vars
 function fetchPlaylistSongs(playlist, platform) {
@@ -45,6 +46,7 @@ function fetchPlaylistSongs(playlist, platform) {
       })
       songsList.innerHTML = innerHTML
       loadedPlaylists[playlistId] = songsList.innerHTML
+      highlightNowPlaying() // if the playlist contains the current song, highlight it
     })
 }
 
@@ -67,16 +69,19 @@ function setCurrentTracks(platform, tracks, context) {
   })
 }
 
-window.addEventListener('setTrack', (e) => {
-  console.log('set_track event fired')
-  // fired when a new song is in the music player
-  const { track } = e.detail
-  const song = document.getElementById(track.id)
-  console.log('song with id', track.id, song)
+function highlightNowPlaying() {
+  const song = document.getElementById(nowPlaying.id)
   document.querySelectorAll('.now-playing').forEach((element) => {
     element.classList.remove('now-playing')
   })
   if (song) {
     song.classList.add('now-playing')
   }
+}
+
+window.addEventListener('setTrack', (e) => {
+  // fired when a new song is in the music player
+  const { track } = e.detail
+  nowPlaying = track
+  highlightNowPlaying()
 })
