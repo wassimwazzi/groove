@@ -1,7 +1,6 @@
 window.onSpotifyWebPlaybackSDKReady = () => {
   const token = document.querySelector('#spotify-access-token').dataset.token
   const musicPlayer = document.getElementById('js-music-player')
-  let currentTrackId
   // eslint-disable-next-line no-undef
   const player = new Spotify.Player({
     name: 'Groove',
@@ -99,10 +98,9 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   player.addListener(
     'player_state_changed',
     async ({ shuffle, position, paused, duration, track_window: { current_track } }) => {
-      if (!current_track || current_track.id === currentTrackId) {
+      if (!current_track) {
         return
       }
-      currentTrackId = current_track.id
       const trackDetails = {
         track: current_track,
         artist: current_track.artists.map((artist) => artist.name).join(' & '),

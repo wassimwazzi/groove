@@ -89,7 +89,8 @@
     cursor: pointer;
   }
 
-  &.now-playing, &:hover {
+  &.now-playing,
+  &:hover {
     background-color: var(--secondary-color-dark);
     border-radius: var(--radius-medium);
   }
