@@ -13,7 +13,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
   player.addListener('ready', ({ device_id }) => {
     // set the device to this player
-    fetch('https://api.spotify.com/v1/me/player', {
+    fetch('https://api.spotify.com/v1/me/player?platform=spotify', {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -81,9 +81,19 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     player.setVolume(e.detail.volume)
   })
 
+  window.addEventListener('setShuffle', (e) => {
+    fetch('/api/player/shuffle?platform=spotify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ shuffle: e.detail.shuffle }),
+    })
+  })
+
   player.addListener(
     'player_state_changed',
-    async ({ position, paused, duration, track_window: { current_track } }) => {
+    async ({ shuffle, position, paused, duration, track_window: { current_track } }) => {
       if (!current_track || current_track.id === currentTrackId) {
         return
       }
@@ -95,6 +105,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         duration: duration / 1000,
         elapsedTime: position / 1000,
         paused,
+        shuffle,
         volume: await player.getVolume(),
       }
       musicPlayer.dispatchEvent(

@@ -63,4 +63,17 @@ export default class SpotifyCommunicator extends BaseCommunicator {
       console.log('No tracks or context provided')
     }
   }
+
+  /**
+   * Sets the shuffle of the player.
+   * @param {Object} req - The request object.
+   * @param {boolean} shuffle - The shuffle to set.
+   * @memberof SpotifyCommunicator
+   * @instance
+   * @function setShuffle
+   */
+  async setShuffle(req, shuffle) {
+    this.spotifyApi.setAccessToken(req.session.spotifyAccessToken)
+    await this.spotifyApi.setShuffle(shuffle)
+  }
 }

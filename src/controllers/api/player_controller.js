@@ -8,4 +8,12 @@ async function setPlayerTrack(req, res) {
   res.send()
 }
 
-export { setPlayerTrack }
+async function setPlayerShuffle(req, res) {
+  const platform = req.query.platform
+  const { shuffle } = req.body
+  const communicator = PlatformsManager.getCommunicator(platform)
+  await communicator.setShuffle(req, shuffle)
+  res.send()
+}
+
+export { setPlayerTrack, setPlayerShuffle }
