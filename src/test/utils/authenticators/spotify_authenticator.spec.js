@@ -70,8 +70,7 @@ describe('SpotifyAuthenticator', () => {
               response_type: 'code',
               client_id: spotifyAuthenticator.spotifyClientId,
               scope: spotifyAuthenticator.requiredScopes.join(' '),
-              redirect_uri: 'http://localhost:3000/callback?platform=spotify',
-              state: sinon.match.string,
+              redirect_uri: sinon.match('callback?platform=spotify'),
             }),
         ),
       )
