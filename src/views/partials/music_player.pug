@@ -95,8 +95,8 @@ script.
   }, false);
 
   // This event should be triggered when a new track is loaded.
-  musicPlayer.addEventListener("setTrack", (e) => {
-    trackName = e.detail.name;
+  window.addEventListener("setTrack", (e) => {
+    trackName = e.detail.track.name;
     artistName = e.detail.artist;
     albumName = e.detail.album;
     albumCover = e.detail.cover;

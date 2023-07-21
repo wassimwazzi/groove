@@ -723,6 +723,8 @@ p {
 }
 .song-list-item:hover {
   cursor: pointer;
+}
+.song-list-item.now-playing, .song-list-item:hover {
   background-color: var(--secondary-color-dark);
   border-radius: var(--radius-medium);
 }

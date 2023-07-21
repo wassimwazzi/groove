@@ -88,6 +88,11 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ shuffle: e.detail.shuffle }),
+    }).then((response) => {
+      if (!response.ok) {
+        console.log('error', response)
+        return
+      }
     })
   })
 
@@ -97,8 +102,9 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       if (!current_track || current_track.id === currentTrackId) {
         return
       }
+      currentTrackId = current_track.id
       const trackDetails = {
-        name: current_track.name,
+        track: current_track,
         artist: current_track.artists.map((artist) => artist.name).join(' & '),
         album: current_track.album.name,
         cover: current_track.album.images.length > 0 ? current_track.album.images[0].url : '',
@@ -108,7 +114,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         shuffle,
         volume: await player.getVolume(),
       }
-      musicPlayer.dispatchEvent(
+      window.dispatchEvent(
         new CustomEvent('setTrack', {
           detail: trackDetails,
         }),

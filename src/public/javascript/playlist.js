@@ -30,7 +30,9 @@ function fetchPlaylistSongs(playlist, platform) {
         const artists = track.artists.map((artist) => artist.name).join(' & ')
         const playlistContext = `spotify:user:${ownerId}:playlist:${playlistId}`
         innerHTML += `
-          <a class="song-list-item" onClick="setCurrentTracks('${platform}', ['${track.uri}'], '${playlistContext}')">
+          <a class="song-list-item" onClick="setCurrentTracks('${platform}', ['${
+            track.uri
+          }'], '${playlistContext}')" id="${track.id}" data-uri="${track.uri}">
             ${image ? `<img src="${image}" alt="Album Cover">` : ''}
             <div class="playlist-song-info">
               <span class="name">
@@ -48,23 +50,33 @@ function fetchPlaylistSongs(playlist, platform) {
 
 // eslint-disable-next-line no-unused-vars
 function setCurrentTracks(platform, tracks, context) {
+  // set the track of the music player
   fetch(`/api/player/current?platform=${platform}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ tracks, context }),
+  }).then((response) => {
+    if (!response.ok) {
+      console.log('error', response)
+      document.querySelector('#refresh-page').style.display = 'block'
+      window.scrollTo(0, 0)
+      return
+    }
   })
-    .then((response) => {
-      if (!response.ok) {
-        console.log('error', response)
-        document.querySelector('#refresh-page').style.display = 'block'
-        window.scrollTo(0, 0)
-        return
-      }
-      return response.json()
-    })
-    .catch((error) => {
-      console.log(error)
-    })
 }
+
+window.addEventListener('setTrack', (e) => {
+  console.log('set_track event fired')
+  // fired when a new song is in the music player
+  const { track } = e.detail
+  const song = document.getElementById(track.id)
+  console.log('song with id', track.id, song)
+  document.querySelectorAll('.now-playing').forEach((element) => {
+    element.classList.remove('now-playing')
+  })
+  if (song) {
+    song.classList.add('now-playing')
+  }
+})
