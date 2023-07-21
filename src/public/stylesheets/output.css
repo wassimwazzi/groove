@@ -939,6 +939,26 @@ p {
 .music-player .player-song-info .button-items .expend svg:hover g polygon {
   fill: #ef6dbc;
 }
+.music-player .player-song-info .shuffle-icon {
+  width: 30px;
+  margin-left: var(--spacing-4);
+  cursor: pointer;
+}
+.music-player .player-song-info .shuffle-icon.active.spotify {
+  fill: var(--spotify-color);
+}
+.music-player .player-song-info .shuffle-icon.active.apple-music {
+  fill: var(--apple-music-color);
+}
+.music-player .player-song-info .shuffle-icon.active.youtube-music {
+  fill: var(--youtube-music-color);
+}
+.music-player .player-song-info .shuffle-icon.active.deezer {
+  fill: var(--deezer-color);
+}
+.music-player .player-song-info .shuffle-icon.active.soundcloud {
+  fill: var(--soundcloud-color);
+}
 .music-player .player-song-info .volume {
   display: flex;
   justify-content: space-between;
