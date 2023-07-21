@@ -614,6 +614,7 @@ p {
 }
 .playlist-and-songs-container {
   display: flex;
+  flex-basis: auto;
   align-items: stretch;
   justify-content: space-between;
   width: 100%;
@@ -622,8 +623,12 @@ p {
 
 .playlists-container {
   width: 100%;
-  transition: width 0.5s linear;
+  max-width: 100%;
+  transition: all 0.5s linear;
   overflow-y: scroll;
+  flex: 2;
+}
+.playlists-container.collapsed {
   flex: 1;
 }
 .playlists-container ul {
@@ -676,28 +681,31 @@ p {
 }
 
 .playlist-songs {
-  flex: 1;
-  padding: var(--spacing-5) var(--spacing-6);
-  margin: var(--spacing-2);
-  /* transition: flex-basis 0.3s ease-in-out; */
+  transition: all 0.3s ease-in-out;
+  flex: 0;
   overflow-y: scroll;
   /* height: fit-content;  add to make songs list bigger */
+}
+.playlist-songs.expanded {
+  flex: 1;
   border: var(--line-light) solid var(--secondary-color-dark);
   border-radius: var(--radius-round);
+  padding: var(--spacing-5) var(--spacing-6);
+  margin: var(--spacing-2);
 }
-.playlist-songs.spotify {
+.playlist-songs.expanded.spotify {
   border-color: var(--spotify-color);
 }
-.playlist-songs.apple-music {
+.playlist-songs.expanded.apple-music {
   border-color: var(--apple-music-color);
 }
-.playlist-songs.youtube-music {
+.playlist-songs.expanded.youtube-music {
   border-color: var(--youtube-music-color);
 }
-.playlist-songs.deezer {
+.playlist-songs.expanded.deezer {
   border-color: var(--deezer-color);
 }
-.playlist-songs.soundcloud {
+.playlist-songs.expanded.soundcloud {
   border-color: var(--soundcloud-color);
 }
 

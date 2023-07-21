@@ -29,7 +29,7 @@ block inset_content
                                         img(src="../images/playlist-placeholder-" + platform + ".jpg", class="playlist-image")
                                     p(class='playlist-name') #{playlist.name}
 
-                div.playlist-songs(style="display: none;" class=platform)
+                div.playlist-songs(class=platform)
                     ul.song-list
 
         include partials/music_player.pug
@@ -45,7 +45,7 @@ block inset_content
                 if (playlist.classList.contains('active')) {
                     document.querySelector('.playlists-container').classList.toggle('collapsed');
                     playlist.classList.toggle('active')
-                    songs.style.display = 'none';
+                    songs.classList.toggle('expanded')
                 } else {
                     const activePlaylist = document.querySelector('.playlist-item.active');
                     await fetchPlaylistSongs({id, ownerId}, platform);
@@ -59,7 +59,7 @@ block inset_content
                         activePlaylist.classList.toggle('active');
                     } else {
                         document.querySelector('.playlists-container').classList.toggle('collapsed')
-                        songs.style.display = 'block';
+                        songs.classList.toggle('expanded')
                     }
                 }
             })
