@@ -4,8 +4,8 @@ import toBoolean from 'to-boolean'
 dotenv.config()
 
 function valueOrError(key) {
-  const value = process.env[key]
-  if (!value) {
+  const value = process.env[key] || ''
+  if (!value && process.env.NODE_ENV !== 'test') {
     throw new Error(`Missing environment variable ${key}`)
   }
   return value

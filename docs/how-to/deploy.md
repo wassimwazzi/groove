@@ -21,4 +21,5 @@ Run `heroku login` to login to your heroku account.heroku create
 - `git push heroku {branch}:main` to deploy your branch to heroku.
 
 ## Configuring
+
 Any env variables need to be set in the heroku app. You can do this in the heroku dashboard, settings, config vars.

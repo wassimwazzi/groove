@@ -15,7 +15,7 @@
     "format-staged": "prettier --write",
     "pre-commit": "lint-staged",
     "prepare": "husky install",
-    "test": "nyc mocha --recursive src/test"
+    "test": "NODE_ENV=test nyc mocha --recursive src/test"
   },
   "type": "module",
   "dependencies": {
