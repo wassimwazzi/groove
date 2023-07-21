@@ -206,16 +206,16 @@ $player-width: 100%;
     }
   }
 
-    .shuffle-icon {
-      width: 30px;
-      margin-left: var(--spacing-4);
-      cursor: pointer;
-  
-      &.active {
-        @include platform-color(fill);
-      }
+  .shuffle-icon {
+    width: 30px;
+    margin-left: var(--spacing-4);
+    cursor: pointer;
+
+    &.active {
+      @include platform-color(fill);
     }
-    
+  }
+
   .volume {
     display: flex;
     justify-content: space-between;
