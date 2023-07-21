@@ -10,10 +10,7 @@
   width: 100%;
   transition: width 0.5s linear;
   overflow-y: scroll;
-
-  &.collapsed {
-    width: 40%;
-  }
+  flex: 1;
 
   ul {
     list-style-type: none;
