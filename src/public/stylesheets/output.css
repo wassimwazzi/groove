@@ -624,7 +624,7 @@ p {
 .playlists-container {
   width: 100%;
   max-width: 100%;
-  transition: all 0.5s linear;
+  transition: all 1s ease-in-out;
   overflow-y: scroll;
   flex: 2;
 }
@@ -681,7 +681,7 @@ p {
 }
 
 .playlist-songs {
-  transition: all 0.3s ease-in-out;
+  transition: all 1s ease-in-out;
   flex: 0;
   overflow-y: scroll;
   /* height: fit-content;  add to make songs list bigger */
